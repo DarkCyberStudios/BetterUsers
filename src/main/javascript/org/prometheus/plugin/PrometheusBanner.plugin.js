@@ -13,6 +13,16 @@ module.exports = (() => {
         "info": {
             "name": "PrometheusBanner",
             "authors": [{
+                "name": "lemons",
+                "discord_id": "407348579376693260",
+                "github_username": "respecting"
+            },
+            {
+                "name": "Shimoro",
+                "discord_id": "427406422733619200",
+                "github_username": "Shimoro-Rune"
+            },
+            {
                 "name": "NormalBettle437",
                 "discord_id": "725079599297331200",
                 "github_username": "NormalBettle437"
@@ -36,7 +46,7 @@ module.exports = (() => {
         }
 
         getAuthor() {
-            return configuration.info.author;
+            return configuration.info.authors.map(v => v.name).join(", ");
         }
 
         getSource() {
