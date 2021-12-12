@@ -1,8 +1,10 @@
 /**
  * @name PrometheusBanner
+ * @author NormalBettle437
+ * @source https://raw.githubusercontent.com/NormalBettle437/PrometheusBanner/main/src/main/javascript/org/prometheus/banner/PrometheusBanner.plugin.js
+ * @updateUrl https://raw.githubusercontent.com/NormalBettle437/PrometheusBanner/main/src/main/javascript/org/prometheus/banner/PrometheusBanner.plugin.js
  * @version 1.0.0
  * @description Allows you to locally assign a banner or an avatar of your choosing
- * @author NormalBettle437
  */
 
 module.exports = (() => {
@@ -15,6 +17,8 @@ module.exports = (() => {
                 "discord_id": "725079599297331200",
                 "github_username": "NormalBettle437"
             }],
+            "source": "https://raw.githubusercontent.com/NormalBettle437/PrometheusBanner/main/src/main/javascript/org/prometheus/banner/PrometheusBanner.plugin.js",
+            "updateUrl": "https://raw.githubusercontent.com/NormalBettle437/PrometheusBanner/main/src/main/javascript/org/prometheus/banner/PrometheusBanner.plugin.js",
             "version": "1.0.0",
             "description": "Allows you to locally assign a banner or an avatar of your choosing"
         },
@@ -35,12 +39,20 @@ module.exports = (() => {
             return configuration.info.author;
         }
 
-        getDescription() {
-            return configuration.info.description;
+        getSource() {
+            return configuration.info.source;
+        }
+
+        getUpdateUrl() {
+            return configuration.info.updateUrl;
         }
 
         getVersion() {
             return configuration.info.version;
+        }
+
+        getDescription() {
+            return configuration.info.description;
         }
 
         load() {
