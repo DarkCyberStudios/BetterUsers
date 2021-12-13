@@ -178,12 +178,12 @@ module.exports = (() => {
                                 banner.style = `background-image: url("${this.settings.bannerUrl}") !important; background-repeat: no repeat; background-position: 50%; background-size: cover; width: 600px; height: 240px;`;
                             });
 
-                            document.querySelectorAll(`.banner-2QYc2d [class *= "settingsBanner-"]`).forEach(banner => {
+                            document.querySelectorAll(`div [class *= "settingsBanner-"]`).forEach(banner => {
 
                                 banner.style = `background-image: url("${this.settings.bannerUrl}") !important; background-repeat: no-repeat; background-position: 50%; background-size: cover;`;
                             });
 
-                            document.querySelectorAll(`.bannerUploaderInnerSquare-1alXv4 [class *= "banner-"]`).forEach(banner => {
+                            document.querySelectorAll(`div [class *= "bannerUploaderInnerSquare-"][class *= "banner-"]`).forEach(banner => {
 
                                 banner.style = `background-image: url("${this.settings.bannerUrl}"); !important; background-repeat: no-repeat; background-position: 50%; background-size: cover;`;
                             });
