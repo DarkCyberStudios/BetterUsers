@@ -1,5 +1,5 @@
 /**
- * @name PrometheusBanner
+ * @name PrometheusPerks
  * @author NormalBettle437
  * @source https://raw.githubusercontent.com/NormalBettle437/PrometheusBanner/main/src/main/javascript/org/prometheus/banner/PrometheusBanner.plugin.js
  * @updateUrl https://raw.githubusercontent.com/NormalBettle437/PrometheusBanner/main/src/main/javascript/org/prometheus/banner/PrometheusBanner.plugin.js
@@ -32,7 +32,7 @@ module.exports = (() => {
             "version": "1.0.3",
             "description": "Allows you to locally assign a banner or an avatar of your choosing"
         },
-        "main": "PrometheusBanner.plugin.js"
+        "main": "PrometheusPerks.plugin.js"
     };
     return !global.ZeresPluginLibrary ? class {
 
@@ -91,7 +91,7 @@ module.exports = (() => {
 
         const plugin = (Plugin, Api) => {
 
-            const { Patcher, DiscordModules, DiscordAPI, Settings, Toasts, PluginUtilities } = Api;
+            const { Patcher, DiscordAPI, Settings, Toasts, PluginUtilities } = Api;
             return class PrometheusBanner extends Plugin {
 
                 defaults = { 
@@ -141,23 +141,6 @@ module.exports = (() => {
                     if (this.settings.clientsideAvatar && this.settings.avatarUrl) {
 
                         this.clientsideAvatar = setInterval(() => {
-
-                            document.querySelectorAll(`[src = "https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=128"]`).forEach(avatar => {
-
-                                avatar.src = this.settings.avatarUrl;
-                            });
-
-                            document.querySelectorAll(`[src = "https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.png?size=128"]`).forEach(avatar => {
-
-                                avatar.src = this.settings.avatarUrl;
-                            });
-
-                            document.querySelectorAll(`.avatarContainer-28iYmV.avatar-3tNQiO.avatar-3tNQiO.avatarSmall-1PJoGO`).forEach(avatar => {
-                                if (!avatar.getElementsByClassName.backgroundImage.includes(`https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.png?size=128`)) {
-                                    return;
-                                }
-                                avatar.style = `background-image: url("${this.settings.avatarUrl}")`;
-                            });
                         }, 100);
                     }
                     if (!this.settings.clientsideAvatar) {
@@ -203,17 +186,6 @@ module.exports = (() => {
                 removeAvatar() {
 
                     clearInterval(this.clientsideAvatar);
-                    document.querySelectorAll(`[src = "${this.settings.avatarUrl}"]`).forEach(avatar => {
-
-                        avatar.src = `https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=128;`;
-                    });
-
-                    document.querySelectorAll(`.avatarContainer-28iYmV.avatar-3tNQiO.avatarSmall-1PJoGO`).forEach(avatar => {
-                        if (!avatar.style.backgroundImage.includes(this.settings.avatarUrl)) { 
-                            return; 
-                        }
-                        avatar.style = `background-image: url("https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.png?size=128");`;
-                    });
                 }
 
                 removeBanner() {
