@@ -1,8 +1,8 @@
 /**
  * @name PrometheusPerks
  * @author NormalBettle437
- * @source https://raw.githubusercontent.com/NormalBettle437/PrometheusBanner/main/src/main/javascript/org/prometheus/banner/PrometheusBanner.plugin.js
- * @updateUrl https://raw.githubusercontent.com/NormalBettle437/PrometheusBanner/main/src/main/javascript/org/prometheus/banner/PrometheusBanner.plugin.js
+ * @source https://raw.githubusercontent.com/NormalBettle437/PrometheusPerks/main/src/main/javascript/org/prometheus/banner/PrometheusPerks.plugin.js
+ * @updateUrl https://raw.githubusercontent.com/NormalBettle437/PrometheusPerks/main/src/main/javascript/org/prometheus/banner/PrometheusPerks.plugin.js
  * @version 1.0.3
  * @description Allows you to locally assign a banner or an avatar of your choosing
  */
@@ -11,7 +11,7 @@ module.exports = (() => {
 
     const configuration = {
         "info": {
-            "name": "PrometheusBanner",
+            "name": "PrometheusPerks",
             "authors": [{
                 "name": "lemons",
                 "discord_id": "407348579376693260",
@@ -27,8 +27,8 @@ module.exports = (() => {
                 "discord_id": "725079599297331200",
                 "github_username": "NormalBettle437"
             }],
-            "source": "https://raw.githubusercontent.com/NormalBettle437/PrometheusBanner/main/src/main/javascript/org/prometheus/banner/PrometheusBanner.plugin.js",
-            "updateUrl": "https://raw.githubusercontent.com/NormalBettle437/PrometheusBanner/main/src/main/javascript/org/prometheus/banner/PrometheusBanner.plugin.js",
+            "source": "https://raw.githubusercontent.com/NormalBettle437/PrometheusPerks/main/src/main/javascript/org/prometheus/banner/PrometheusPerks.plugin.js",
+            "updateUrl": "https://raw.githubusercontent.com/NormalBettle437/PrometheusPerks/main/src/main/javascript/org/prometheus/banner/PrometheusPerks.plugin.js",
             "version": "1.0.3",
             "description": "Allows you to locally assign a banner or an avatar of your choosing"
         },
@@ -92,7 +92,7 @@ module.exports = (() => {
         const plugin = (Plugin, Api) => {
 
             const { Patcher, DiscordAPI, Settings, Toasts, PluginUtilities } = Api;
-            return class PrometheusBanner extends Plugin {
+            return class PrometheusPerks extends Plugin {
 
                 defaults = { 
                     "clientsideAvatar": false,
@@ -141,6 +141,11 @@ module.exports = (() => {
                     if (this.settings.clientsideAvatar && this.settings.avatarUrl) {
 
                         this.clientsideAvatar = setInterval(() => {
+
+                            document.querySelectorAll(`[src = "https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=128"]`).forEach(avatar => {
+
+                                avatar.src = this.settings.avatarUrl;
+                            });
                         }, 100);
                     }
                     if (!this.settings.clientsideAvatar) {
@@ -168,7 +173,7 @@ module.exports = (() => {
 
                             document.querySelectorAll(`div [class *= "bannerUploaderInnerSquare-"][class *= "banner-"]`).forEach(banner => {
 
-                                banner.style = `background-image: url("${this.settings.bannerUrl}"); !important; background-repeat: no-repeat; background-position: 50%; background-size: cover;`;
+                                banner.style = `background-image: url("${this.settings.bannerUrl}") !important; background-repeat: no-repeat; background-position: 50%; background-size: cover;`;
                             });
 
                             document.querySelectorAll(`[data-user-id = "${DiscordAPI.currentUser.discordObject.id}"] .avatarWrapperNormal-26WQIb`).forEach(avatar => {
