@@ -185,6 +185,16 @@ module.exports = (() => {
 
                                 avatar.src = this.settings.avatarUrl;
                             });
+
+                            document.querySelectorAll(`[src = "https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=80"]`).forEach(avatar => {
+
+                                avatar.src = this.settings.avatarUrl;
+                            });
+
+                            document.querySelectorAll(`[src = "https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=32"]`).forEach(avatar => {
+
+                                avatar.src = this.settings.avatarUrl;
+                            });
                         }, 100);
                     } else {
 
