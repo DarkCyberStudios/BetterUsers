@@ -107,7 +107,7 @@ module.exports = (() => {
                 clientside;
 
                 getSettingsPanel() {
-                    return Settings.SettingPanel.build(_ => this.update(), ...[
+                    return Settings.SettingPanel.build(_ => this.onStart(), ...[
                         new Settings.SettingGroup("Avatar").append(...[
                             new Settings.Switch("Clientside Avatar", "Enabled or disable a clientside avatar", this.settings.clientsideAvatar, value => this.settings.clientsideAvatar = value),
                             new Settings.Textbox("URL", "The direct URL for the avatar you will be using, supported types are, PNG, JPG, or GIF", this.settings.avatarUrl, image => {
@@ -141,6 +141,21 @@ module.exports = (() => {
                     document.querySelectorAll(`[src = "${this.settings.avatarUrl}"]`).forEach(avatar => {
 
                         avatar.src = `https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=128`;
+                    });
+
+                    document.querySelectorAll(`[src = "${this.settings.avatarUrl}"]`).forEach(avatar => {
+
+                        avatar.src = `https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=80`;
+                    });
+
+                    document.querySelectorAll(`[src = "${this.settings.avatarUrl}"]`).forEach(avatar => {
+
+                        avatar.src = `https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=32`;
+                    });
+
+                    document.querySelectorAll(`[class *= "avatarUploaderInner-"]`).forEach(avatar => {
+
+                        avatar.style = `background-image: url("https://cdn.discordapp.com/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=80");`;
                     });
                 }
 
@@ -195,8 +210,14 @@ module.exports = (() => {
 
                                 avatar.src = this.settings.avatarUrl;
                             });
+
+                            document.querySelectorAll(`[class *= "avatarUploaderInner-"]`).forEach(avatar => {
+
+                                avatar.style = `background-image: url("${this.settings.avatarUrl}");`;
+                            });
                         }, 100);
-                    } else {
+                    } 
+                    if (!this.settings.clientsideAvatar) {
 
                         this.removeAvatar();
                     }
@@ -229,7 +250,8 @@ module.exports = (() => {
                                 avatar.style = `top: 76px;`;
                             });
                         }, 100);
-                    } else {
+                    } 
+                    if (!this.settings.clientsideBanner) {
 
                         this.removeBanner();
                     }
