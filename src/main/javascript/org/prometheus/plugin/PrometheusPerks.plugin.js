@@ -3,7 +3,7 @@
  * @author NormalBettle437
  * @source https://raw.githubusercontent.com/NormalBettle437/PrometheusPerks/main/src/main/javascript/org/prometheus/banner/PrometheusPerks.plugin.js
  * @updateUrl https://raw.githubusercontent.com/NormalBettle437/PrometheusPerks/main/src/main/javascript/org/prometheus/banner/PrometheusPerks.plugin.js
- * @version 1.0.8
+ * @version 1.0.10
  * @description Allows you to locally assign a banner or an avatar of your choosing
  */
 
@@ -29,7 +29,7 @@ module.exports = (() => {
             }],
             "source": "https://raw.githubusercontent.com/NormalBettle437/PrometheusPerks/main/src/main/javascript/org/prometheus/banner/PrometheusPerks.plugin.js",
             "updateUrl": "https://raw.githubusercontent.com/NormalBettle437/PrometheusPerks/main/src/main/javascript/org/prometheus/banner/PrometheusPerks.plugin.js",
-            "version": "1.0.8",
+            "version": "1.0.10",
             "description": "Allows you to locally assign a banner or an avatar of your choosing"
         },
         "main": "PrometheusPerks.plugin.js"
@@ -163,6 +163,11 @@ module.exports = (() => {
                         avatar.style = `background-image: url("https://cdn.discordapp.com/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=80");`;
                     });
 
+                    document.querySelectorAll(`[src = "${this.settings.avatarUrl}]`).forEach(avatar => {
+
+                        avatar.src = `https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=16`;
+                    });
+
                     document.querySelectorAll(`[class *= "avatarStack-"] [src = "${this.settings.avatarUrl}"]`).forEach(avatar => {
 
                         avatar.src = `https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.gif?size=128`;
@@ -241,6 +246,11 @@ module.exports = (() => {
                             });
 
                             document.querySelectorAll(`[class *= "avatarStack-"] [src = "https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=32"]`).forEach(avatar => {
+
+                                avatar.src = this.settings.avatarUrl;
+                            });
+
+                            document.querySelectorAll(`[src = "https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=16"]`).forEach(avatar => {
 
                                 avatar.src = this.settings.avatarUrl;
                             });
