@@ -16,6 +16,6 @@
     "url": "https://github.com/NormalBettle437/PrometheusPerks/issues"
   },
   "homepage": "https://github.com/NormalBettle437/PrometheusPerks#readme",
-  "devDependencies": {
+  "dependencies": {
   }
 }
