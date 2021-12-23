@@ -234,7 +234,7 @@ module.exports = (() => {
 
                                 avatar.src = this.settings.avatarUrl;
                                 if (avatar.querySelectorAll(`[src = "${this.settings.avatarUrl.substr(0, this.settings.avatarUrl.lastIndexOf('.'))}.gif"]`)) {
-                                
+
                                     avatar.src = this.settings.avatarUrl.replace('.gif', '.webp');
                                 }
                             });
