@@ -3,7 +3,7 @@
  * @author NormalBettle437
  * @source https://raw.githubusercontent.com/NormalBettle437/PrometheusPerks/main/src/main/javascript/org/prometheus/banner/PrometheusPerks.plugin.js
  * @updateUrl https://raw.githubusercontent.com/NormalBettle437/PrometheusPerks/main/src/main/javascript/org/prometheus/banner/PrometheusPerks.plugin.js
- * @version 1.0.10
+ * @version 1.0.13
  * @description Allows you to locally assign a banner or an avatar of your choosing
  */
 
@@ -29,7 +29,7 @@ module.exports = (() => {
             }],
             "source": "https://raw.githubusercontent.com/NormalBettle437/PrometheusPerks/main/src/main/javascript/org/prometheus/banner/PrometheusPerks.plugin.js",
             "updateUrl": "https://raw.githubusercontent.com/NormalBettle437/PrometheusPerks/main/src/main/javascript/org/prometheus/banner/PrometheusPerks.plugin.js",
-            "version": "1.0.10",
+            "version": "1.0.13",
             "description": "Allows you to locally assign a banner or an avatar of your choosing"
         },
         "main": "PrometheusPerks.plugin.js"
@@ -141,31 +141,51 @@ module.exports = (() => {
                     document.querySelectorAll(`[src = "${this.settings.avatarUrl}"]`).forEach(avatar => {
 
                         avatar.src = `https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=128`;
+                        if (avatar.querySelectorAll(`[src = "${this.settings.avatarUrl.substr(0, this.settings.avatarUrl.lastIndexOf('.'))}.gif"]`)) {
+
+                            avatar.src = `https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.gif?size=128`;
+                        }
                     });
 
                     document.querySelectorAll(`[src = "${this.settings.avatarUrl}"]`).forEach(avatar => {
 
                         avatar.src = `https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=80`;
+                        if (avatar.querySelectorAll(`[src = "${this.settings.avatarUrl.substr(0, this.settings.avatarUrl.lastIndexOf('.'))}.gif"]`)) {
+
+                            avatar.src = `https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.gif?size=80`;
+                        }
                     });
 
                     document.querySelectorAll(`[src = "${this.settings.avatarUrl}"]`).forEach(avatar => {
 
                         avatar.src = `https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=40`;
+                        if (avatar.querySelectorAll(`[src = "${this.settings.avatarUrl.substr(0, this.settings.avatarUrl.lastIndexOf('.'))}.gif"]`)) {
+
+                            avatar.src = `https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.gif?size=40`;
+                        }
                     });
 
                     document.querySelectorAll(`[src = "${this.settings.avatarUrl}"]`).forEach(avatar => {
 
                         avatar.src = `https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=32`;
+                        if (avatar.querySelectorAll(`[src = "${this.settings.avatarUrl.substr(0, this.settings.avatarUrl.lastIndexOf('.'))}.gif"]`)) {
+
+                            avatar.src = `https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.gif?size=32`;
+                        }
                     });
 
                     document.querySelectorAll(`[src = "${this.settings.avatarUrl}"]`).forEach(avatar => {
 
                         avatar.src = `https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=16`;
+                        if (avatar.querySelectorAll(`[src = "${this.settings.avatarUrl.substr(0, this.settings.avatarUrl.lastIndexOf('.'))}.gif"]`)) {
+
+                            avatar.src = `https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.gif?size=16`;
+                        }
                     });
 
                     document.querySelectorAll(`.avatarUploaderInner-3UNxY3.avatarUploaderInner-mAGe3e`).forEach(avatar => {
 
-                        avatar.style = `background-image: url("${this.settings.avatarUrl}");`;
+                        avatar.style = `background-image: url("https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.gif?size=80}");`;
                     });
 
                     document.querySelectorAll(`[src = "${this.settings.avatarUrl}"]`).forEach(avatar => {
