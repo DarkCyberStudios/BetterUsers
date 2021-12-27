@@ -1,8 +1,8 @@
 /**
  * @name PrometheusPerks
  * @author NormalBettle437
- * @source https://raw.githubusercontent.com/NormalBettle437/PrometheusPerks/main/src/main/javascript/org/prometheus/banner/PrometheusPerks.plugin.js
- * @updateUrl https://raw.githubusercontent.com/NormalBettle437/PrometheusPerks/main/src/main/javascript/org/prometheus/banner/PrometheusPerks.plugin.js
+ * @source https://raw.githubusercontent.com/NormalBettle437/PrometheusPerks/main/src/main/javascript/org/prometheus/plugin/PrometheusPerks.plugin.js
+ * @updateUrl https://raw.githubusercontent.com/NormalBettle437/PrometheusPerks/main/src/main/javascript/org/prometheus/plugin/PrometheusPerks.plugin.js
  * @version 1.0.14
  * @description Allows you to locally assign a banner or an avatar of your choosing
  */
@@ -27,8 +27,8 @@ module.exports = (() => {
                 "discord_id": "725079599297331200",
                 "github_username": "NormalBettle437"
             }],
-            "source": "https://raw.githubusercontent.com/NormalBettle437/PrometheusPerks/main/src/main/javascript/org/prometheus/banner/PrometheusPerks.plugin.js",
-            "updateUrl": "https://raw.githubusercontent.com/NormalBettle437/PrometheusPerks/main/src/main/javascript/org/prometheus/banner/PrometheusPerks.plugin.js",
+            "source": "https://raw.githubusercontent.com/NormalBettle437/PrometheusPerks/main/src/main/javascript/org/prometheus/plugin/PrometheusPerks.plugin.js",
+            "updateUrl": "https://raw.githubusercontent.com/NormalBettle437/PrometheusPerks/main/src/main/javascript/org/prometheus/plugin/PrometheusPerks.plugin.js",
             "version": "1.0.14",
             "description": "Allows you to locally assign a banner or an avatar of your choosing"
         },
@@ -138,93 +138,20 @@ module.exports = (() => {
                 removeAvatar() {
 
                     clearInterval(this.clientsideAvatar);
-                    document.querySelectorAll(`[src = "${this.settings.avatarUrl}"]`).forEach(avatar => {
 
-                        avatar.src = `https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=160`;
+                    const sizes = ["160", "100", "56", "40", "32", "10"];
+                    sizes.forEach(size => document.querySelectorAll(`[src = "${this.settings.avatarUrl}"]`).forEach(avatar => {
+
+                        avatar.src = `https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=${size}`;
                         if (avatar.querySelectorAll(`[src = "${this.settings.avatarUrl.substr(0, this.settings.avatarUrl.lastIndexOf('.'))}.gif"]`)) {
 
-                            avatar.src = `https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.gif?size=160`;
+                            avatar.src = `https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.${"webp" || "gif"}?size=${size}`;
                         }
-                    });
-
-                    document.querySelectorAll(`[src = "${this.settings.avatarUrl}"]`).forEach(avatar => {
-
-                        avatar.src = `https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=100`;
-                        if (avatar.querySelectorAll(`[src = "${this.settings.avatarUrl.substr(0, this.settings.avatarUrl.lastIndexOf('.'))}.gif"]`)) {
-
-                            avatar.src = `https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.gif?size=100`;
-                        }
-                    });
-
-                    document.querySelectorAll(`[src = "${this.settings.avatarUrl}"]`).forEach(avatar => {
-
-                        avatar.src = `https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=56`;
-                        if (avatar.querySelectorAll(`[src = "${this.settings.avatarUrl.substr(0, this.settings.avatarUrl.lastIndexOf('.'))}.gif"]`)) {
-
-                            avatar.src = `https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.gif?size=56`;
-                        }
-                    });
-
-                    document.querySelectorAll(`[src = "${this.settings.avatarUrl}"]`).forEach(avatar => {
-
-                        avatar.src = `https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=40`;
-                        if (avatar.querySelectorAll(`[src = "${this.settings.avatarUrl.substr(0, this.settings.avatarUrl.lastIndexOf('.'))}.gif"]`)) {
-
-                            avatar.src = `https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.gif?size=40`;
-                        }
-                    });
-
-                    document.querySelectorAll(`[src = "${this.settings.avatarUrl}"]`).forEach(avatar => {
-
-                        avatar.src = `https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=32`;
-                        if (avatar.querySelectorAll(`[src = "${this.settings.avatarUrl.substr(0, this.settings.avatarUrl.lastIndexOf('.'))}.gif"]`)) {
-
-                            avatar.src = `https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.gif?size=32`;
-                        }
-                    });
-
-                    document.querySelectorAll(`[src = "${this.settings.avatarUrl}"]`).forEach(avatar => {
-
-                        avatar.src = `https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=10`;
-                        if (avatar.querySelectorAll(`[src = "${this.settings.avatarUrl.substr(0, this.settings.avatarUrl.lastIndexOf('.'))}.gif"]`)) {
-
-                            avatar.src = `https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.gif?size=10`;
-                        }
-                    });
+                    }));
 
                     document.querySelectorAll(`.avatarUploaderInner-3UNxY3.avatarUploaderInner-mAGe3e`).forEach(avatar => {
 
                         avatar.style = `background-image: url("https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.gif?size=80}");`;
-                    });
-
-                    document.querySelectorAll(`[src = "${this.settings.avatarUrl}"]`).forEach(avatar => {
-
-                        avatar.src = `https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.gif?size=160`;
-                    });
-
-                    document.querySelectorAll(`[src = "${this.settings.avatarUrl}"]`).forEach(avatar => {
-
-                        avatar.src = `https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.gif?size=100`;
-                    });
-
-                    document.querySelectorAll(`[src = "${this.settings.avatarUrl}"]`).forEach(avatar => {
-
-                        avatar.src = `https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.gif?size=56`;
-                    });
-
-                    document.querySelectorAll(`[src = "${this.settings.avatarUrl}"]`).forEach(avatar => {
-
-                        avatar.src = `https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.gif?size=40`;
-                    });
-
-                    document.querySelectorAll(`[src = "${this.settings.avatarUrl}"]`).forEach(avatar => {
-
-                        avatar.src = `https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.gif?size=32`;
-                    });
-
-                    document.querySelectorAll(`[src = "${this.settings.avatarUrl}"]`).forEach(avatar => {
-
-                        avatar.src = `https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.gif?size=10`;
                     });
                 }
 
@@ -264,59 +191,15 @@ module.exports = (() => {
 
                         this.clientsideAvatar = setInterval(() => {
 
-                            document.querySelectorAll(`[src = "https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=160"]`).forEach(avatar => {
+                            const sizes = ["160", "100", "56", "40", "32", "10"];
+                            sizes.forEach(size => document.querySelectorAll(`[src = "https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=${size}"]`).forEach(avatar => {
 
                                 avatar.src = this.settings.avatarUrl;
                                 if (avatar.querySelectorAll(`[src = "${this.settings.avatarUrl.substr(0, this.settings.avatarUrl.lastIndexOf('.'))}.gif"]`)) {
 
                                     avatar.src = this.settings.avatarUrl.replace('.gif', '.webp');
                                 }
-                            });
-
-                            document.querySelectorAll(`[src = "https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=100"]`).forEach(avatar => {
-
-                                avatar.src = this.settings.avatarUrl;
-                                if (avatar.querySelectorAll(`[src = "${this.settings.avatarUrl.substr(0, this.settings.avatarUrl.lastIndexOf('.'))}.gif"]`)) {
-                                
-                                    avatar.src = this.settings.avatarUrl.replace('.gif', '.webp');
-                                }
-                            });
-
-                            document.querySelectorAll(`[src = "https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=56"]`).forEach(avatar => {
-
-                                avatar.src = this.settings.avatarUrl;
-                                if (avatar.querySelectorAll(`[src = "${this.settings.avatarUrl.substr(0, this.settings.avatarUrl.lastIndexOf('.'))}.gif"]`)) {
-                                
-                                    avatar.src = this.settings.avatarUrl.replace('.gif', '.webp');
-                                }
-                            });
-
-                            document.querySelectorAll(`[src = "https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=40"]`).forEach(avatar => {
-
-                                avatar.src = this.settings.avatarUrl;
-                                if (avatar.querySelectorAll(`[src = "${this.settings.avatarUrl.substr(0, this.settings.avatarUrl.lastIndexOf('.'))}.gif"]`)) {
-                                
-                                    avatar.src = this.settings.avatarUrl.replace('.gif', '.webp');
-                                }
-                            });
-
-                            document.querySelectorAll(`[src = "https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=32"]`).forEach(avatar => {
-
-                                avatar.src = this.settings.avatarUrl;
-                                if (avatar.querySelectorAll(`[src = "${this.settings.avatarUrl.substr(0, this.settings.avatarUrl.lastIndexOf('.'))}.gif"]`)) {
-                                
-                                    avatar.src = this.settings.avatarUrl.replace('.gif', '.webp');
-                                }
-                            });
-
-                            document.querySelectorAll(`[src = "https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=10"]`).forEach(avatar => {
-
-                                avatar.src = this.settings.avatarUrl;
-                                if (avatar.querySelectorAll(`[src = "${this.settings.avatarUrl.substr(0, this.settings.avatarUrl.lastIndexOf('.'))}.gif"]`)) {
-                                
-                                    avatar.src = this.settings.avatarUrl.replace('.gif', '.webp');
-                                }
-                            });
+                            }));
 
                             document.querySelectorAll(`.avatarUploaderInner-3UNxY3.avatarUploaderInner-mAGe3e`).forEach(avatar => {
 
@@ -325,36 +208,6 @@ module.exports = (() => {
                                 
                                     avatar.src = this.settings.avatarUrl.replace('.gif', '.webp');
                                 }
-                            });
-
-                            document.querySelectorAll(`[src = "https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.gif?size=160"]`).forEach(avatar => {
-
-                                avatar.src = this.settings.avatarUrl;
-                            });
-
-                            document.querySelectorAll(`[src = "https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.gif?size=100"]`).forEach(avatar => {
-
-                                avatar.src = this.settings.avatarUrl;
-                            });
-
-                            document.querySelectorAll(`[src = "https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.gif?size=56"]`).forEach(avatar => {
-
-                                avatar.src = this.settings.avatarUrl;
-                            });
-
-                            document.querySelectorAll(`[src = "https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.gif?size=40"]`).forEach(avatar => {
-
-                                avatar.src = this.settings.avatarUrl;
-                            });
-
-                            document.querySelectorAll(`[src = "https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.gif?size=32"]`).forEach(avatar => {
-
-                                avatar.src = this.settings.avatarUrl;
-                            });
-
-                            document.querySelectorAll(`[src = "https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.gif?size=10"]`).forEach(avatar => {
-
-                                avatar.src = this.settings.avatarUrl;
                             });
                         }, 100);
                     } 
