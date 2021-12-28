@@ -139,7 +139,7 @@ module.exports = (() => {
 
                     clearInterval(this.clientsideAvatar);
 
-                    const sizes = ["160", "100", "56", "40", "32", "10"];
+                    const sizes = ["160", "100", "56", "40", "32", "20", "10"];
                     sizes.forEach(size => document.querySelectorAll(`[src = "${this.settings.avatarUrl}"]`).forEach(avatar => {
 
                         avatar.src = `https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.${"webp" || "gif"}?size=${size}`;
@@ -200,7 +200,7 @@ module.exports = (() => {
 
                         this.clientsideAvatar = setInterval(() => {
 
-                            const sizes = ["160", "100", "56", "40", "32", "10"];
+                            const sizes = ["160", "100", "56", "40", "32", "20", "10"];
                             sizes.forEach(size => document.querySelectorAll(`[src = "https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.${"webp" || "gif"}?size=${size}"]`).forEach(avatar => {
 
                                 avatar.src = this.settings.avatarUrl;
