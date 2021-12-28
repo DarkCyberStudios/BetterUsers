@@ -167,12 +167,12 @@ module.exports = (() => {
                 removeBanner() {
 
                     clearInterval(this.clientsideBanner);
-                    document.querySelectorAll(`[data-user-id = "${DiscordAPI.currentUser.discordObject.id}"] div [class *= "popoutBanner-"]`).forEach(banner => {
+                    document.querySelectorAll(`[data-user-id = "${DiscordAPI.currentUser.discordObject.id}"] div [class *= "profileBanner-"]`).forEach(banner => {
                         
                         banner.style = `background-image: none !important; background-repeat: none; background-position: none; background-size: none; width: none; height: none;`;
                     });
-
-					document.querySelectorAll(`[data-user-id = "${DiscordAPI.currentUser.discordObject.id}"] div [class *= "profileBanner-"]`).forEach(banner => {
+                    
+                    document.querySelectorAll(`[data-user-id = "${DiscordAPI.currentUser.discordObject.id}"] div [class *= "popoutBanner-"]`).forEach(banner => {
                         
                         banner.style = `background-image: none !important; background-repeat: none; background-position: none; background-size: none; width: none; height: none;`;
                     });
@@ -234,14 +234,14 @@ module.exports = (() => {
 
                         this.clientsideBanner = setInterval(() => {
 
-                            document.querySelectorAll(`[data-user-id = "${DiscordAPI.currentUser.discordObject.id}"] div [class *= "popoutBanner-"]`).forEach(banner => {
-
-                                banner.style = `background-image: url("${this.settings.bannerUrl}") !important; background-repeat: no repeat; background-position: 50%; background-size: cover; width: 300px; height: 120px;`;
-                            });
-
                             document.querySelectorAll(`[data-user-id = "${DiscordAPI.currentUser.discordObject.id}"] div [class *= "profileBanner-"]`).forEach(banner => {
 
                                 banner.style = `background-image: url("${this.settings.bannerUrl}") !important; background-repeat: no repeat; background-position: 50%; background-size: cover; width: 600px; height: 240px;`;
+                            });
+
+                            document.querySelectorAll(`[data-user-id = "${DiscordAPI.currentUser.discordObject.id}"] div [class *= "popoutBanner-"]`).forEach(banner => {
+
+                                banner.style = `background-image: url("${this.settings.bannerUrl}") !important; background-repeat: no repeat; background-position: 50%; background-size: cover; width: 300px; height: 120px;`;
                             });
 
                             document.querySelectorAll(`[data-user-id = "${DiscordAPI.currentUser.discordObject.id}"] .avatarWrapperNormal-26WQIb`).forEach(avatar => {
