@@ -96,8 +96,9 @@ module.exports = (() => {
 
                 defaults = { 
                     "clientsideAvatar": false,
-                    "clientsideBanner": false, 
+                    "clientsideBanner": false,
                     "avatarUrl": "", 
+                    "staticAvatarUrl": "",
                     "bannerUrl": ""
                 };
 
@@ -115,9 +116,18 @@ module.exports = (() => {
 
                                     new URL(image);
                                 } catch {
-                                    return Toasts.error('This is an invalid URL!');
+                                    return Toasts.error("This is an invalid URL!");
                                 }
                                 this.settings.avatarUrl = image;
+                            }),
+                            new Settings.Textbox("URL", "The direct URL for the avatar you will be using that will act as a static placeholder for an animated image, supported types are, PNG. Use this site for the conversion https://convertio.co/gif-png/", this.settings.staticAvatarUrl, image => {
+                                try {
+
+                                    new URL(image);
+                                } catch {
+                                    return Toasts.error("This is an invalid URL!");
+                                }
+                                this.settings.staticAvatarUrl = image;
                             })
                         ]),
                         new Settings.SettingGroup("Banner").append(...[
@@ -127,7 +137,7 @@ module.exports = (() => {
 
                                     new URL(image);
                                 } catch {
-                                    return Toasts.error('This is an invalid URL!');
+                                    return Toasts.error("This is an invalid URL!");
                                 }
                                 this.settings.bannerUrl = image;
                             })
@@ -196,18 +206,35 @@ module.exports = (() => {
                 setAvatar() {
 
                     PluginUtilities.saveSettings(this.getName(), this.settings);
-                    if (this.settings.clientsideAvatar && this.settings.avatarUrl) {
+                    if (this.settings.clientsideAvatar && this.settings.staticAvatarUrl) {
 
                         this.clientsideAvatar = setInterval(() => {
 
-                            const sizes = ["160", "100", "56", "40", "32", "20", "10"];
-                            sizes.forEach(size => document.querySelectorAll(`[src = "https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.${"webp" || "gif"}?size=${size}"]`).forEach(avatar => {
-
+                            document.querySelectorAll(`[src = "https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=160"]`).forEach(avatar => {
+                                
                                 avatar.src = this.settings.avatarUrl;
-                                if (avatar.querySelectorAll(`[src = "${this.settings.avatarUrl.substr(0, this.settings.avatarUrl.lastIndexOf('.'))}.gif"]`)) {
+                            });
 
-                                    avatar.src = this.settings.avatarUrl.replace('.gif', '.webp');
+                            document.querySelectorAll(`[src = "https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=100"]`).forEach(avatar => {
+
+                                avatar.src = this.settings.staticAvatarUrl;
+                                if (avatar.querySelectorAll(`[src = "${this.settings.staticAvatarUrl.substr(0, this.settings.staticAvatarUrl.lastIndexOf("."))}.png"]`)) {
+
+                                    avatar.addEventListener("mouseover", () => {
+
+                                        avatar.src = this.settings.avatarUrl;
+                                    });
+    
+                                    avatar.addEventListener("mouseout", () => {
+    
+                                        avatar.src = this.settings.staticAvatarUrl;
+                                    });
                                 }
+                            });
+
+                            ["56", "40", "32", "20", "10"].forEach(sizes => document.querySelectorAll(`[src = "https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=${sizes}"]`).forEach(avatar => {
+
+                                avatar.src = this.settings.staticAvatarUrl;
                             }));
 
                             document.querySelectorAll(`.avatarContainer-28iYmV.avatar-3tNQiO.avatarSmall-1PJoGO`).forEach(avatar => {
