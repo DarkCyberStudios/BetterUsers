@@ -1,6 +1,6 @@
 {
   "name": "prometheusperks",
-  "version": "1.0.3",
+  "version": "1.0.14",
   "description": "Allows you to locally assign a banner or an avatar of your choosing",
   "main": "PrometheusPerks.plugin.js",
   "scripts": {
