@@ -3,7 +3,7 @@
  * @author NormalBettle437
  * @source https://raw.githubusercontent.com/NormalBettle437/PrometheusPerks/main/src/main/javascript/org/prometheus/plugin/PrometheusPerks.plugin.js
  * @updateUrl https://raw.githubusercontent.com/NormalBettle437/PrometheusPerks/main/src/main/javascript/org/prometheus/plugin/PrometheusPerks.plugin.js
- * @version 1.0.14
+ * @version 1.0.16
  * @description Allows you to locally assign a banner or an avatar of your choosing
  */
 
@@ -29,7 +29,7 @@ module.exports = (() => {
             }],
             "source": "https://raw.githubusercontent.com/NormalBettle437/PrometheusPerks/main/src/main/javascript/org/prometheus/plugin/PrometheusPerks.plugin.js",
             "updateUrl": "https://raw.githubusercontent.com/NormalBettle437/PrometheusPerks/main/src/main/javascript/org/prometheus/plugin/PrometheusPerks.plugin.js",
-            "version": "1.0.14",
+            "version": "1.0.16",
             "description": "Allows you to locally assign a banner or an avatar of your choosing"
         },
         "main": "PrometheusPerks.plugin.js"
