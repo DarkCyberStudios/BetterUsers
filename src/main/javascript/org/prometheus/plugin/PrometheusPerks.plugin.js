@@ -146,37 +146,6 @@ module.exports = (() => {
                 }
 
                 removeAvatar() {
-
-                    clearInterval(this.clientsideAvatar);
-
-                    ["160"].forEach(sizes => document.querySelectorAll(`[src = "${this.settings.avatarUrl}"]`).forEach(avatar => {
-                                
-                        avatar.src = `https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=${sizes}`;
-                    }));
-
-                    ["100"].forEach(sizes => document.querySelectorAll(`[src = "${this.settings.staticAvatarUrl}"]`).forEach(avatar => {
-                                
-                        avatar.src = `https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=${sizes}`;
-                        if (avatar.querySelectorAll(`[src = "${this.settings.staticAvatarUrl.substr(0, this.settings.staticAvatarUrl.lastIndexOf("."))}.png"]`)) {
-
-                            avatar.src = `https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=${sizes}`;
-                        }
-                    }));
-
-                    ["56", "40", "32", "20", "10"].forEach(sizes => document.querySelectorAll(`[src = "${this.settings.staticAvatarUrl}"]`).forEach(avatar => {
-                                
-                        avatar.src = `https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=${sizes}`;
-                    }));
-
-                    ["32"].forEach(sizes => document.querySelectorAll(`.avatarContainer-28iYmV.avatar-3tNQiO.avatarSmall-1PJoGO`).forEach(avatar => {
-                                
-                        avatar.style = `background-image: url("https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=${sizes}");`;
-                    }));
-
-                    ["100"].forEach(document.querySelectorAll(`.avatarUploaderInner-3UNxY3.avatarUploaderInner-mAGe3e`).forEach(avatar => {
-
-                        avatar.style = `background-image: url("https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=${sizes}");`;
-                    }));
                 }
 
                 removeBanner() {
@@ -227,16 +196,26 @@ module.exports = (() => {
                                 if (avatar.querySelectorAll(`[src = "${this.settings.staticAvatarUrl.substr(0, this.settings.staticAvatarUrl.lastIndexOf("."))}.png"]`)) {
 
                                     document.querySelectorAll(`[class *= "messageListItem-"]`).forEach(element => {
-                                        element.addEventListener("mouseover", () => {
+                                        document.querySelectorAll(`message-2qnXI6`).forEach(id => {
+                                            if (id.getAttribute(`data-author-id`) === DiscordAPI.discordObject.currentUser.id) {
 
-                                            avatar.src = this.settings.avatarUrl;
+                                                element.addEventListener("mouseover", () => {
+
+                                                    avatar.src = this.settings.avatarUrl;
+                                                });
+                                            }
                                         });
                                     });
 
                                     document.querySelectorAll(`[class *= "messageListItem-"]`).forEach(element => {
-                                        element.addEventListener("mouseout", () => {
+                                        document.querySelectorAll(`message-2qnXI6`).forEach(id => {
+                                            if (id.getAttribute(`data-author-id`) === DiscordAPI.discordObject.currentUser.id) {
 
-                                            avatar.src = this.settings.staticAvatarUrl;
+                                                element.addEventListener("mouseout", () => {
+
+                                                    avatar.src = this.settings.staticAvatarUrl;
+                                                });
+                                            }
                                         });
                                     });
                                 }
