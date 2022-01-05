@@ -185,40 +185,9 @@ module.exports = (() => {
 
                         this.clientsideAvatar = setInterval(() => {
 
-                            ["160"].forEach(sizes => document.querySelectorAll(`[src = "https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=${sizes}"]`).forEach(avatar => {
+                            ["160", "100"].forEach(sizes => document.querySelectorAll(`[src = "https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=${sizes}"]`).forEach(avatar => {
                                 
                                 avatar.src = this.settings.avatarUrl;
-                            }));
-
-                            ["100"].forEach(sizes => document.querySelectorAll(`[src = "https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=${sizes}"]`).forEach(avatar => {
-                                
-                                avatar.src = this.settings.staticAvatarUrl;
-                                if (avatar.querySelectorAll(`[src = "${this.settings.staticAvatarUrl.substr(0, this.settings.staticAvatarUrl.lastIndexOf("."))}.png"]`)) {
-
-                                    document.querySelectorAll(`[class *= "messageListItem-"]`).forEach(element => {
-                                        document.querySelectorAll(`message-2qnXI6`).forEach(id => {
-                                            if (id.getAttribute(`data-author-id`) === DiscordAPI.discordObject.currentUser.id) {
-
-                                                element.addEventListener("mouseover", () => {
-
-                                                    avatar.src = this.settings.avatarUrl;
-                                                });
-                                            }
-                                        });
-                                    });
-
-                                    document.querySelectorAll(`[class *= "messageListItem-"]`).forEach(element => {
-                                        document.querySelectorAll(`message-2qnXI6`).forEach(id => {
-                                            if (id.getAttribute(`data-author-id`) === DiscordAPI.discordObject.currentUser.id) {
-
-                                                element.addEventListener("mouseout", () => {
-
-                                                    avatar.src = this.settings.staticAvatarUrl;
-                                                });
-                                            }
-                                        });
-                                    });
-                                }
                             }));
 
                             ["56", "40", "32", "20", "10"].forEach(sizes => document.querySelectorAll(`[src = "https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=${sizes}"]`).forEach(avatar => {
