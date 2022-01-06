@@ -152,17 +152,17 @@ module.exports = (() => {
 
                     clearInterval(this.clientsideBanner);
 
-                    document.querySelectorAll(`[data-user-id = "${DiscordAPI.currentUser.discordObject.id}"] div [class *= "profileBanner-"]`).forEach(banner => {
+                    document.querySelectorAll(`[data-user-id = "${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id}"] div [class *= "profileBanner-"]`).forEach(banner => {
                         
                         banner.style = `background-image: none !important; background-repeat: none; background-position: none; background-size: none; width: none; height: none;`;
                     });
                     
-                    document.querySelectorAll(`[data-user-id = "${DiscordAPI.currentUser.discordObject.id}"] div [class *= "popoutBanner-"]`).forEach(banner => {
+                    document.querySelectorAll(`[data-user-id = "${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id}"] div [class *= "popoutBanner-"]`).forEach(banner => {
                         
                         banner.style = `background-image: none !important; background-repeat: none; background-position: none; background-size: none; width: none; height: none;`;
                     });
 
-                    document.querySelectorAll(`[data-user-id = "${DiscordAPI.currentUser.discordObject.id}"] .avatarWrapperNormal-26WQIb`).forEach(avatar => {
+                    document.querySelectorAll(`[data-user-id = "${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id}"] .avatarWrapperNormal-26WQIb`).forEach(avatar => {
                         
                         avatar.style = `top: none;`;
                     });
@@ -185,12 +185,27 @@ module.exports = (() => {
 
                         this.clientsideAvatar = setInterval(() => {
 
-                            ["160", "100"].forEach(sizes => document.querySelectorAll(`[src = "https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=${sizes}"]`).forEach(avatar => {
+                            ["160", "100"].forEach(sizes => document.querySelectorAll(`[src = "https://cdn.discordapp.com/avatars/${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id}/${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${sizes}"]`).forEach(avatar => {
                                 
                                 avatar.src = this.settings.avatarUrl;
+                                document.querySelectorAll(`.messageListItem-1-jvGY .avatar-1BDn8e`).forEach(element => {
+                                    if (element["dataset"]["userId"] == ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id) {
+
+                                        element.src = this.settings.staticAvatarUrl;
+                                        element.addEventListener("mouseover", () => {
+
+                                            element.src = this.settings.avatarUrl;
+                                        });
+
+                                        element.addEventListener("mouseout", () => {
+
+                                            element.src = this.settings.staticAvatarUrl;
+                                        });
+                                    }
+                                });
                             }));
 
-                            ["56", "40", "32", "20", "10"].forEach(sizes => document.querySelectorAll(`[src = "https://cdn.discordapp.com/avatars/${DiscordAPI.currentUser.discordObject.id}/${DiscordAPI.currentUser.discordObject.avatar}.webp?size=${sizes}"]`).forEach(avatar => {
+                            ["56", "40", "32", "20", "10"].forEach(sizes => document.querySelectorAll(`[src = "https://cdn.discordapp.com/avatars/${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id}/${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${sizes}"]`).forEach(avatar => {
                                 
                                 avatar.src = this.settings.staticAvatarUrl;
                             }));
@@ -219,17 +234,17 @@ module.exports = (() => {
 
                         this.clientsideBanner = setInterval(() => {
 
-                            document.querySelectorAll(`[data-user-id = "${DiscordAPI.currentUser.discordObject.id}"] div [class *= "profileBanner-"]`).forEach(banner => {
+                            document.querySelectorAll(`[data-user-id = "${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id}"] div [class *= "profileBanner-"]`).forEach(banner => {
 
                                 banner.style = `background-image: url("${this.settings.bannerUrl}") !important; background-repeat: no repeat; background-position: 50%; background-size: cover; width: 600px; height: 240px;`;
                             });
 
-                            document.querySelectorAll(`[data-user-id = "${DiscordAPI.currentUser.discordObject.id}"] div [class *= "popoutBanner-"]`).forEach(banner => {
+                            document.querySelectorAll(`[data-user-id = "${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id}"] div [class *= "popoutBanner-"]`).forEach(banner => {
 
                                 banner.style = `background-image: url("${this.settings.bannerUrl}") !important; background-repeat: no repeat; background-position: 50%; background-size: cover; width: 300px; height: 120px;`;
                             });
 
-                            document.querySelectorAll(`[data-user-id = "${DiscordAPI.currentUser.discordObject.id}"] .avatarWrapperNormal-26WQIb`).forEach(avatar => {
+                            document.querySelectorAll(`[data-user-id = "${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id}"] .avatarWrapperNormal-26WQIb`).forEach(avatar => {
 
                                 avatar.style = `top: 76px;`;
                             });
@@ -253,17 +268,17 @@ module.exports = (() => {
 
                 onStart() {
                     
-                    this.status = DiscordAPI.currentUser.discordObject.premiumType;
+                    this.status = ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().premiumType;
                     
                     this.setAvatar();
                     this.setBanner();
                     
-                    DiscordAPI.currentUser.discordObject.premiumType = 2;
+                    ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().premiumType = 2;
                 }
 
                 onStop() {
                     
-                    DiscordAPI.currentUser.discordObject.premiumType = this.status
+                    ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().premiumType = this.status
 
                     this.removeAvatar()
                     this.removeBanner();
