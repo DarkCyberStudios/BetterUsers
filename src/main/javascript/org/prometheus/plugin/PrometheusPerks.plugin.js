@@ -96,6 +96,7 @@ module.exports = (() => {
 
                 defaults = { 
                     "clientsideAvatar": false,
+                    "staticClientsideAvatar": false,
                     "clientsideBanner": false,
                     "avatarUrl": "", 
                     "staticAvatarUrl": "",
@@ -120,7 +121,8 @@ module.exports = (() => {
                                 }
                                 this.settings.avatarUrl = image;
                             }),
-                            new Settings.Textbox("URL", "The direct URL for the avatar you will be using that will act as a static placeholder for an animated image, supported types are, PNG. Use this site for the conversion https://convertio.co/gif-png/", this.settings.staticAvatarUrl, image => {
+                            new Settings.Switch("Static Clientside Avatar", "Enable or disable a static clientside avatar", this.settings.staticClientsideAvatar, value => this.settings.staticClientsideAvatar = value),
+                            new Settings.Textbox("URL", "The direct URL for the avatar you will be using that will act as a static placeholder for an animated image, supported types are, PNG, or JPG", this.settings.staticAvatarUrl, image => {
                                 try {
 
                                     new URL(image);
@@ -181,27 +183,27 @@ module.exports = (() => {
                 setAvatar() {
 
                     PluginUtilities.saveSettings(this.getName(), this.settings);
-                    if (this.settings.clientsideAvatar && this.settings.avatarUrl && this.settings.staticAvatarUrl) {
+                    if (this.settings.clientsideAvatar && this.settings.staticClientsideAvatar && this.settings.avatarUrl && this.settings.staticAvatarUrl) {
 
                         this.clientsideAvatar = setInterval(() => {
 
                             ["160", "100"].forEach(sizes => document.querySelectorAll(`[src = "https://cdn.discordapp.com/avatars/${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id}/${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${sizes}"]`).forEach(avatar => {
                                 
                                 avatar.src = this.settings.avatarUrl;
-                                document.querySelectorAll(`.messageListItem-1-jvGY .avatar-1BDn8e`).forEach(element => {
-                                    if (element["dataset"]["userId"] == ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id) {
+                                document.querySelectorAll(`.messageListItem-1-jvGY > [data-author-id="${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id}"]`).forEach((parent, index) => {
+                                    
+                                    var element = document.querySelectorAll(`.messageListItem-1-jvGY > [data-author-id="${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id}"] .avatar-1BDn8e`)[index]
+                                    element.src = this.settings.staticAvatarUrl;
+                                    
+                                    parent.addEventListener("mouseover", () => {
+
+                                        element.src = this.settings.avatarUrl;
+                                    });
+
+                                    parent.addEventListener("mouseout", () => {
 
                                         element.src = this.settings.staticAvatarUrl;
-                                        element.addEventListener("mouseover", () => {
-
-                                            element.src = this.settings.avatarUrl;
-                                        });
-
-                                        element.addEventListener("mouseout", () => {
-
-                                            element.src = this.settings.staticAvatarUrl;
-                                        });
-                                    }
+                                    });
                                 });
                             }));
 
