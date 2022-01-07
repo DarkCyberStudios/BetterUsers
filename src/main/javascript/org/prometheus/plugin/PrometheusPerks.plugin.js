@@ -214,7 +214,7 @@ module.exports = (() => {
 
                             document.querySelectorAll(`.avatarContainer-28iYmV.avatar-3tNQiO.avatarSmall-1PJoGO`).forEach(avatar => {
                                 
-                                avatar.style = `background-image: url("${this.settings.avatarUrl}");`;
+                                avatar.style = `background-image: url("${this.settings.staticAvatarUrl}");`;
                             });
 
                             document.querySelectorAll(`.avatarUploaderInner-3UNxY3.avatarUploaderInner-mAGe3e`).forEach(avatar => {
