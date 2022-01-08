@@ -219,7 +219,7 @@ module.exports = (() => {
                                 avatar.src = this.settings.avatarUrl;
                                 document.querySelectorAll(`.messageListItem-1-jvGY > [data-author-id="${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id}"]`).forEach((parent, index) => {
                                         
-                                    const element = document.querySelectorAll(`.messageListItem-1-jvGY > [data-author-id="${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id}"] .avatar-1BDn8e`)[index];
+                                    var element = document.querySelectorAll(`.messageListItem-1-jvGY > [data-author-id="${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id}"] .avatar-1BDn8e`)[index];
                                     element.src = this.settings.staticAvatarUrl;
                                     
                                     parent.addEventListener("mouseover", () => {
