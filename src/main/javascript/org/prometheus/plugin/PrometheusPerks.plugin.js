@@ -68,7 +68,6 @@ module.exports = (() => {
         load() {
 
             BdApi.showConfirmationModal("Library Missing", `The library needed for ${configuration.info.name} is missing`, {
-
                 confirmText: "Download Now",
                 cancelText: "Cancel",
                 onConfirm: () => {
