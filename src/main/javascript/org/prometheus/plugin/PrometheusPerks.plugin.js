@@ -1,6 +1,6 @@
 /**
  * @name PrometheusPerks
- * @author NormalBettle437
+ * @author lemons, Shimoro, NormalBettle437
  * @source https://raw.githubusercontent.com/NormalBettle437/PrometheusPerks/main/src/main/javascript/org/prometheus/plugin/PrometheusPerks.plugin.js
  * @updateUrl https://raw.githubusercontent.com/NormalBettle437/PrometheusPerks/main/src/main/javascript/org/prometheus/plugin/PrometheusPerks.plugin.js
  * @version 1.0.18
