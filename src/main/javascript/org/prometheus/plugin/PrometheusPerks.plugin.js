@@ -131,7 +131,7 @@
                                     children: BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.AvatarComponents.default, {
 
                                         className: BDFDB.disCN.listavatar,
-                                        src = this.getUserAvatar(id),
+                                        src: this.getUserAvatar(id),
                                         size: BDFDB.LibraryComponents.AvatarComponents.Sizes.SIZE_32,
 
                                         onClick: () => this.getUserSettings(BDFDB.LibraryModules.UserStore.getUser(id))
@@ -229,7 +229,9 @@
 
             getUserSettings(user) {
 
-                let data = Object.assign({}, users[user.id]) || {};
+                let data = users[user.id] || {};
+                let latest = Object.assign({}, data);
+
                 let member = BDFDB.LibraryModules.MemberStore.getMember(BDFDB.LibraryModules.LastGuildStore.getGuildId(), user.id) || {};
 
                 let avatar, banner;
@@ -253,7 +255,7 @@
 
                                             className: BDFDB.disCN.marginreset,
                                             tag: BDFDB.LibraryComponents.FormComponents.FormTitle.Tags.H5,
-                                            children: this.labels.modal_useravatar
+                                            children: "Profile Avatar"
                                         }),
                                         BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.SettingsItem, {
 
@@ -266,7 +268,7 @@
 
                                             onChange: value => {
 
-                                                data.removeIcon = value;
+                                                latest.removeIcon = value;
                                                 if (value) {
 
                                                     delete avatar.props.success;
@@ -278,7 +280,7 @@
                                                 } else {
 
                                                     avatar.props.disable = false;
-                                                    this.getUserUrl(avatar.props.value, avatar).then(returned => data.url = returned);
+                                                    this.getUserUrl(avatar.props.value, avatar).then(returned => latest.url = returned);
                                                 }
                                             }
                                         })
@@ -301,7 +303,7 @@
 
                                     onChange: (value, instance) => {
                                         
-                                        this.getUserUrl(value, instance).then(returned => data.url = returned);
+                                        this.getUserUrl(value, instance).then(returned => latest.url = returned);
                                     }
                                 })
                             ]
@@ -320,7 +322,7 @@
 
                                             className: BDFDB.disCN.marginreset,
                                             tag: BDFDB.LibraryComponents.FormComponents.FormTitle.Tags.H5,
-                                            children: BDFDB.LanguageUtils.LanguageStrings.USER_SETTINGS_PROFILE_BANNER
+                                            children: "Profile Banner"
                                         }),
                                         BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.SettingsItem, {
 
@@ -333,7 +335,7 @@
 
                                             onChange: value => {
 
-                                                data.removeBanner = value;
+                                                latest.removeBanner = value;
                                                 if (value) {
 
                                                     delete banner.props.success;
@@ -345,7 +347,7 @@
                                                 } else {
 
                                                     banner.props.disabled = false;
-                                                    this.getUserUrl(banner.props.value, banner).then(returned => data.banner = returned);
+                                                    this.getUserUrl(banner.props.value, banner).then(returned => latest.banner = returned);
                                                 }
                                             }
                                         })
@@ -368,7 +370,7 @@
 
                                     onChange: (value, instance) => {
                                         
-                                        this.getUserUrl(value, instance).then(returned => data.banner = returned);
+                                        this.getUserUrl(value, instance).then(returned => latest.banner = returned);
                                     }
                                 })
                             ]
@@ -376,21 +378,22 @@
                     ],
                     buttons: [{
 
-                        contents: BDFDB.LanguageUtils.LanguageStrings.SAVE,
+                        contents: "Save",
                         color: "BRAND",
                         close: true,
 
                         onClick: () => {
 
-                            data.url = !data.removeIcon ? data.url : "";
+                            latest.url = !latest.removeIcon ? latest.url : "";
+                            latest.banner = !latest.removeBanner ? latest.url : "";
 
                             let changed = false;
-                            if (Object.keys(data).every(key => data[key] == null || data[key] == false) && (changed = true)) {
+                            if (Object.keys(latest).every(key => latest[key] == null || latest[key] == false) && (changed = true)) {
 
                                 BDFDB.DataUtils.remove(this, "users", user.id);
-                            } else if (!BDFDB.equals(data, data) && (changed = true)) {
+                            } else if (!BDFDB.equals(latest, data) && (changed = true)) {
 
-                                BDFDB.DataUtils.save(data, this, "users", user.id);
+                                BDFDB.DataUtils.save(latest, this, "users", user.id);
                             }
                             if (changed) {
 
@@ -449,13 +452,13 @@
                 });
             }
 
-            getUserMenu(event) {
+            onUserContextMenu(event) {
                 if (event.instance.props.user) {
 
                     let username = this.getUserData(event.instance.props.user.id).username;
                     if (username != event.instance.props.user.username && this.settings.places.menu) {
 
-                        let [kickChildren, kickIndex] = BDFDB.ContextMenuUtils.findItem(event.returnValue, {
+                        let [kickChildren, kickIndex] = BDFDB.ContextMenuUtils.findItem(event.returnvalue, {
 
                             id: "kick"
                         });
@@ -463,7 +466,7 @@
 
                             kickChildren[kickIndex].props.label = BDFDB.LanguageUtils.LanguageStringsFormat("KICK_USER", username);
                         }
-                        let [banChildren, banIndex] = BDFDB.ContextMenuUtils.findItem(event.returnValue, {
+                        let [banChildren, banIndex] = BDFDB.ContextMenuUtils.findItem(event.returnvalue, {
 
                             id: "ban"
                         });
@@ -471,7 +474,7 @@
 
                             banChildren[banIndex].props.label = BDFDB.LanguageUtils.LanguageStringsFormat("BAN_USER", username);
                         }
-                        let [muteChildren, muteIndex] = BDFDB.ContextMenuUtils.findItem(event.returnValue, {
+                        let [muteChildren, muteIndex] = BDFDB.ContextMenuUtils.findItem(event.returnvalue, {
 
                             id: "mute-channel"
                         });
@@ -479,7 +482,7 @@
 
                             muteChildren[muteIndex].props.label = BDFDB.LanguageUtils.LanguageStringsFormat("MUTE_CHANNEL", `@${username}`);
                         }
-                        let [unmuteChildren, unmuteIndex] = BDFDB.ContextMenuUtils.findItem(event.returnValue, {
+                        let [unmuteChildren, unmuteIndex] = BDFDB.ContextMenuUtils.findItem(event.returnvalue, {
 
                             id: "unmute-channel"
                         });
@@ -488,7 +491,7 @@
                             unmuteChildren[unmuteIndex].props.label = BDFDB.LanguageUtils.LanguageStringsFormat("UNMUTE_CHANNEL", `@${username}`);
                         }
                     }
-                    let [children, index] = BDFDB.ContextMenuUtils.findItem(event.returnValue, {
+                    let [children, index] = BDFDB.ContextMenuUtils.findItem(event.returnvalue, {
 
                         id: "devmode-copy-id",
                         group: true
@@ -496,23 +499,23 @@
                     children.splice(index > -1 ? index : children.length, 0, BDFDB.ContextMenuUtils.createItem(BDFDB.LibraryComponents.MenuItems.MenuGroup, {
                         children: BDFDB.ContextMenuUtils.createItem(BDFDB.LibraryComponents.MenuItems.MenuItem, {
 
-                            label: this.labels.context.localusersettings,
+                            label: "User Settings",
                             id: BDFDB.ContextMenuUtils.createItemId(this.name, "settings-submenu"),
                             children: BDFDB.ContextMenuUtils.createItem(BDFDB.LibraryComponents.MenuItems.MenuGroup, {
                                 children: [
                                     BDFDB.ContextMenuUtils.createItem(BDFDB.LibraryComponents.MenuItems.MenuItem, {
 
-                                        label: this.labels.submenu_usersettings,
+                                        label: "Change Settings",
                                         id: BDFDB.ContextMenuUtils.createItemId(this.name, "settings-change"),
 
                                         action: () => {
 
-                                            this.getSettingsPanel(event.instance.props.user);
+                                            this.getUserSettings(event.instance.props.user);
                                         }
                                     }),
                                     BDFDB.ContextMenuUtils.createItem(BDFDB.LibraryComponents.MenuItems.MenuItem, {
 
-                                        label: this.labels.submenu_resetsettings,
+                                        label: "Reset Settings",
                                         id: BDFDB.ContextMenuUtils.createItemId(this.name, "settings-reset"),
                                         color: BDFDB.LibraryComponents.MenuItems.Colors.DANGER,
                                         disabled: !users[event.instance.props.user.id],
@@ -522,7 +525,7 @@
                                             let remove = () => {
 
                                                 BDFDB.DataUtils.remove(this, "users", event.instance.props.user.id);
-                                                this.getUserUpdates(true);
+                                                this.forceUpdateAll(true);
                                             };
                                             if (events.shiftKey) {
 
