@@ -12,13 +12,22 @@
     const config = {
         "info": {
             "name": "PrometheusPerks",
-            "author": "NormalBettle437",
+            "authors": [{
+                "name": "NormalBettle437",
+                "discord_id": "725079599297331200",
+                "github_username": "NormalBettle437"
+            }],
             "version": "1.0.0",
             "description": "Allows you to locally assign a banner or an avatar of your choosing"
         }
     };
-    return !window.BDFDB_Global || (!window.BDFDB_Global.loaded && !window.BDFDB_Global.started) ? class {
+    return !global.ZeresPluginLibrary ? class {
     
+        constructor() {
+
+            this.config = config;
+        }
+
         getName() {
             return config.info.name;
         }
@@ -36,48 +45,20 @@
         }
 
         load() {
-            if (!window.BDFDB_Global || !Array.isArray(window.BDFDB_Global.pluginQueue)) {
+            BdApi.showConfirmationModal("Library Missing", `The library needed for ${config.info.name} is missing`, {
 
-                window.BDFDB_Global = Object.assign({}, window.BDFDB_Global, {
+                confirmText: "Download",
+                cancelText: "Cancel",
 
-                    pluginQueue: []
-                });
-            }
-            if (!window.BDFDB_Global.downloadModal) {
-
-                window.BDFDB_Global.downloadModal = true;
-                BdApi.showConfirmationModal("Library Missing", `The plugin library needed for ${config.info.name} is missing`, {
-
-                    confirmText: "Download",
-                    cancelText: "Cancel",
-
-                    onCancel: () => {
-
-                        delete window.BDFDB_Global.downloadModal;
-                    },
-
-                    onConfirm: () => {
-
-                        delete window.BDFDB_Global.downloadModal;
-                        require("request").get("https://mwittrien.github.io/BetterDiscordAddons/Library/0BDFDB.plugin.js", (error, request, body) => {
-                            if (!error && body && request.statusCode == 200) {
-
-                                require("fs").writeFile(require("path").join(BdApi.Plugins.folder, "0BDFDB.plugin.js"), body, () => BdApi.showToast("Finished downloading the BDFDB library plugin", {
-
-                                    type: success
-                                }));
-                            } else {
-
-                                BdApi.alert("Error", "Could not download the BDFDB plugin library");
-                            }
-                        });
-                    }
-                });
-            }
-            if (!window.BDFDB_Global.pluginQueue.includes(config.info.name)) {
-
-                window.BDFDB_Global.pluginQueue.push(config.info.name);
-            }
+                onConfirm: () => {
+                    require("request").get("https://rauenzi.github.io/BDPluginLibrary/release/0PluginLibrary.plugin.js", async (error, body) => {
+                        if (error) {
+                            return require("electron").shell.openExternal("https://betterdiscord.net/ghdl?url=https://raw.githubusercontent.com/rauenzi/BDPluginLibrary/master/release/0PluginLibrary.plugin.js");
+                        }
+                        await new Promise(response => require("fs").writeFile(require("path").join(BdApi.Plugins.folder, "0PluginLibrary.plugin.js"), body, response));
+                    })
+                }
+            });
         }
 
         start() {
@@ -87,11 +68,123 @@
 
         stop() {
         }
-    } : (([Plugin, BDFDB]) => {
-        return class PrometheusPerks extends Plugin {
+    } : (([Plugin, Api]) => {
+        const plugin = (Plugin, Api) => {
 
-            
+            const { Patcher, Settings, Toasts, PluginUtilities } = Api;
+            return class PrometheusPerks extends Plugin {
+
+                defaults = {
+                    "clientsideBanner": false,
+                    "bannerURL": ""
+                };
+
+                settings = PluginUtilities.loadSettings(this.getName(), this.defaults);
+
+                status = 0;
+
+                getSettingsPanel() {
+                    return Settings.SettingPanel.build(() => this.onStart(), ...[
+                        new Settings.SettingGroup("Avatar").append(...[
+                            new Settings.Switch("Clientside Banner", "Enable or disable a clientside banner", this.settings.clientsideBanner, value => this.settings.clientsideBanner = value),
+                            new Settings.Textbox("URL", "The direct URl for the banner you will be using, supported types are, PNG, JPG, or GIF", this.settings.bannerURL, image => {
+                                try {
+
+                                    new URL(image);
+                                } catch {
+                                    return Toasts.error("This is an invalid URL!");
+                                }
+                                this.settings.bannerURL = image;
+                            })
+                        ])
+                    ]);
+                }
+
+                setBanner() {
+
+                    PluginUtilities.saveSettings(this.getName(), this.settings);
+                    if (this.settings.clientsideBanner && this.settings.bannerURL) {
+                        this.clientsideBanner = setInterval(() => {
+
+                            document.querySelectorAll(`[data-user-id = "${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id}"] div [class *= "profileBanner-"]`).forEach(banner => {
+
+                                banner.style = `background-image: url("${this.settings.bannerURL}") !important; background-repeat: no repeat; background-position: 50%; background-size: cover; width: 600px; height: 240px;`;
+                            });
+
+                            document.querySelectorAll(`[data-user-id = "${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id}"] div [class *= "popoutBanner-"]`).forEach(banner => {
+
+                                banner.style = `background-image: url("${this.settings.bannerURL}") !important; background-repeat: no repeat; background-position: 50%; background-size: cover; width: 300px; height: 120px;`;
+                            });
+
+                            document.querySelectorAll(`[class *= "settingsBanner-"]`).forEach(banner => {
+
+                                banner.style = `background-image: url("${this.settings.bannerURL}") !important; background-repeat: no-repeat; background-position: 50%; background-size: cover;`;
+                            });
+
+                            document.querySelectorAll(`.avatarUploaderInner-yEhTv5.bannerUploaderInnerSquare-2c2J8_.banner-3D8GgT`).forEach(banner => {
+
+                                banner.style = `background-image: url("${this.settings.bannerURL}") !important; background-repeat: no-repeat; background-position: 50%; background-size: cover;`;
+                            });
+
+                            document.querySelectorAll(`[data-user-id = "${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id}"] .avatarWrapperNormal-ahVUaC`).forEach(avatar => {
+
+                                avatar.style = `top: 76px;`;
+                            });
+                        }, 1000);
+                    }
+                    if (!this.settings.clientsideBanner) {
+
+                        this.removeBanner();
+                    }
+                }
+
+                removeBanner() {
+
+                    clearInterval(this.clientsideBanner);
+                    document.querySelectorAll(`[data-user-id = "${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id}"] div [class *= "profileBanner-"]`).forEach(banner => {
+
+                        banner.style = `background-image: none !important; background-repeat: none; background-position: none; background-size: none; width: none; height: none;`;
+                    });
+
+                    document.querySelectorAll(`[data-user-id = "${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id}"] div [class *= "popoutBanner-"]`).forEach(banner => {
+
+                        banner.style = `background-image: none !important; background-repeat: none; background-position: none; background-size: none; width: none; height: none;`;
+                    });
+
+                    document.querySelectorAll(`[class *= "settingsBanner-"]`).forEach(banner => {
+
+                        banner.style = `background-image: none !important; background-repeat: none; background-position: none; background-size: none;`;
+                    });
+
+                    document.querySelectorAll(`.avatarUploaderInner-yEhTv5.bannerUploaderInnerSquare-2c2J8_.banner-3D8GgT`).forEach(banner => {
+
+                        banner.style = `background-image: none !important; background-repeat: none; background-position: none; background-size: none;`;
+                    });
+
+                    document.querySelectorAll(`[data-user-id = "${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id}"] .avatarWrapperNormal-ahVUaC`).forEach(avatar => {
+
+                        avatar.style = `top: none;`;
+                    });
+                }
+
+                onStart() {
+
+                    this.status = ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().premiumType = 2;
+
+                    this.setBanner();
+                }
+
+                onStop() {
+
+                    ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().premiumType = this.status;
+
+                    this.removeBanner();
+
+                    Patcher.unpatchAll();
+                }
+            };
         };
-    })(window.BDFDB_Global.PluginUtils.buildPlugin(config));
+        return plugin(Plugin, Api);
+    })(global.ZeresPluginLibrary.buildPlugin(config));
  })();
  
