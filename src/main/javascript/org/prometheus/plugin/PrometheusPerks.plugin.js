@@ -33,7 +33,7 @@
         }
 
         getAuthor() {
-            return config.info.author;
+            return config.info.authors.map(name => name.name);
         }
 
         getVersion() {
@@ -76,7 +76,9 @@
 
                 defaults = {
                     "clientsideBanner": false,
-                    "bannerURL": ""
+                    "bannerURL": "",
+                    "clientsideAvatar": false,
+                    "avatarURL": ""
                 };
 
                 settings = PluginUtilities.loadSettings(this.getName(), this.defaults);
@@ -85,7 +87,7 @@
 
                 getSettingsPanel() {
                     return Settings.SettingPanel.build(() => this.onStart(), ...[
-                        new Settings.SettingGroup("Avatar").append(...[
+                        new Settings.SettingGroup("Banner").append(...[
                             new Settings.Switch("Clientside Banner", "Enable or disable a clientside banner", this.settings.clientsideBanner, value => this.settings.clientsideBanner = value),
                             new Settings.Textbox("URL", "The direct URl for the banner you will be using, supported types are, PNG, JPG, or GIF", this.settings.bannerURL, image => {
                                 try {
@@ -95,9 +97,61 @@
                                     return Toasts.error("This is an invalid URL!");
                                 }
                                 this.settings.bannerURL = image;
+                            }, {
+
+                                // placeholder: this.getUserBanner(ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id).substring(0, this.getUserBanner(ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id).lastIndexOf(".webp?"))
+                            })
+                        ]),
+                        new Settings.SettingGroup("Avatar").append(...[
+                            new Settings.Switch("Clientside Avatar", "Enable or disable a clientside avatar", value => this.settings.clientsideAvatar = value),
+                            new Settings.Textbox("URL", "The direct URL for the avatar you will be using, supported types are, PNG, JPG, or GIF", this.settings.avatarURL, image => {
+                                try {
+
+                                    new URL(image);
+                                } catch {
+                                    return Toasts.error("This is an invalid URL")
+                                }
+                                this.settings.avatarURL = image;
+                            }, {
+
+                                // placeholder: this.getUserAvatar(ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id).substring(0, this.getUserAvatar(ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id).lastIndexOf(".webp?"))
                             })
                         ])
                     ]);
+                }
+
+                getUserBanner(id, change = true) {
+
+                    let user = ZeresPluginLibrary.DiscordModules.UserStore.getUser(id);
+                    if (!user) {
+                        return "";
+                    }
+                    let data = change && user.id;
+                    if (data) {
+                        if (data.removeIcon) {
+                            return "";
+                        } else if (data.url) {
+                            return data.url;
+                        }
+                    }
+                    return ZeresPluginLibrary.DiscordModules.AvatarDefaults.getUserBannerURL(user);
+                }
+
+                getUserAvatar(id, change = true) {
+                 
+                    let user = ZeresPluginLibrary.DiscordModules.UserStore.getUser(id);
+                    if (!user) {
+                        return "";
+                    }
+                    let data = change && user.id;
+                    if (data) {
+                        if (data.removeIcon) {
+                            return "";
+                        } else if (data.url) {
+                            return data.url;
+                        }
+                    }
+                    return ZeresPluginLibrary.DiscordModules.AvatarDefaults.getUserAvatarURL(user);
                 }
 
                 setBanner() {
@@ -138,6 +192,39 @@
                     }
                 }
 
+                setAvatar() {
+
+                    PluginUtilities.saveSettings(this.getName(), this.settings);
+                    if (this.settings.clientsideAvatar && this.settings.avatarURL) {
+                        this.clientsideAvatar = setInterval(() => {
+                            
+                            ["160"].forEach(sizes => document.querySelectorAll(`[src = "https://cdn.discordapp.com/avatars/${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id}/${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${sizes}"]`).forEach(avatar => {
+
+                                avatar.src = this.settings.avatarURL;
+                            }));
+
+                            ["100", "56", "40", "32", "20", "10"].forEach(sizes => document.querySelectorAll(`[src = "https://cdn.discordapp.com/avatars/${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id}/${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${sizes}"]`).forEach(avatar => {
+
+                                avatar.src = this.settings.avatarURL;
+                            }));
+
+                            document.querySelectorAll(`.avatarContainer-28iYmV.avatar-3tNQiO.avatarSmall-1PJoGO`).forEach(avatar => {
+
+                                avatar.style = `background-image: url("${this.settings.avatarURL}");`;
+                            });
+
+                            document.querySelectorAll(`.avatarUploaderInner-3UNxY3.avatarUploaderInner-mAGe3e`).forEach(avatar => {
+
+                                avatar.style = `background-image: url("${this.settings.avatarURL}");`;
+                            });
+                        });
+                    }
+                    if (this.settings.clientsideAvatar) {
+
+                        this.removeAvatar();
+                    }
+                }
+
                 removeBanner() {
 
                     clearInterval(this.clientsideBanner);
@@ -167,11 +254,36 @@
                     });
                 }
 
+                removeAvatar() {
+
+                    clearInterval(this.clientsideAvatar);
+                    ["160"].forEach(sizes => document.querySelectorAll(`[src = "${this.settings.avatarURL}"]`).forEach(avatar => {
+
+                        avatar.src = `https://cdn.discordapp.com/avatars/${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id}/${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${sizes}`;
+                    }));
+
+                    ["100", "56", "40", "32", "20", "10"].forEach(sizes => document.querySelectorAll(`[src = "${this.settings.avatarURL}"]`).forEach(avatar => {
+
+                        avatar.src = `https://cdn.discordapp.com/avatars/${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id}/${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${sizes}`;
+                    }));
+
+                    ["32"].forEach(sizes => document.querySelectorAll(`.avatarContainer-28iYmV.avatar-3tNQiO.avatarSmall-1PJoGO`).forEach(avatar => {
+
+                        avatar.style = `background-image: url("https://cdn.discordapp.com/avatars/${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id}/${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${sizes}");`;
+                    }));
+
+                    ["100"].forEach(sizes => document.querySelectorAll(`.avatarUploaderInner-3UNxY3.avatarUploaderInner-mAGe3e`).forEach(avatar => {
+
+                        avatar.style = `background-image: url("https://cdn.discordapp.com/avatars/${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id}/${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${sizes}");`;
+                    }));
+                }
+
                 onStart() {
 
                     this.status = ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().premiumType = 2;
 
                     this.setBanner();
+                    this.setAvatar();
                 }
 
                 onStop() {
@@ -179,6 +291,7 @@
                     ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().premiumType = this.status;
 
                     this.removeBanner();
+                    this.removeAvatar();
 
                     Patcher.unpatchAll();
                 }
