@@ -89,7 +89,7 @@
                     return Settings.SettingPanel.build(() => this.onStart(), ...[
                         new Settings.SettingGroup("Banner").append(...[
                             new Settings.Switch("Clientside Banner", "Enable or disable a clientside banner", this.settings.clientsideBanner, value => this.settings.clientsideBanner = value),
-                            new Settings.Textbox("URL", "The direct URl for the banner you will be using, supported types are, PNG, JPG, or GIF", this.settings.bannerURL, image => {
+                            new Settings.Textbox("URL", "The direct URL for the banner you will be using, supported types are, PNG, JPG, or GIF", this.settings.bannerURL, image => {
                                 try {
 
                                     new URL(image);
@@ -99,7 +99,7 @@
                                 this.settings.bannerURL = image;
                             }, {
 
-                                // placeholder: this.getUserBanner(ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id).substring(0, this.getUserBanner(ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id).lastIndexOf(".webp?"))
+                                placeholder: this.getUserBanner(ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id)
                             })
                         ]),
                         new Settings.SettingGroup("Avatar").append(...[
@@ -114,7 +114,7 @@
                                 this.settings.avatarURL = image;
                             }, {
 
-                                // placeholder: this.getUserAvatar(ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id).substring(0, this.getUserAvatar(ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id).lastIndexOf(".webp?"))
+                                placeholder: this.getUserAvatar(ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id)
                             })
                         ])
                     ]);
@@ -158,6 +158,7 @@
 
                     PluginUtilities.saveSettings(this.getName(), this.settings);
                     if (this.settings.clientsideBanner && this.settings.bannerURL) {
+                        
                         this.clientsideBanner = setInterval(() => {
 
                             document.querySelectorAll(`[data-user-id = "${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id}"] div [class *= "profileBanner-"]`).forEach(banner => {
@@ -196,6 +197,7 @@
 
                     PluginUtilities.saveSettings(this.getName(), this.settings);
                     if (this.settings.clientsideAvatar && this.settings.avatarURL) {
+
                         this.clientsideAvatar = setInterval(() => {
                             
                             ["160"].forEach(sizes => document.querySelectorAll(`[src = "https://cdn.discordapp.com/avatars/${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id}/${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${sizes}"]`).forEach(avatar => {
