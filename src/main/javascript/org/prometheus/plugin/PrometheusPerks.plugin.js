@@ -9,6 +9,7 @@
  */
 
  module.exports = (() => {
+     
     const config = {
         "info": {
             "name": "PrometheusPerks",
@@ -70,7 +71,7 @@
         stop() {
         }
     } : (([Plugin, Api]) => {
-        
+
         const plugin = (Plugin, Api) => {
 
             const { Patcher, Settings, Toasts, PluginUtilities, DOMTools } = Api;
