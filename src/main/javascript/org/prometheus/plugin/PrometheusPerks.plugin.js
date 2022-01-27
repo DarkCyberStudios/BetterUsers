@@ -102,7 +102,8 @@
                                 this.settings.clientsideBannerURL = image;
                             }, {
 
-                                placeholder: this.getUserBanner(ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id)
+                                placeholder: this.getUserBanner(ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id),
+                                disabled: !this.settings.clientsideBanner
                             })
                         ]),
                         new Settings.SettingGroup("Avatar").append(...[
@@ -112,12 +113,13 @@
 
                                     new URL(image);
                                 } catch {
-                                    return Toasts.error("This is an invalid URL")
+                                    return Toasts.error("This is an invalid URL");
                                 }
                                 this.settings.clientsideAvatarURL = image;
                             }, {
 
-                                placeholder: this.getUserAvatar(ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id)
+                                placeholder: this.getUserAvatar(ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id),
+                                disabled: !this.settings.clientsideAvatar
                             })
                         ])
                     ]);
