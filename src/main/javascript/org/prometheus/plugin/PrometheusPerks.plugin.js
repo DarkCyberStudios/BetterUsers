@@ -219,7 +219,7 @@
 
                                 avatar.style = `background-image: url("${this.settings.clientsideAvatarURL}");`;
                             });
-                        });
+                        }, 1000);
                     }
                     if (this.settings.clientsideAvatar) {
 
