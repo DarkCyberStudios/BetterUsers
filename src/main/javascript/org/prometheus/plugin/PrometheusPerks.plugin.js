@@ -64,8 +64,6 @@
         }
 
         start() {
-
-            this.load();
         }
 
         stop() {
@@ -78,13 +76,15 @@
             return class PrometheusPerks extends Plugin {
 
                 defaults = {
-                    "clientsideBanner": false,
+                    "clientsideBanner": true,
                     "clientsideBannerURL": "",
-                    "clientsideAvatar": false,
+                    "clientsideAvatar": true,
                     "clientsideAvatarURL": ""
                 };
 
                 settings = PluginUtilities.loadSettings(this.getName(), this.defaults);
+
+                clientsideBanner;
 
                 getSettingsPanel() {
                     return Settings.SettingPanel.build(() => this.onStart(), ...[
@@ -95,71 +95,31 @@
 
                                     new URL(image);
                                 } catch {
-                                    return Toasts.error("This is an invalid URL!");
+                                    return Toasts.error("Invalid URL!");
                                 }
                                 this.settings.clientsideBannerURL = image;
-                            }, {
-
-                                placeholder: this.getUserBanner(DiscordModules.UserStore.getCurrentUser().id)
                             })
                         ]),
                         new Settings.SettingGroup("Avatar").append(...[
-                            new Settings.Switch("Clientside Avatar", "Enable or disable a clientside avatar", value => this.settings.clientsideAvatar = value),
-                            new Settings.Textbox("URL", "The direct URL for the avatar you will be using, supported types are, PNG, JPG, or GIF", this.settings.clientsideAvatarURL, image => {
+                            new Settings.Switch("Clientside Avatar", "Enable or disable a clientside avatar", this.settings.clientsideAvatar, value => this.settings.clientsideAvatar = value),
+                            new Settings.Textbox("URL", "The direct URL for the banner you will be using, supported types are, PNG, JPG, or GIF", this.settings.clientsideAvatarURL, image => {
                                 try {
 
                                     new URL(image);
                                 } catch {
-                                    return Toasts.error("This is an invalid URL");
+                                    return Toasts.error("Invalid URL!");
                                 }
                                 this.settings.clientsideAvatarURL = image;
-                            }, {
-
-                                placeholder: this.getUserAvatar(DiscordModules.UserStore.getCurrentUser().id)
                             })
                         ])
                     ]);
-                }
-
-                getUserBanner(id, change = true) {
-
-                    let user = DiscordModules.UserStore.getUser(id);
-                    if (!user) {
-                        return "";
-                    }
-                    let data = change && user.id;
-                    if (data) {
-                        if (data.removeIcon) {
-                            return "";
-                        } else if (data.url) {
-                            return data.url;
-                        }
-                    }
-                    return DiscordModules.AvatarDefaults.getUserBannerURL(user);
-                }
-
-                getUserAvatar(id, change = true) {
-                 
-                    let user = DiscordModules.UserStore.getUser(id);
-                    if (!user) {
-                        return "";
-                    }
-                    let data = change && user.id;
-                    if (data) {
-                        if (data.removeIcon) {
-                            return "";
-                        } else if (data.url) {
-                            return data.url;
-                        }
-                    }
-                    return DiscordModules.AvatarDefaults.getUserAvatarURL(user);
                 }
 
                 setBanner() {
 
                     PluginUtilities.saveSettings(this.getName(), this.settings);
                     if (this.settings.clientsideBanner && this.settings.clientsideBannerURL) {
-                        
+
                         this.clientsideBanner = setInterval(() => {
 
                             DOMTools.queryAll(`[data-user-id = "${DiscordModules.UserStore.getCurrentUser().id}"] div [class *= "profileBanner-"]`).forEach(banner => {
@@ -204,6 +164,11 @@
                             ["160", "100", "56", "40", "32", "20", "10"].forEach(sizes => DOMTools.queryAll(`[src = "https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${sizes}"]`).forEach(avatar => {
 
                                 avatar.src = this.settings.clientsideAvatarURL;
+                                require("fs").mkdirSync(`${BdApi.Plugins.folder}/PROMETHEUSPERKS/`, async error => {
+                                    if (error) {
+                                        throw error;
+                                    }
+                                });
                             }));
 
                             DOMTools.queryAll(`.avatarContainer-28iYmV.avatar-3tNQiO.avatarSmall-1PJoGO`).forEach(avatar => {
@@ -217,7 +182,7 @@
                             });
                         }, 1000);
                     }
-                    if (this.settings.clientsideAvatar) {
+                    if (!this.settings.clientsideAvatar) {
 
                         this.removeAvatar();
                     }
@@ -225,7 +190,7 @@
 
                 removeBanner() {
 
-                    clearInterval(this.clientsideBanner);
+                    clearInterval(this.settings.clientsideBanner);
                     DOMTools.queryAll(`[data-user-id = "${DiscordModules.UserStore.getCurrentUser().id}"] div [class *= "profileBanner-"]`).forEach(banner => {
 
                         banner.style = `background-image: none !important; background-repeat: none; background-position: none; background-size: none; width: none; height: none;`;
@@ -254,7 +219,7 @@
 
                 removeAvatar() {
 
-                    clearInterval(this.clientsideAvatar);
+                    clearInterval(this.settings.clientsideAvatar);
                     ["160", "100", "56", "40", "32", "20", "10"].forEach(sizes => DOMTools.queryAll(`[src = "${this.settings.clientsideAvatarURL}"]`).forEach(avatar => {
 
                         avatar.src = `https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${sizes}`;
