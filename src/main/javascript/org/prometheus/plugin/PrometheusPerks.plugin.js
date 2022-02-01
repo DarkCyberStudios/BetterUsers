@@ -164,11 +164,6 @@
                             ["160", "100", "56", "40", "32", "20", "10"].forEach(sizes => DOMTools.queryAll(`[src = "https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${sizes}"]`).forEach(avatar => {
 
                                 avatar.src = this.settings.clientsideAvatarURL;
-                                require("fs").mkdirSync(`${BdApi.Plugins.folder}/PROMETHEUSPERKS/`, async error => {
-                                    if (error) {
-                                        throw error;
-                                    }
-                                });
                             }));
 
                             DOMTools.queryAll(`.avatarContainer-28iYmV.avatar-3tNQiO.avatarSmall-1PJoGO`).forEach(avatar => {
