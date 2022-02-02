@@ -161,7 +161,7 @@
 
                         this.clientsideAvatar = setInterval(() => {
 
-                            ["160", "100", "56", "40", "32", "20", "10"].forEach(sizes => DOMTools.queryAll(`[src = "https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${sizes}"]`).forEach(avatar => {
+                            ["128", "80", "56", "40", "32", "20", "16"].forEach(sizes => DOMTools.queryAll(`[src = "https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${sizes}"]`).forEach(avatar => {
 
                                 avatar.src = this.settings.clientsideAvatarURL;
                             }));
@@ -171,7 +171,7 @@
                                 avatar.style = `background-image: url("${this.settings.clientsideAvatarURL}");`;
                             });
 
-                            DOMTools.queryAll(`.avatarUploaderInner-3UNxY3.avatarUploaderInner-mAGe3e`).forEach(avatar => {
+                            DOMTools.queryAll(`.avatarUploaderInner-yEhTv5.avatarUploaderInner-p38nm2`).forEach(avatar => {
 
                                 avatar.style = `background-image: url("${this.settings.clientsideAvatarURL}");`;
                             });
@@ -215,7 +215,7 @@
                 removeAvatar() {
 
                     clearInterval(this.settings.clientsideAvatar);
-                    ["160", "100", "56", "40", "32", "20", "10"].forEach(sizes => DOMTools.queryAll(`[src = "${this.settings.clientsideAvatarURL}"]`).forEach(avatar => {
+                    ["128", "80", "56", "40", "32", "20", "16"].forEach(sizes => DOMTools.queryAll(`[src = "${this.settings.clientsideAvatarURL}"]`).forEach(avatar => {
 
                         avatar.src = `https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${sizes}`;
                     }));
