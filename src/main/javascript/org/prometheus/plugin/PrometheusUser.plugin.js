@@ -226,7 +226,7 @@
 
                     let isAvatar = (array, element) => array.includes(element);
                     DOMTools.queryAll('img[src]').forEach(avatar => {
-                        if (isAvatar(avatar.src, `https://cdn.discordapp.com/avatars/${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id}/`)) {
+                        if (isAvatar(avatar.src, this.settings.clientsideAvatarURL)) {
 
                             let getSize = string => string.split('=').filter(element => element).slice(-1);
                             getSize(avatar.src).forEach(sizes => {
