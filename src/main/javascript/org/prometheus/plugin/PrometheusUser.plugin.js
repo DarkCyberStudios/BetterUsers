@@ -162,10 +162,17 @@
 
                         this.clientsideAvatar = setInterval(() => {
 
-                            ["160", "100", "56", "40", "20"].forEach(sizes => DOMTools.queryAll(`[src = "https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${sizes}"]`).forEach(avatar => {
+                            let isAvatar = (array, element) => array.includes(element);
+                            DOMTools.queryAll('img[src]').forEach(avatar => {
+                                if (isAvatar(avatar.src, `https://cdn.discordapp.com/avatars/${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id}/`)) {
 
-                                avatar.src = this.settings.clientsideAvatarURL;
-                            }));
+                                    let getSize = string => string.split('=').filter(element => element).slice(-1);
+                                    getSize(avatar.src).forEach(() => {
+
+                                        avatar.src = this.settings.clientsideAvatarURL;
+                                    });
+                                }
+                            });
 
                             DOMTools.queryAll(`.avatarContainer-28iYmV.avatar-3tNQiO.avatarSmall-1PJoGO`).forEach(avatar => {
 
@@ -216,10 +223,18 @@
                 removeAvatar() {
 
                     clearInterval(this.settings.clientsideAvatar);
-                    ["160", "100", "56", "40", "20"].forEach(sizes => DOMTools.queryAll(`[src = "${this.settings.clientsideAvatarURL}"]`).forEach(avatar => {
 
-                        avatar.src = `https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${sizes}`;
-                    }));
+                    let isAvatar = (array, element) => array.includes(element);
+                    DOMTools.queryAll('img[src]').forEach(avatar => {
+                        if (isAvatar(avatar.src, `https://cdn.discordapp.com/avatars/${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id}/`)) {
+
+                            let getSize = string => string.split('=').filter(element => element).slice(-1);
+                            getSize(avatar.src).forEach(sizes => {
+
+                                avatar.src = `https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${sizes}`;
+                            });
+                        }
+                    });
 
                     ["32"].forEach(sizes => DOMTools.queryAll(`.avatarContainer-28iYmV.avatar-3tNQiO.avatarSmall-1PJoGO`).forEach(avatar => {
 
