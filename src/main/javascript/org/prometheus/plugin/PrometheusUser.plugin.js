@@ -53,6 +53,7 @@
                 cancelText: "Cancel",
 
                 onConfirm: () => {
+
                     require("request").get("https://rauenzi.github.io/BDPluginLibrary/release/0PluginLibrary.plugin.js", async (error, body) => {
                         if (error) {
                             return require("electron").shell.openExternal("https://betterdiscord.net/ghdl?url=https://raw.githubusercontent.com/rauenzi/BDPluginLibrary/master/release/0PluginLibrary.plugin.js");
@@ -72,10 +73,14 @@
 
         const plugin = (Plugin, Api) => {
 
-            const { Patcher, Settings, Toasts, PluginUtilities, DOMTools, DiscordModules } = Api;
+            const { 
+                
+                Patcher, Settings, Toasts, PluginUtilities, DOMTools, DiscordModules 
+            } = Api;
             return class PrometheusUser extends Plugin {
 
                 defaults = {
+
                     "clientsideBanner": true,
                     "clientsideBannerURL": "",
                     "clientsideAvatar": true,
@@ -123,12 +128,12 @@
 
                         this.clientsideBanner = setInterval(() => {
 
-                            DOMTools.queryAll(`[data-user-id = "${DiscordModules.UserStore.getCurrentUser().id}"] div [class *= "profileBanner-"]`).forEach(banner => {
+                            DOMTools.queryAll(`[class *= "profileBanner-"]`).forEach(banner => {
 
                                 banner.style = `background-image: url("${this.settings.clientsideBannerURL}") !important; background-repeat: no repeat; background-position: 50%; background-size: cover; width: 600px; height: 240px;`;
                             });
 
-                            DOMTools.queryAll(`[data-user-id = "${DiscordModules.UserStore.getCurrentUser().id}"] div [class *= "popoutBanner-"]`).forEach(banner => {
+                            DOMTools.queryAll(`[aria-label = "${DiscordModules.UserStore.getCurrentUser().username}"] [class *= "popoutBanner-"]`).forEach(banner => {
 
                                 banner.style = `background-image: url("${this.settings.clientsideBannerURL}") !important; background-repeat: no repeat; background-position: 50%; background-size: cover; width: 300px; height: 120px;`;
                             });
@@ -143,7 +148,7 @@
                                 banner.style = `background-image: url("${this.settings.clientsideBannerURL}") !important; background-repeat: no-repeat; background-position: 50%; background-size: cover;`;
                             });
 
-                            DOMTools.queryAll(`[data-user-id = "${DiscordModules.UserStore.getCurrentUser().id}"] .avatarWrapperNormal-ahVUaC`).forEach(avatar => {
+                            DOMTools.queryAll(`[aria-label = "${DiscordModules.UserStore.getCurrentUser().username}"] [class *= "avatarWrapperNormal-"]`).forEach(avatar => {
 
                                 avatar.style = `top: 76px;`;
                             });
