@@ -169,7 +169,7 @@
 
                             let isAvatar = (array, element) => array.includes(element);
                             DOMTools.queryAll('img[src]').forEach(avatar => {
-                                if (isAvatar(avatar.src, `https://cdn.discordapp.com/avatars/${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id}/`)) {
+                                if (isAvatar(avatar.src, `https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/`)) {
 
                                     let getSize = string => string.split('=').filter(element => element).slice(-1);
                                     getSize(avatar.src).forEach(() => {
@@ -179,14 +179,16 @@
                                 }
                             });
 
-                            DOMTools.queryAll(`.avatarContainer-28iYmV.avatar-3tNQiO.avatarSmall-1PJoGO`).forEach(avatar => {
+                            DOMTools.queryAll(`.avatarContainer-3FF_Km.avatar-3FKimL.avatarSmall-3qwAkA`).forEach(avatar => {
 
                                 avatar.style = `background-image: url("${this.settings.clientsideAvatarURL}");`;
                             });
 
-                            DOMTools.queryAll(`.imageUploaderInner-IIRaFr.avatarUploaderInner-p38nm2`).forEach(avatar => {
+                            DOMTools.queryAll('div[style]').forEach(avatar => {
+                                if (isAvatar(avatar.style.backgroundImage, `https://cdn.discordapp.com/avatars/${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id}/`)) {
 
-                                avatar.style = `background-image: url("${this.settings.clientsideAvatarURL}");`;
+                                    avatar.style = `background-image: url("${this.settings.clientsideAvatarURL}");`;
+                                }
                             });
                         }, 1000);
                     }
@@ -199,12 +201,12 @@
                 removeBanner() {
 
                     clearInterval(this.settings.clientsideBanner);
-                    DOMTools.queryAll(`[data-user-id = "${DiscordModules.UserStore.getCurrentUser().id}"] div [class *= "profileBanner-"]`).forEach(banner => {
+                    DOMTools.queryAll(`[class *= "profileBanner-"]`).forEach(banner => {
 
                         banner.style = `background-image: none !important; background-repeat: none; background-position: none; background-size: none; width: none; height: none;`;
                     });
 
-                    DOMTools.queryAll(`[data-user-id = "${DiscordModules.UserStore.getCurrentUser().id}"] div [class *= "popoutBanner-"]`).forEach(banner => {
+                    DOMTools.queryAll(`[aria-label = "${DiscordModules.UserStore.getCurrentUser().username}"] [class *= "popoutBanner-"]`).forEach(banner => {
 
                         banner.style = `background-image: none !important; background-repeat: none; background-position: none; background-size: none; width: none; height: none;`;
                     });
@@ -214,12 +216,12 @@
                         banner.style = `background-image: none !important; background-repeat: none; background-position: none; background-size: none;`;
                     });
 
-                    DOMTools.queryAll(`.avatarUploaderInner-yEhTv5.bannerUploaderInnerSquare-2c2J8_.banner-3D8GgT`).forEach(banner => {
+                    DOMTools.queryAll(`.imageUploaderInner-IIRaFr.bannerUploaderInnerSquare-2c2J8_.banner-3D8GgT`).forEach(banner => {
 
                         banner.style = `background-image: none !important; background-repeat: none; background-position: none; background-size: none;`;
                     });
 
-                    DOMTools.queryAll(`[data-user-id = "${DiscordModules.UserStore.getCurrentUser().id}"] .avatarWrapperNormal-ahVUaC`).forEach(avatar => {
+                    DOMTools.queryAll(`[aria-label = "${DiscordModules.UserStore.getCurrentUser().username}"] [class *= "avatarWrapperNormal-"]`).forEach(avatar => {
 
                         avatar.style = `top: none;`;
                     });
@@ -246,10 +248,17 @@
                         avatar.style = `background-image: url("https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${sizes}");`;
                     }));
 
-                    ["100"].forEach(sizes => DOMTools.queryAll(`.avatarUploaderInner-3UNxY3.avatarUploaderInner-mAGe3e`).forEach(avatar => {
+                    DOMTools.queryAll('div[style]').forEach(avatar => {
+                        if (isAvatar(avatar.style.backgroundImage, `https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/`)) {
 
-                        avatar.style = `background-image: url("https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${sizes}");`;
-                    }));
+                            let getSize = string => string.split('=').filter(element => element).slice(-1);
+                            getSize(avatar.style.backgroundImage).forEach(sizes => {
+
+                                let finalize = string => string.split('")').filter(element => element);
+                                avatar.style = `background-image: url("https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${finalize(sizes)}");`;
+                            });
+                        }
+                    });
                 }
 
                 onStart() {
