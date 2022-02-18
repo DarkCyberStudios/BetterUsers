@@ -179,11 +179,6 @@
                                 }
                             });
 
-                            DOMTools.queryAll(`.avatarContainer-3FF_Km.avatar-3FKimL.avatarSmall-3qwAkA`).forEach(avatar => {
-
-                                avatar.style = `background-image: url("${this.settings.clientsideAvatarURL}");`;
-                            });
-
                             DOMTools.queryAll('div[style]').forEach(avatar => {
                                 if (isAvatar(avatar.style.backgroundImage, `https://cdn.discordapp.com/avatars/${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id}/`)) {
 
