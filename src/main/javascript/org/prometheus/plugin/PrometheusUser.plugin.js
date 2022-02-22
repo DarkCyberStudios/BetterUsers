@@ -183,7 +183,7 @@
                             });
 
                             DOMTools.queryAll('div[style]').forEach(avatar => {
-                                if (isElement(avatar.style.backgroundImage, `https://cdn.discordapp.com/avatars/${ZeresPluginLibrary.DiscordModules.UserStore.getCurrentUser().id}/`)) {
+                                if (isElement(avatar.style.backgroundImage, `https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/`)) {
 
                                     avatar.style = `background-image: url("${this.settings.clientsideAvatarURL}");`;
                                 }
