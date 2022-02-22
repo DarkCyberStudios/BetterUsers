@@ -128,29 +128,32 @@
 
                         this.clientsideBanner = setInterval(() => {
 
-                            DOMTools.queryAll(`[class *= "profileBanner-"]`).forEach(banner => {
+                            let isElement = (array, element) => array.includes(element);
+                            DOMTools.queryAll('div[class *= "banner-"]').forEach(banner => {
+                                DOMTools.queryAll('span[class *= "username-"]').forEach(username => {
+                                    if (isElement(banner.classList.value, 'profileBanner-') && isElement(username.innerText, DiscordModules.UserStore.getCurrentUser().username)) {
 
-                                banner.style = `background-image: url("${this.settings.clientsideBannerURL}") !important; background-repeat: no repeat; background-position: 50%; background-size: cover; width: 600px; height: 240px;`;
+                                        banner.style = `background-image: url("${this.settings.clientsideBannerURL}") !important; background-repeat: no repeat; background-position: 50%; background-size: cover; width: 600px; height: 240px;`;
+                                    } else if (isElement(banner.classList.value, 'popoutBanner-') && isElement(username.innerText, DiscordModules.UserStore.getCurrentUser().username)) {
+
+                                        banner.style = `background-image: url("${this.settings.clientsideBannerURL}") !important; background-repeat: no repeat; background-position: 50%; background-size: cover; width: 300px; height: 120px;`;
+                                    } else if (isElement(banner.classList.value, 'settingsBanner-') && isElement(username.innerText, DiscordModules.UserStore.getCurrentUser().username)) {
+
+                                        banner.style = `background-image: url("${this.settings.clientsideBannerURL}") !important; background-repeat: no-repeat; background-position: 50%; background-size: cover;`;
+                                    } else if (isElement(banner.classList.value, 'bannerUploaderInnerSquare-') && isElement(username.innerText, DiscordModules.UserStore.getCurrentUser().username)) {
+
+                                        banner.style = `background-image: url("${this.settings.clientsideBannerURL}") !important; background-repeat: no-repeat; background-position: 50%; background-size: cover;`;
+                                    }
+                                });
                             });
 
-                            DOMTools.queryAll(`[aria-label = "${DiscordModules.UserStore.getCurrentUser().username}"] [class *= "popoutBanner-"]`).forEach(banner => {
+                            DOMTools.queryAll('div[class *= "avatarWrapperNormal-"]').forEach(avatar => {
+                                DOMTools.queryAll('span[class *= "username-"]').forEach(username => {
+                                    if (isElement(username.innerText, DiscordModules.UserStore.getCurrentUser().username)) {
 
-                                banner.style = `background-image: url("${this.settings.clientsideBannerURL}") !important; background-repeat: no repeat; background-position: 50%; background-size: cover; width: 300px; height: 120px;`;
-                            });
-
-                            DOMTools.queryAll(`[class *= "settingsBanner-"]`).forEach(banner => {
-
-                                banner.style = `background-image: url("${this.settings.clientsideBannerURL}") !important; background-repeat: no-repeat; background-position: 50%; background-size: cover;`;
-                            });
-
-                            DOMTools.queryAll(`.imageUploaderInner-IIRaFr.bannerUploaderInnerSquare-2c2J8_.banner-3D8GgT`).forEach(banner => {
-
-                                banner.style = `background-image: url("${this.settings.clientsideBannerURL}") !important; background-repeat: no-repeat; background-position: 50%; background-size: cover;`;
-                            });
-
-                            DOMTools.queryAll(`[aria-label = "${DiscordModules.UserStore.getCurrentUser().username}"] [class *= "avatarWrapperNormal-"]`).forEach(avatar => {
-
-                                avatar.style = `top: 76px;`;
+                                        avatar.style = `top: 76px;`;
+                                    }
+                                });
                             });
                         }, 1000);
                     }
@@ -171,8 +174,8 @@
                             DOMTools.queryAll('img[src]').forEach(avatar => {
                                 if (isAvatar(avatar.src, `https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/`)) {
 
-                                    let getSize = string => string.split('=').filter(element => element).slice(-1);
-                                    getSize(avatar.src).forEach(() => {
+                                    let getElement = (string, character) => string.split(character).filter(element => element).slice(-1);
+                                    getElement(avatar.src, '=').forEach(() => {
 
                                         avatar.src = this.settings.clientsideAvatarURL;
                                     });
@@ -230,27 +233,22 @@
                     DOMTools.queryAll('img[src]').forEach(avatar => {
                         if (isAvatar(avatar.src, this.settings.clientsideAvatarURL)) {
 
-                            let getSize = string => string.split('=').filter(element => element).slice(-1);
-                            getSize(avatar.src).forEach(sizes => {
+                            let getElement = (string, character) => string.split(character).filter(element => element).slice(-1);
+                            getSize(avatar.src, '=').forEach(sizes => {
 
                                 avatar.src = `https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${sizes}`;
                             });
                         }
                     });
 
-                    ["32"].forEach(sizes => DOMTools.queryAll(`.avatarContainer-28iYmV.avatar-3tNQiO.avatarSmall-1PJoGO`).forEach(avatar => {
-
-                        avatar.style = `background-image: url("https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${sizes}");`;
-                    }));
-
                     DOMTools.queryAll('div[style]').forEach(avatar => {
                         if (isAvatar(avatar.style.backgroundImage, `https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/`)) {
 
-                            let getSize = string => string.split('=').filter(element => element).slice(-1);
-                            getSize(avatar.style.backgroundImage).forEach(sizes => {
+                            let getElement = (string, character) => string.split(character).filter(element => element).slice(-1);
+                            getElement(avatar.style.backgroundImage, '=').forEach(sizes => {
 
-                                let finalize = string => string.split('")').filter(element => element);
-                                avatar.style = `background-image: url("https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${finalize(sizes)}");`;
+                                let finalize = (string, character) => string.split(character).filter(element => element);
+                                avatar.style = `background-image: url("https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${finalize(sizes, '")')}");`;
                             });
                         }
                     });
