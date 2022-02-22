@@ -4,7 +4,7 @@
  * @authorId 725079599297331200
  * @source https://raw.githubusercontent.com/NormalBettle437/PrometheusUser/main/src/main/javascript/org/prometheus/plugin/PrometheusUser.plugin.js
  * @updateUrl https://raw.githubusercontent.com/NormalBettle437/PrometheusUser/main/src/main/javascript/org/prometheus/plugin/PrometheusUser.plugin.js
- * @version 1.0.0
+ * @version 1.8.7
  * @description Allows you to locally assign a banner or an avatar of your choosing
  */
 
@@ -18,7 +18,7 @@
                 "discord_id": "725079599297331200",
                 "github_username": "NormalBettle437"
             }],
-            "version": "1.0.0",
+            "version": "1.8.7",
             "description": "Allows you to locally assign a banner or an avatar of your choosing"
         }
     };
