@@ -159,9 +159,9 @@
                                 });
                             });
 
-                            DOMTools.queryAll('div[class *= "avatarWrapperNormal-"]').forEach(avatar => {
+                            DOMTools.queryAll('div[class *= "clickable-"]').forEach(avatar => {
                                 DOMTools.queryAll('div[aria-label]').forEach(username => {
-                                    if (username['__reactProps$']['aria-label'] == DiscordModules.UserStore.getCurrentUser().username) {
+                                    if (isElement(avatar.classList.value, 'avatarWrapperNormal-') && (username['__reactProps$']['aria-label'] == DiscordModules.UserStore.getCurrentUser().username)) {
 
                                         avatar.style = `top: 76px;`;
                                     }
