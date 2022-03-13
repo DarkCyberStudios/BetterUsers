@@ -75,7 +75,7 @@
 
             const { 
                 
-                Patcher, Settings, Toasts, PluginUtilities, DOMTools, DiscordModules 
+                Patcher, Settings, Toasts, PluginUtilities, DOMTools, DiscordModules
             } = Api;
             return class PrometheusUser extends Plugin {
 
