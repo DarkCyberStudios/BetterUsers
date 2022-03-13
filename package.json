@@ -4,18 +4,15 @@
   "description": "Allows you to locally assign a banner or an avatar of your choosing",
   "main": "PrometheusUser.plugin.js",
   "scripts": {
-
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
-
     "type": "git",
     "url": "git+https://github.com/NormalBettle437/PrometheusUser.git"
   },
   "author": "NormalBettle437",
   "license": "Apache License 2.0",
   "bugs": {
-
     "url": "https://github.com/NormalBettle437/PrometheusUser/issues"
   },
   "homepage": "https://github.com/NormalBettle437/PrometheusUser#readme",
