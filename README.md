@@ -9,7 +9,11 @@
 
 A plugin created specifically for giving nitroless users a taste of what nitro could feel like. Emproved and experienced on, this plugin aims to give the aimless a pure representation of nitro perks specifically catered towards the representation of the user profile
 
-Based on <b> Shimoro-Rune's </b> plugin, <b> NitroPerks </b>
+Based on <b> 
+ <a href = "https://github.com/Shimoro-Rune"> Shimoro-Rune's </a>
+</b> plugin, <b> 
+ <a href = "https://github.com/Shimoro-Rune/NitroPerks"> NitroPerks </a>
+</b>
 
 <h2> Installation </h2>
 
