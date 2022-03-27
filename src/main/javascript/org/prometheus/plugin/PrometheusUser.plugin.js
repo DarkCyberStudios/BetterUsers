@@ -177,7 +177,7 @@
                                     DOMTools.queryAll('div[class *= "userPopout-"] span[class *= "username-"]').forEach(username => {
                                         if (isElement(username.innerText, DiscordModules.UserStore.getCurrentUser().username) && (username.innerText.toLocaleLowerCase() === DiscordModules.UserStore.getCurrentUser().username.toLocaleLowerCase())) {
 
-                                            avatar.style = `top: 76px;`;
+                                            avatar.style = "top: 76px;";
                                         }
                                     });
                                 }
@@ -280,7 +280,7 @@
                             DOMTools.queryAll('div[class *= "userPopout-"] span[class *= "username-"]').forEach(username => {
                                 if (isElement(username.innerText, DiscordModules.UserStore.getCurrentUser().username) && (username.innerText.toLocaleLowerCase() === DiscordModules.UserStore.getCurrentUser().username.toLocaleLowerCase())) {
 
-                                    avatar.style = `top: none;`;
+                                    avatar.style = "top: none;";
                                 }
                             });
                         }
