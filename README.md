@@ -17,4 +17,4 @@ Based on <b>
 
 <h2> Installation </h2>
 
-Install with <a href = "https://betterdiscord.app/"> BetterDiscord </a> by placing it inside of the, `/plugins` folder. The `/plugins` folder can be found by clicking the blue button in Discord, when BetterDiscord is installed, inside of the setting named, "Plugins"
+Install with <a href = "https://betterdiscord.app/"> BetterDiscord </a> by placing it inside of the, `/plugins` folder. The `/plugins` folder can be found in, `C:\Users\USERNAME\AppData\Roaming\BetterDiscord\plugins`
