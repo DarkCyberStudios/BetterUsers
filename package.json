@@ -16,6 +16,8 @@
     "url": "https://github.com/NormalBettle437/PrometheusUser/issues"
   },
   "homepage": "https://github.com/NormalBettle437/PrometheusUser#readme",
-  "dependencies": {
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.17.0",
+    "eslint": "^8.12.0"
   }
 }
