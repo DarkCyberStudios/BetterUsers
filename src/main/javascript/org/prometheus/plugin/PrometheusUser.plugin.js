@@ -128,7 +128,7 @@
 
                         this.clientsideBanner = setInterval(() => {
 
-                            let isElement = (array, element) => array.includes(element);
+                            const isElement = (array, element) => array.includes(element);
                             DOMTools.queryAll('div[class *= "banner-"]').forEach(banner => {
                                 if (isElement(banner.className, "profileBanner-")) {
 
@@ -197,17 +197,19 @@
 
                         this.clientsideAvatar = setInterval(() => {
 
-                            let isElement = (array, element) => array.includes(element);
+                            const isElement = (array, element) => array.includes(element);
                             DOMTools.queryAll("img[src]").forEach(avatar => {
                                 if (isElement(avatar.src, `https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/`)) {
 
-                                    let getElement = (string, character) => string.split(character).filter(element => element).slice(-1);
+                                    const getElement = (string, character) => string.split(character).filter(element => element).slice(-1);
                                     getElement(avatar.src, "=").forEach(() => {
 
                                         avatar.src = this.settings.clientsideAvatarURL;
-                                        if (avatar.src.substr(0, avatar.src.lastIndexOf(".gif"))) {
-                                            
-                                            
+                                        if (avatar.src.substring(0, avatar.src.lastIndexOf(".gif"))) {
+                                            return Promise.resolve(this.settings.clientsideAvatarURL).then(response => {
+
+                                                
+                                            });
                                         }
                                     });
                                 }
@@ -231,7 +233,7 @@
 
                     clearInterval(this.clientsideBanner);
 
-                    let isElement = (array, element) => array.includes(element);
+                    const isElement = (array, element) => array.includes(element);
                     DOMTools.queryAll('div[class *= "banner-"]').forEach(banner => {
                         if (isElement(banner.className, "profileBanner-")) {
 
@@ -291,11 +293,11 @@
 
                     clearInterval(this.clientsideAvatar);
 
-                    let isElement = (array, element) => array.includes(element);
+                    const isElement = (array, element) => array.includes(element);
                     DOMTools.queryAll("img[src]").forEach(avatar => {
                         if (isElement(avatar.src, this.settings.clientsideAvatarURL)) {
 
-                            let getElement = (string, character) => string.split(character).filter(element => element).slice(-1);
+                            const getElement = (string, character) => string.split(character).filter(element => element).slice(-1);
                             avatar.src = `https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${getElement(avatar.src, "=")}`;
                         }
                     });
@@ -303,7 +305,7 @@
                     DOMTools.queryAll("div[style]").forEach(avatar => {
                         if (isElement(avatar.style.backgroundImage, this.settings.clientsideAvatarURL)) {
 
-                            let getElement = (string, character) => string.split(character).filter(element => element).slice(-1);
+                            const getElement = (string, character) => string.split(character).filter(element => element).slice(-1);
                             avatar.style = `background-image: url("https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${getElement(avatar.style.backgroundImage, "=")});`;
                         }
                     });
