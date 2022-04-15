@@ -84,7 +84,8 @@
                     "clientsideBanner": true,
                     "clientsideBannerURL": "",
                     "clientsideAvatar": true,
-                    "clientsideAvatarURL": ""
+                    "clientsideAvatarURL": "",
+                    "clientsideStaticAvatarURL": ""
                 };
 
                 settings = PluginUtilities.loadSettings(this.getName(), this.defaults);
@@ -108,7 +109,7 @@
                         ]),
                         new Settings.SettingGroup("Avatar").append(...[
                             new Settings.Switch("Clientside Avatar", "Enable or disable a clientside avatar", this.settings.clientsideAvatar, value => this.settings.clientsideAvatar = value),
-                            new Settings.Textbox("URL", "The direct URL for the banner you will be using, supported types are, PNG, JPG, or GIF", this.settings.clientsideAvatarURL, image => {
+                            new Settings.Textbox("URL", "The direct URL for the avatar you will be using, supported types are, PNG, JPG, or GIF", this.settings.clientsideAvatarURL, image => {
                                 try {
 
                                     new URL(image);
@@ -116,6 +117,15 @@
                                     return Toasts.error("Invalid URL!");
                                 }
                                 this.settings.clientsideAvatarURL = image;
+                            }),
+                            new Settings.Textbox("URL", "The direct URL for the static avatar you will be using, supported types are, PNG, JPG, or GIF", this.settings.clientsideStaticAvatarURL, image => {
+                                try {
+
+                                    new URL(image);
+                                } catch {
+                                    return Toasts.error("Invalid URL!");
+                                }
+                                this.settings.clientsideStaticAvatarURL = image;
                             })
                         ])
                     ]);
@@ -193,7 +203,7 @@
                 setAvatar() {
 
                     PluginUtilities.saveSettings(this.getName(), this.settings);
-                    if (this.settings.clientsideAvatar && this.settings.clientsideAvatarURL) {
+                    if (this.settings.clientsideAvatar && this.settings.clientsideAvatarURL && this.settings.clientsideStaticAvatarURL) {
 
                         this.clientsideAvatar = setInterval(() => {
 
@@ -202,15 +212,46 @@
                                 if (isElement(avatar.src, `https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/`)) {
 
                                     const getElement = (string, character) => string.split(character).filter(element => element).slice(-1);
-                                    getElement(avatar.src, "=").forEach(() => {
+                                    getElement(avatar.src, "=").forEach(size => {
 
-                                        avatar.src = this.settings.clientsideAvatarURL;
-                                        if (avatar.src.substring(0, avatar.src.lastIndexOf(".gif"))) {
-                                            return Promise.resolve(this.settings.clientsideAvatarURL).then(response => {
+                                        avatar.src = this.settings.clientsideStaticAvatarURL;
+                                        DOMTools.queryAll('div[class *= "banner-"]').forEach(banner => {
+                                            if (isElement(banner.className, "profileBanner-")) {
 
-                                                
-                                            });
-                                        }
+                                                DOMTools.queryAll('div[class *= "topSection-"] span[class *= "username-"]').forEach(username => {
+                                                    if (isElement(username.innerText, DiscordModules.UserStore.getCurrentUser().username) && (username.innerText.toLocaleLowerCase() === DiscordModules.UserStore.getCurrentUser().username.toLocaleLowerCase())) {
+                                                        if (size === "160") {
+
+                                                            avatar.src = this.settings.clientsideAvatarURL;
+                                                        }
+                                                    }
+                                                });
+                                            }
+
+                                            if (isElement(banner.className, "popoutBanner-")) {
+
+                                                DOMTools.queryAll('div[class *= "userPopout-"] span[class *= "username-"]').forEach(username => {
+                                                    if (isElement(username.innerText, DiscordModules.UserStore.getCurrentUser().username) && (username.innerText.toLocaleLowerCase() === DiscordModules.UserStore.getCurrentUser().username.toLocaleLowerCase())) {
+                                                        if (size === "100") {
+
+                                                            avatar.src = this.settings.clientsideAvatarURL;
+                                                        }
+                                                    }
+                                                });
+                                            }
+
+                                            if (isElement(banner.className, "settingsBanner-")) {
+
+                                                DOMTools.queryAll('div[class *= "accountProfileCard-"] span[class *= "username-"]').forEach(username => {
+                                                    if (isElement(username.innerText, DiscordModules.UserStore.getCurrentUser().username) && (username.innerText.toLocaleLowerCase() === DiscordModules.UserStore.getCurrentUser().username.toLocaleLowerCase())) {
+                                                        if (size === "100") {
+
+                                                            avatar.src = this.settings.clientsideAvatarURL;
+                                                        }
+                                                    }
+                                                });
+                                            }
+                                        });
                                     });
                                 }
                             });
@@ -295,7 +336,7 @@
 
                     const isElement = (array, element) => array.includes(element);
                     DOMTools.queryAll("img[src]").forEach(avatar => {
-                        if (isElement(avatar.src, this.settings.clientsideAvatarURL)) {
+                        if (isElement(avatar.src, this.settings.clientsideAvatarURL) || isElement(avatar.src, this.settings.clientsideStaticAvatarURL)) {
 
                             const getElement = (string, character) => string.split(character).filter(element => element).slice(-1);
                             avatar.src = `https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${getElement(avatar.src, "=")}`;
@@ -303,7 +344,7 @@
                     });
 
                     DOMTools.queryAll("div[style]").forEach(avatar => {
-                        if (isElement(avatar.style.backgroundImage, this.settings.clientsideAvatarURL)) {
+                        if (isElement(avatar.style.backgroundImage, this.settings.clientsideAvatarURL) || isElement(avatar.style.backgroundImage, this.settings.clientsideStaticAvatarURL)) {
 
                             const getElement = (string, character) => string.split(character).filter(element => element).slice(-1);
                             avatar.style = `background-image: url("https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${getElement(avatar.style.backgroundImage, "=")});`;
