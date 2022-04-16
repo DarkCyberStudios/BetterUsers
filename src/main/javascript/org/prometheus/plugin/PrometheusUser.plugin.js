@@ -216,40 +216,9 @@
 
                                         avatar.src = this.settings.clientsideStaticAvatarURL;
                                         DOMTools.queryAll('div[class *= "banner-"]').forEach(banner => {
-                                            if (isElement(banner.className, "profileBanner-")) {
-
-                                                DOMTools.queryAll('div[class *= "topSection-"] span[class *= "username-"]').forEach(username => {
-                                                    if (isElement(username.innerText, DiscordModules.UserStore.getCurrentUser().username) && (username.innerText.toLocaleLowerCase() === DiscordModules.UserStore.getCurrentUser().username.toLocaleLowerCase())) {
-                                                        if (size === "160") {
-
-                                                            avatar.src = this.settings.clientsideAvatarURL;
-                                                        }
-                                                    }
-                                                });
-                                            }
-
-                                            if (isElement(banner.className, "popoutBanner-")) {
-
-                                                DOMTools.queryAll('div[class *= "userPopout-"] span[class *= "username-"]').forEach(username => {
-                                                    if (isElement(username.innerText, DiscordModules.UserStore.getCurrentUser().username) && (username.innerText.toLocaleLowerCase() === DiscordModules.UserStore.getCurrentUser().username.toLocaleLowerCase())) {
-                                                        if (size === "100") {
-
-                                                            avatar.src = this.settings.clientsideAvatarURL;
-                                                        }
-                                                    }
-                                                });
-                                            }
-
-                                            if (isElement(banner.className, "settingsBanner-")) {
-
-                                                DOMTools.queryAll('div[class *= "accountProfileCard-"] span[class *= "username-"]').forEach(username => {
-                                                    if (isElement(username.innerText, DiscordModules.UserStore.getCurrentUser().username) && (username.innerText.toLocaleLowerCase() === DiscordModules.UserStore.getCurrentUser().username.toLocaleLowerCase())) {
-                                                        if (size === "100") {
-
-                                                            avatar.src = this.settings.clientsideAvatarURL;
-                                                        }
-                                                    }
-                                                });
+                                            if ((isElement(banner.className, "profileBanner-") && (size === "160")) || (isElement(banner.className, "popoutBanner-") && (size === "100")) || (isElement(banner.className, "settingsBanner-") && (size === "100"))) {
+                                                    
+                                                avatar.src = this.settings.clientsideAvatarURL;
                                             }
                                         });
                                     });
