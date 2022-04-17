@@ -84,6 +84,7 @@
                     "clientsideBanner": true,
                     "clientsideBannerURL": "",
                     "clientsideAvatar": true,
+                    "clientsideStaticAvatar": true,
                     "clientsideAvatarURL": "",
                     "clientsideStaticAvatarURL": ""
                 };
@@ -118,7 +119,8 @@
                                 }
                                 this.settings.clientsideAvatarURL = image;
                             }),
-                            new Settings.Textbox("URL", "The direct URL for the static avatar you will be using, supported types are, PNG, JPG, or GIF", this.settings.clientsideStaticAvatarURL, image => {
+                            new Settings.Switch("Static Clientside Avatar", "Enable or disable a static clientside avatar", this.settings.clientsideStaticAvatar, value => this.settings.clientsideStaticAvatar = value),
+                            new Settings.Textbox("URL", "The direct URL for the static clientside avatar you will be using, supported types are, PNG, or JPG", this.settings.clientsideStaticAvatarURL, image => {
                                 try {
 
                                     new URL(image);
@@ -203,7 +205,7 @@
                 setAvatar() {
 
                     PluginUtilities.saveSettings(this.getName(), this.settings);
-                    if (this.settings.clientsideAvatar && this.settings.clientsideAvatarURL && this.settings.clientsideStaticAvatarURL) {
+                    if ((this.settings.clientsideAvatar || this.settings.clientsideStaticAvatar) && this.settings.clientsideAvatarURL && this.settings.clientsideStaticAvatarURL) {
 
                         this.clientsideAvatar = setInterval(() => {
 
@@ -214,13 +216,17 @@
                                     const getElement = (string, character) => string.split(character).filter(element => element).slice(-1);
                                     getElement(avatar.src, "=").forEach(size => {
 
-                                        avatar.src = this.settings.clientsideStaticAvatarURL;
-                                        DOMTools.queryAll('div[class *= "banner-"]').forEach(banner => {
-                                            if ((isElement(banner.className, "profileBanner-") && (size === "160")) || (isElement(banner.className, "popoutBanner-") && (size === "100")) || (isElement(banner.className, "settingsBanner-") && (size === "100"))) {
+                                        avatar.src = this.settings.clientsideAvatarURL;
+                                        if (this.settings.clientsideAvatarURL.substring(0, this.settings.clientsideAvatarURL.lastIndexOf(".gif"))) {
+                                            
+                                            avatar.src = this.settings.clientsideStaticAvatarURL;
+                                            DOMTools.queryAll('div[class *= "banner-"]').forEach(banner => {
+                                                if ((isElement(banner.className, "profileBanner-") && (size === "160")) || (isElement(banner.className, "popoutBanner-") && (size === "100")) || (isElement(banner.className, "settingsBanner-") && (size === "100"))) {
                                                     
-                                                avatar.src = this.settings.clientsideAvatarURL;
-                                            }
-                                        });
+                                                    avatar.src = this.settings.clientsideAvatarURL;
+                                                }
+                                            });
+                                        }
                                     });
                                 }
                             });
