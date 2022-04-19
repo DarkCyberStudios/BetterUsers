@@ -94,6 +94,14 @@
                 clientsideBanner;
                 clientsideAvatar;
 
+                isElement = (array, element) => {
+                    return array.includes(element);
+                };
+
+                getElement = (string, character) => {
+                    return string.split(character).filter(element => element).slice(-1);
+                };
+
                 getSettingsPanel() {
                     return Settings.SettingPanel.build(() => this.onStart(), ...[
                         new Settings.SettingGroup("Banner").append(...[
@@ -131,7 +139,7 @@
                             })
                         ])
                     ]);
-                }
+                };
 
                 setBanner() {
 
@@ -140,7 +148,6 @@
 
                         this.clientsideBanner = setInterval(() => {
 
-                            const isElement = (array, element) => array.includes(element);
                             DOMTools.queryAll('div[class *= "banner-"]').forEach(banner => {
                                 if (isElement(banner.className, "profileBanner-")) {
 
@@ -200,7 +207,7 @@
 
                         this.removeBanner();
                     }
-                }
+                };
 
                 setAvatar() {
 
@@ -209,11 +216,9 @@
 
                         this.clientsideAvatar = setInterval(() => {
 
-                            const isElement = (array, element) => array.includes(element);
                             DOMTools.queryAll("img[src]").forEach(avatar => {
                                 if (isElement(avatar.src, `https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/`)) {
 
-                                    const getElement = (string, character) => string.split(character).filter(element => element).slice(-1);
                                     getElement(avatar.src, "=").forEach(size => {
 
                                         avatar.src = this.settings.clientsideAvatarURL;
@@ -243,13 +248,11 @@
 
                         this.removeAvatar();
                     }
-                }
+                };
 
                 removeBanner() {
 
                     clearInterval(this.clientsideBanner);
-
-                    const isElement = (array, element) => array.includes(element);
                     DOMTools.queryAll('div[class *= "banner-"]').forEach(banner => {
                         if (isElement(banner.className, "profileBanner-")) {
 
@@ -303,17 +306,14 @@
                             });
                         }
                     });
-                }
+                };
 
                 removeAvatar() {
 
                     clearInterval(this.clientsideAvatar);
-
-                    const isElement = (array, element) => array.includes(element);
                     DOMTools.queryAll("img[src]").forEach(avatar => {
                         if (isElement(avatar.src, this.settings.clientsideAvatarURL) || isElement(avatar.src, this.settings.clientsideStaticAvatarURL)) {
 
-                            const getElement = (string, character) => string.split(character).filter(element => element).slice(-1);
                             avatar.src = `https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${getElement(avatar.src, "=")}`;
                         }
                     });
@@ -321,11 +321,10 @@
                     DOMTools.queryAll("div[style]").forEach(avatar => {
                         if (isElement(avatar.style.backgroundImage, this.settings.clientsideAvatarURL) || isElement(avatar.style.backgroundImage, this.settings.clientsideStaticAvatarURL)) {
 
-                            const getElement = (string, character) => string.split(character).filter(element => element).slice(-1);
                             avatar.style = `background-image: url("https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${getElement(avatar.style.backgroundImage, "=")});`;
                         }
                     });
-                }
+                };
 
                 onStart() {
 
@@ -333,7 +332,7 @@
 
                     this.setBanner();
                     this.setAvatar();
-                }
+                };
 
                 onStop() {
 
@@ -343,7 +342,7 @@
                     this.removeAvatar();
 
                     Patcher.unpatchAll();
-                }
+                };
             };
         };
         return plugin(Plugin, Api);
