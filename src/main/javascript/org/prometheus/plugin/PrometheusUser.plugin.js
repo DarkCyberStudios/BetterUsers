@@ -331,7 +331,7 @@
                     });
 
                     DOMTools.queryAll("div[style]").forEach(avatar => {
-                        if (this.isElement(avatar.src, this.settings.clientsideAvatarURL) || this.isElement(avatar.style.backgroundImage, this.settings.clientsideStaticAvatarURL)) {
+                        if (this.isElement(avatar.style.backgroundImage, this.settings.clientsideAvatarURL) || this.isElement(avatar.style.backgroundImage, this.settings.clientsideStaticAvatarURL)) {
 
                             avatar.style = `background-image: url("https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${this.getElement(avatar.style.backgroundImage, "=")});`;
                         }
