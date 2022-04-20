@@ -226,7 +226,7 @@
                                             
                                             avatar.src = this.settings.clientsideStaticAvatarURL;
                                             DOMTools.queryAll('div[class *= "banner-"]').forEach(banner => {
-                                                if ((this.isElement(banner.className, "profileBanner-") && (size === "128")) || (this.isElement(banner.className, "popoutBanner-") && (size === "80")) || (this.isElement(banner.className, "settingsBanner-") && (size === "80"))) {
+                                                if ((this.isElement(banner.className, "profileBanner-") && (size === "160")) || (this.isElement(banner.className, "popoutBanner-") && (size === "100")) || (this.isElement(banner.className, "settingsBanner-") && (size === "100"))) {
                                                     
                                                     avatar.src = this.settings.clientsideAvatarURL;
                                                 }
