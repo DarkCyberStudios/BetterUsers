@@ -226,7 +226,7 @@
                                             
                                             avatar.src = this.settings.clientsideStaticAvatarURL;
                                             DOMTools.queryAll('div[class *= "banner-"]').forEach(banner => {
-                                                if ((this.isElement(banner.className, "profileBanner-") && (size === "160")) || (this.isElement(banner.className, "popoutBanner-") && (size === "100")) || (this.isElement(banner.className, "settingsBanner-") && (size === "100"))) {
+                                                if ((this.isElement(banner.className, "profileBanner-") && (size === "128")) || (this.isElement(banner.className, "popoutBanner-") && (size === "80")) || (this.isElement(banner.className, "settingsBanner-") && (size === "80"))) {
                                                     
                                                     avatar.src = this.settings.clientsideAvatarURL;
                                                 }
@@ -239,7 +239,19 @@
                             DOMTools.queryAll("div[style]").forEach(avatar => {
                                 if (this.isElement(avatar.style.backgroundImage, `https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/`)) {
 
-                                    avatar.style = `background-image: url("${this.settings.clientsideStaticAvatarURL}");`;
+                                    this.getElement(avatar.style.backgroundImage, "=").forEach(size => {
+
+                                        avatar.style = `background-image: url("${this.settings.clientsideAvatarURL}");`;
+                                        if (this.settings.clientsideAvatarURL.substring(0, this.settings.clientsideAvatarURL.lastIndexOf(".gif"))) {
+
+                                            DOMTools.queryAll('div[class *= "banner-"]').forEach(banner => {
+                                                if ((this.isElement(banner.className, "bannerUploaderInnerSquare-") && (size === "80);"))) {
+
+                                                    avatar.style = `background-image: url("${this.settings.clientsideAvatarURL}");`;
+                                                }
+                                            });
+                                        }
+                                    });
                                 }
                             });
                         }, 1000);
