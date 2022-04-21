@@ -244,6 +244,7 @@
                                         avatar.style = `background-image: url("${this.settings.clientsideAvatarURL}");`;
                                         if (this.settings.clientsideAvatarURL.substring(0, this.settings.clientsideAvatarURL.lastIndexOf(".gif"))) {
 
+                                            avatar.style = `background-image: url("${this.settings.clientsideStaticAvatarURL}");`;
                                             DOMTools.queryAll('div[class *= "banner-"]').forEach(banner => {
                                                 if ((this.isElement(banner.className, "bannerUploaderInnerSquare-") && (size === "100);"))) {
 
