@@ -75,7 +75,7 @@
 
             const { 
                 
-                Patcher, Settings, Toasts, PluginUtilities, DOMTools, DiscordModules
+                Patcher, Settings, Toasts, Utilities, DOMTools, DiscordModules
             } = Api;
             return class PrometheusUser extends Plugin {
 
@@ -89,7 +89,7 @@
                     "clientsideStaticAvatarURL": ""
                 };
 
-                settings = PluginUtilities.loadSettings(this.getName(), this.defaults);
+                settings = Utilities.loadSettings(this.getName(), this.defaults);
 
                 clientsideBanner;
                 clientsideAvatar;
@@ -143,7 +143,7 @@
 
                 setBanner() {
 
-                    PluginUtilities.saveSettings(this.getName(), this.settings);
+                    Utilities.saveSettings(this.getName(), this.settings);
                     if (this.settings.clientsideBanner && this.settings.clientsideBannerURL) {
 
                         this.clientsideBanner = setInterval(() => {
@@ -211,7 +211,7 @@
 
                 setAvatar() {
 
-                    PluginUtilities.saveSettings(this.getName(), this.settings);
+                    Utilities.saveSettings(this.getName(), this.settings);
                     if ((this.settings.clientsideAvatar || this.settings.clientsideStaticAvatar) && this.settings.clientsideAvatarURL && this.settings.clientsideStaticAvatarURL) {
 
                         this.clientsideAvatar = setInterval(() => {
