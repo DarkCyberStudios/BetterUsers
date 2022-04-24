@@ -73,18 +73,15 @@
 
         const plugin = (Plugin, Api) => {
 
-            const { 
-                
-                Patcher, Settings, Toasts, Utilities, DOMTools, DiscordModules
-            } = Api;
+            const { DiscordModules, DOMTools, Settings, Toasts, Utilities } = Api;
             return class PrometheusUser extends Plugin {
 
                 defaults = {
 
-                    "clientsideBanner": true,
+                    "clientsideBanner": false,
                     "clientsideBannerURL": "",
-                    "clientsideAvatar": true,
-                    "clientsideStaticAvatar": true,
+                    "clientsideAvatar": false,
+                    "clientsideStaticAvatar": false,
                     "clientsideAvatarURL": "",
                     "clientsideStaticAvatarURL": ""
                 };
@@ -94,17 +91,17 @@
                 clientsideBanner;
                 clientsideAvatar;
 
-                isElement = (array, element) => {
-                    return array.includes(element);
-                };
-
                 getElement = (string, character) => {
                     return string.split(character).filter(element => element).slice(-1);
                 };
 
                 getSettingsPanel() {
                     return Settings.SettingPanel.build(() => this.onStart(), ...[
-                        new Settings.SettingGroup("Banner").append(...[
+                        new Settings.SettingGroup("Banner", {
+
+                            collapsible: false,
+                            shown: true
+                        }).append(...[
                             new Settings.Switch("Clientside Banner", "Enable or disable a clientside banner", this.settings.clientsideBanner, value => this.settings.clientsideBanner = value),
                             new Settings.Textbox("URL", "The direct URL for the banner you will be using, supported types are, PNG, JPG, or GIF", this.settings.clientsideBannerURL, image => {
                                 try {
@@ -116,7 +113,11 @@
                                 this.settings.clientsideBannerURL = image;
                             })
                         ]),
-                        new Settings.SettingGroup("Avatar").append(...[
+                        new Settings.SettingGroup("Avatar", {
+
+                            collapsible: false,
+                            shown: true
+                        }).append(...[
                             new Settings.Switch("Clientside Avatar", "Enable or disable a clientside avatar", this.settings.clientsideAvatar, value => this.settings.clientsideAvatar = value),
                             new Settings.Textbox("URL", "The direct URL for the avatar you will be using, supported types are, PNG, JPG, or GIF", this.settings.clientsideAvatarURL, image => {
                                 try {
@@ -149,7 +150,7 @@
                         this.clientsideBanner = setInterval(() => {
 
                             DOMTools.queryAll('div[class *= "banner-"]').forEach(banner => {
-                                if (this.isElement(banner.className, "profileBanner-")) {
+                                if (banner.className.includes("profileBanner-")) {
 
                                     DOMTools.queryAll('div[class *= "topSection-"] span[class *= "username-"]').forEach(username => {
                                         if (username.innerText.toLocaleLowerCase() === DiscordModules.UserStore.getCurrentUser().username.toLocaleLowerCase()) {
@@ -159,7 +160,7 @@
                                     });
                                 }
 
-                                if (this.isElement(banner.className, "popoutBanner-")) {
+                                if (banner.className.includes("popoutBanner-")) {
 
                                     DOMTools.queryAll('div[class *= "userPopout-"] span[class *= "username-"]').forEach(username => {
                                         if (username.innerText.toLocaleLowerCase() === DiscordModules.UserStore.getCurrentUser().username.toLocaleLowerCase()) {
@@ -169,7 +170,7 @@
                                     });
                                 }
 
-                                if (this.isElement(banner.className, "settingsBanner-")) {
+                                if (banner.className.includes("settingsBanner-")) {
 
                                     DOMTools.queryAll('div[class *= "accountProfileCard-"] span[class *= "username-"]').forEach(username => {
                                         if (username.innerText.toLocaleLowerCase() === DiscordModules.UserStore.getCurrentUser().username.toLocaleLowerCase()) {
@@ -179,7 +180,7 @@
                                     });
                                 }
 
-                                if (this.isElement(banner.className, "bannerUploaderInnerSquare-")) {
+                                if (banner.className.includes("bannerUploaderInnerSquare-")) {
 
                                     DOMTools.queryAll('div[class *= "profileBannerPreview-"] span[class *= "username-"]').forEach(username => {
                                         if (username.innerText.toLocaleLowerCase() === DiscordModules.UserStore.getCurrentUser().username.toLocaleLowerCase()) {
@@ -191,7 +192,7 @@
                             });
 
                             DOMTools.queryAll('div[class *= "avatarWrapperNormal-"]').forEach(avatar => {
-                                if (this.isElement(avatar.className, "avatarWrapper-")) {
+                                if (avatar.className.includes("avatarWrapper-")) {
 
                                     DOMTools.queryAll('div[class *= "userPopout-"] span[class *= "username-"]').forEach(username => {
                                         if (username.innerText.toLocaleLowerCase() === DiscordModules.UserStore.getCurrentUser().username.toLocaleLowerCase()) {
@@ -217,7 +218,7 @@
                         this.clientsideAvatar = setInterval(() => {
 
                             DOMTools.queryAll("img[src]").forEach(avatar => {
-                                if (this.isElement(avatar.src, `https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/`)) {
+                                if (avatar.src.includes(`https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/`)) {
 
                                     this.getElement(avatar.src, "=").forEach(size => {
 
@@ -226,7 +227,7 @@
                                             
                                             avatar.src = this.settings.clientsideStaticAvatarURL;
                                             DOMTools.queryAll('div[class *= "banner-"]').forEach(banner => {
-                                                if ((this.isElement(banner.className, "profileBanner-") && (size === "160")) || (this.isElement(banner.className, "popoutBanner-") && (size === "100")) || (this.isElement(banner.className, "settingsBanner-") && (size === "100"))) {
+                                                if ((banner.className.includes("profileBanner-") && (size === "160")) || (banner.className.includes("popoutBanner-") && (size === "100")) || (banner.className.includes("settingsBanner-") && (size === "100"))) {
                                                     
                                                     avatar.src = this.settings.clientsideAvatarURL;
                                                 }
@@ -237,7 +238,7 @@
                             });
 
                             DOMTools.queryAll("div[style]").forEach(avatar => {
-                                if (this.isElement(avatar.style.backgroundImage, `https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/`)) {
+                                if (avatar.style.backgroundImage.includes(`https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/`)) {
 
                                     this.getElement(avatar.style.backgroundImage, "=").forEach(size => {
 
@@ -246,7 +247,7 @@
 
                                             avatar.style = `background-image: url("${this.settings.clientsideStaticAvatarURL}");`;
                                             DOMTools.queryAll('div[class *= "banner-"]').forEach(banner => {
-                                                if ((this.isElement(banner.className, "bannerUploaderInnerSquare-") && (size === "100);"))) {
+                                                if ((banner.className.includes("imageUploaderInner-") && (size === '100")'))) {
 
                                                     avatar.style = `background-image: url("${this.settings.clientsideAvatarURL}");`;
                                                 }
@@ -267,7 +268,7 @@
 
                     clearInterval(this.clientsideBanner);
                     DOMTools.queryAll('div[class *= "banner-"]').forEach(banner => {
-                        if (this.isElement(banner.className, "profileBanner-")) {
+                        if (banner.className.includes("profileBanner-")) {
 
                             DOMTools.queryAll('div[class *= "topSection-"] span[class *= "username-"]').forEach(username => {
                                 if (username.innerText.toLocaleLowerCase() === DiscordModules.UserStore.getCurrentUser().username.toLocaleLowerCase()) {
@@ -277,7 +278,7 @@
                             });
                         }
 
-                        if (this.isElement(banner.className, "popoutBanner-")) {
+                        if (banner.className.includes("popoutBanner-")) {
 
                             DOMTools.queryAll('div[class *= "userPopout-"] span[class *= "username-"]').forEach(username => {
                                 if (username.innerText.toLocaleLowerCase() === DiscordModules.UserStore.getCurrentUser().username.toLocaleLowerCase()) {
@@ -287,7 +288,7 @@
                             });
                         }
 
-                        if (this.isElement(banner.className, "settingsBanner-")) {
+                        if (banner.className.includes("settingsBanner-")) {
 
                             DOMTools.queryAll('div[class *= "accountProfileCard-"] span[class *= "username-"]').forEach(username => {
                                 if (username.innerText.toLocaleLowerCase() === DiscordModules.UserStore.getCurrentUser().username.toLocaleLowerCase()) {
@@ -297,7 +298,7 @@
                             });
                         }
 
-                        if (this.isElement(banner.className, "bannerUploaderInnerSquare-")) {
+                        if (banner.className.includes("bannerUploaderInnerSquare-")) {
 
                             DOMTools.queryAll('div[class *= "profileBannerPreview-"] span[class *= "username-"]').forEach(username => {
                                 if (username.innerText.toLocaleLowerCase() === DiscordModules.UserStore.getCurrentUser().username.toLocaleLowerCase()) {
@@ -309,7 +310,7 @@
                     });
 
                     DOMTools.queryAll('div[class *= "avatarWrapperNormal-"]').forEach(avatar => {
-                        if (this.isElement(avatar.className, "avatarWrapper-")) {
+                        if (avatar.className.includes("avatarWrapper-")) {
 
                             DOMTools.queryAll('div[class *= "userPopout-"] span[class *= "username-"]').forEach(username => {
                                 if (username.innerText.toLocaleLowerCase() === DiscordModules.UserStore.getCurrentUser().username.toLocaleLowerCase()) {
@@ -325,14 +326,14 @@
 
                     clearInterval(this.clientsideAvatar);
                     DOMTools.queryAll("img[src]").forEach(avatar => {
-                        if (this.isElement(avatar.src, this.settings.clientsideAvatarURL) || this.isElement(avatar.src, this.settings.clientsideStaticAvatarURL)) {
+                        if (avatar.src.includes(this.settings.clientsideAvatarURL) || avatar.src.includes(this.settings.clientsideStaticAvatarURL)) {
 
                             avatar.src = `https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${this.getElement(avatar.src, "=")}`;
                         }
                     });
 
                     DOMTools.queryAll("div[style]").forEach(avatar => {
-                        if (this.isElement(avatar.style.backgroundImage, this.settings.clientsideAvatarURL) || this.isElement(avatar.style.backgroundImage, this.settings.clientsideStaticAvatarURL)) {
+                        if (avatar.style.backgroundImage.includes(this.settings.clientsideAvatarURL) || avatar.style.backgroundImage.includes(this.settings.clientsideStaticAvatarURL)) {
 
                             avatar.style = `background-image: url("https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${this.getElement(avatar.style.backgroundImage, "=")});`;
                         }
@@ -353,8 +354,6 @@
 
                     this.removeBanner();
                     this.removeAvatar();
-
-                    Patcher.unpatchAll();
                 };
             };
         };
