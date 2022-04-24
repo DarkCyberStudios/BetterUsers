@@ -81,9 +81,7 @@
                     "clientsideBanner": false,
                     "clientsideBannerURL": "",
                     "clientsideAvatar": false,
-                    "clientsideStaticAvatar": false,
-                    "clientsideAvatarURL": "",
-                    "clientsideStaticAvatarURL": ""
+                    "clientsideAvatarURL": ""
                 };
 
                 settings = Utilities.loadSettings(this.getName(), this.defaults);
@@ -127,16 +125,6 @@
                                     return Toasts.error("Invalid URL!");
                                 }
                                 this.settings.clientsideAvatarURL = image;
-                            }),
-                            new Settings.Switch("Clientside Static Avatar", "Enable or disable a static clientside avatar", this.settings.clientsideStaticAvatar, value => this.settings.clientsideStaticAvatar = value),
-                            new Settings.Textbox("URL", "The direct URL for the static clientside avatar you will be using, supported types are, PNG, or JPG", this.settings.clientsideStaticAvatarURL, image => {
-                                try {
-
-                                    new URL(image);
-                                } catch {
-                                    return Toasts.error("Invalid URL!");
-                                }
-                                this.settings.clientsideStaticAvatarURL = image;
                             })
                         ])
                     ]);
@@ -225,7 +213,7 @@
                                         avatar.src = this.settings.clientsideAvatarURL;
                                         if (this.settings.clientsideAvatarURL.substring(0, this.settings.clientsideAvatarURL.lastIndexOf(".gif"))) {
                                             
-                                            avatar.src = this.settings.clientsideStaticAvatarURL;
+                                            // avatar.src = "";
                                             DOMTools.queryAll('div[class *= "banner-"]').forEach(banner => {
                                                 if ((banner.className.includes("profileBanner-") && (size === "160")) || (banner.className.includes("popoutBanner-") && (size === "100")) || (banner.className.includes("settingsBanner-") && (size === "100"))) {
                                                     
@@ -245,7 +233,7 @@
                                         avatar.style = `background-image: url("${this.settings.clientsideAvatarURL}");`;
                                         if (this.settings.clientsideAvatarURL.substring(0, this.settings.clientsideAvatarURL.lastIndexOf(".gif"))) {
 
-                                            avatar.style = `background-image: url("${this.settings.clientsideStaticAvatarURL}");`;
+                                            // avatar.style = `background-image: url("");`;
                                             DOMTools.queryAll('div[class *= "banner-"]').forEach(banner => {
                                                 if ((banner.className.includes("imageUploaderInner-") && (size === '100")'))) {
 
