@@ -201,7 +201,7 @@
                 setAvatar() {
 
                     Utilities.saveSettings(this.getName(), this.settings);
-                    if ((this.settings.clientsideAvatar || this.settings.clientsideStaticAvatar) && this.settings.clientsideAvatarURL && this.settings.clientsideStaticAvatarURL) {
+                    if (this.settings.clientsideAvatar && this.settings.clientsideAvatarURL) {
 
                         this.clientsideAvatar = setInterval(() => {
 
@@ -314,16 +314,22 @@
 
                     clearInterval(this.clientsideAvatar);
                     DOMTools.queryAll("img[src]").forEach(avatar => {
-                        if (avatar.src.includes(this.settings.clientsideAvatarURL) || avatar.src.includes(this.settings.clientsideStaticAvatarURL)) {
+                        if (avatar.src.includes(this.settings.clientsideAvatarURL) || avatar.src.includes(`https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/`)) {
 
-                            avatar.src = `https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${this.getElement(avatar.src, "=")}`;
+                            this.getElement(avatar.src, "=").forEach(size => {
+                                
+                                avatar.src = `https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size${size.match(/\=(d+)/)}`;
+                            });
                         }
                     });
 
                     DOMTools.queryAll("div[style]").forEach(avatar => {
-                        if (avatar.style.backgroundImage.includes(this.settings.clientsideAvatarURL) || avatar.style.backgroundImage.includes(this.settings.clientsideStaticAvatarURL)) {
+                        if (avatar.style.backgroundImage.includes(this.settings.clientsideAvatarURL) || avatar.style.backgroundImage.includes(`https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/`)) {
 
-                            avatar.style = `background-image: url("https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${this.getElement(avatar.style.backgroundImage, "=")});`;
+                            this.getElement(avatar.style.backgroundImage, "=").forEach(size => {
+                            
+                                avatar.style = `background-image: url("https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size${size.match(/\=(d+)/)}");`;
+                            });
                         }
                     });
                 };
