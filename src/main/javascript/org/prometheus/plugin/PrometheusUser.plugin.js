@@ -89,10 +89,6 @@
                 clientsideBanner;
                 clientsideAvatar;
 
-                getElement = (string, character) => {
-                    return string.split(character).filter(element => element).slice(-1);
-                };
-
                 getSettingsPanel() {
                     return Settings.SettingPanel.build(() => this.onStart(), ...[
                         new Settings.SettingGroup("Banner", {
@@ -101,15 +97,7 @@
                             shown: true
                         }).append(...[
                             new Settings.Switch("Clientside Banner", "Enable or disable a clientside banner", this.settings.clientsideBanner, value => this.settings.clientsideBanner = value),
-                            new Settings.Textbox("URL", "The direct URL for the banner you will be using, supported types are, PNG, JPG, or GIF", this.settings.clientsideBannerURL, image => {
-                                try {
-
-                                    new URL(image);
-                                } catch {
-                                    return Toasts.error("Invalid URL!");
-                                }
-                                this.settings.clientsideBannerURL = image;
-                            })
+                            new Settings.Textbox("URL", "The direct URL for the banner you will be using, supported types are, PNG, JPG, or GIF", this.settings.clientsideBannerURL, image => this.settings.clientsideBannerURL = image)
                         ]),
                         new Settings.SettingGroup("Avatar", {
 
@@ -117,15 +105,7 @@
                             shown: true
                         }).append(...[
                             new Settings.Switch("Clientside Avatar", "Enable or disable a clientside avatar", this.settings.clientsideAvatar, value => this.settings.clientsideAvatar = value),
-                            new Settings.Textbox("URL", "The direct URL for the avatar you will be using, supported types are, PNG, JPG, or GIF", this.settings.clientsideAvatarURL, image => {
-                                try {
-
-                                    new URL(image);
-                                } catch {
-                                    return Toasts.error("Invalid URL!");
-                                }
-                                this.settings.clientsideAvatarURL = image;
-                            })
+                            new Settings.Textbox("URL", "The direct URL for the avatar you will be using, supported types are, PNG, JPG, or GIF", this.settings.clientsideAvatarURL, image => this.settings.clientsideAvatarURL = image)
                         ])
                     ]);
                 };
@@ -208,7 +188,7 @@
                             DOMTools.queryAll("img[src]").forEach(avatar => {
                                 if (avatar.src.includes(`https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/`)) {
 
-                                    this.getElement(avatar.src, "=").forEach(size => {
+                                    avatar.src.split("=").filter(element => element).slice(-1).forEach(size => {
 
                                         avatar.src = this.settings.clientsideAvatarURL;
                                         if (this.settings.clientsideAvatarURL.substring(0, this.settings.clientsideAvatarURL.lastIndexOf(".gif"))) {
@@ -228,7 +208,7 @@
                             DOMTools.queryAll("div[style]").forEach(avatar => {
                                 if (avatar.style.backgroundImage.includes(`https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/`)) {
 
-                                    this.getElement(avatar.style.backgroundImage, "=").forEach(size => {
+                                    avatar.style.backgroundImage.split("=").filter(element => element).slice(-1).forEach(size => {
 
                                         avatar.style = `background-image: url("${this.settings.clientsideAvatarURL}");`;
                                         if (this.settings.clientsideAvatarURL.substring(0, this.settings.clientsideAvatarURL.lastIndexOf(".gif"))) {
@@ -314,9 +294,9 @@
 
                     clearInterval(this.clientsideAvatar);
                     DOMTools.queryAll("img[src]").forEach(avatar => {
-                        if (avatar.src.includes(this.settings.clientsideAvatarURL) && avatar.src.includes(`https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/`)) {
+                        if (avatar.src.includes(this.settings.clientsideAvatarURL) || avatar.src.includes(`https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/`)) {
 
-                            this.getElement(avatar.src, "=").forEach(size => {
+                            avatar.src.split("=").filter(element => element).slice(-1).forEach(size => {
                                 
                                 avatar.src = `https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size${size.match(/\=(d+)/)}`;
                             });
@@ -324,9 +304,9 @@
                     });
 
                     DOMTools.queryAll("div[style]").forEach(avatar => {
-                        if (avatar.style.backgroundImage.includes(this.settings.clientsideAvatarURL) && avatar.style.backgroundImage.includes(`https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/`)) {
+                        if (avatar.style.backgroundImage.includes(this.settings.clientsideAvatarURL) || avatar.style.backgroundImage.includes(`https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/`)) {
 
-                            this.getElement(avatar.style.backgroundImage, "=").forEach(size => {
+                            avatar.style.backgroundImage.split("=").filter(element => element).slice(-1).forEach(size => {
                             
                                 avatar.style = `background-image: url("https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size${size.match(/\=(d+)/)}");`;
                             });
