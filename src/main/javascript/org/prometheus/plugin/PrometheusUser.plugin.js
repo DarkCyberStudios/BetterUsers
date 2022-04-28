@@ -193,13 +193,12 @@
                                         avatar.src = this.settings.clientsideAvatarURL;
                                         if (this.settings.clientsideAvatarURL.substring(0, this.settings.clientsideAvatarURL.lastIndexOf(".gif"))) {
                                             
-                                            const file = fetch(this.settings.clientsideAvatarURL, {
-
-                                                mode: "no-cors"
-                                            }).then(response => response.blob()).then(blob => {
-                                                return URL.createObjectURL(blob);
+                                            avatar.src = fetch(this.settings.clientsideAvatarURL, { mode: "no-cors" }).then(response => {
+                                                
+                                                const blob = response.blob();
+                                                return URL.createObjectURL(new Blob([blob], { type: "image/gif" }));
                                             });
-                                             
+
                                             DOMTools.queryAll('div[class *= "banner-"]').forEach(banner => {
                                                 if ((banner.className.includes("profileBanner-") && (size === "160")) || (banner.className.includes("popoutBanner-") && (size === "100")) || (banner.className.includes("settingsBanner-") && (size === "100"))) {
                                                     
