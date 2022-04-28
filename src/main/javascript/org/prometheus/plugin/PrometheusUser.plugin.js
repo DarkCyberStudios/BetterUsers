@@ -1,9 +1,9 @@
 /**
  * @name PrometheusUser
- * @author NormalBettle437
+ * @author Bettlee
  * @authorId 725079599297331200
- * @source https://raw.githubusercontent.com/NormalBettle437/PrometheusUser/main/src/main/javascript/org/prometheus/plugin/PrometheusUser.plugin.js
- * @updateUrl https://raw.githubusercontent.com/NormalBettle437/PrometheusUser/main/src/main/javascript/org/prometheus/plugin/PrometheusUser.plugin.js
+ * @source https://raw.githubusercontent.com/Bettlee/PrometheusUser/main/src/main/javascript/org/prometheus/plugin/PrometheusUser.plugin.js
+ * @updateUrl https://raw.githubusercontent.com/Bettlee/PrometheusUser/main/src/main/javascript/org/prometheus/plugin/PrometheusUser.plugin.js
  * @version 1.9.2
  * @description Allows you to locally assign a banner or an avatar of your choosing
  */
@@ -14,9 +14,9 @@
         "info": {
             "name": "PrometheusUser",
             "authors": [{
-                "name": "NormalBettle437",
+                "name": "Bettlee",
                 "discord_id": "725079599297331200",
-                "github_username": "NormalBettle437"
+                "github_username": "Bettlee"
             }],
             "version": "1.9.2",
             "description": "Allows you to locally assign a banner or an avatar of your choosing"
