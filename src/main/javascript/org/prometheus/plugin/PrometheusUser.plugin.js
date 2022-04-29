@@ -193,18 +193,21 @@
                                         avatar.src = this.settings.clientsideAvatarURL;
                                         if (this.settings.clientsideAvatarURL.substring(0, this.settings.clientsideAvatarURL.lastIndexOf(".gif"))) {
                                             
-                                            avatar.src = fetch(this.settings.clientsideAvatarURL, { mode: "no-cors" }).then(response => {
+                                            require("fs").existsSync(`${BdApi.Plugins.folder}/PROMETHEUSUSER`) ? require("fs").mkdirSync(`${BdApi.Plugins.folder}/PROMETHEUSUSER`, { recursive: true }) : require("fs").readdirSync(`${BdApi.Plugins.folder}/PROMETHEUSUSER`, files => {
+
                                                 
-                                                const blob = response.blob();
-                                                return URL.createObjectURL(new Blob([blob], { type: "image/gif" }));
                                             });
 
+                                            // avatar.src = "";
                                             DOMTools.queryAll('div[class *= "banner-"]').forEach(banner => {
                                                 if ((banner.className.includes("profileBanner-") && (size === "160")) || (banner.className.includes("popoutBanner-") && (size === "100")) || (banner.className.includes("settingsBanner-") && (size === "100"))) {
                                                     
                                                     avatar.src = this.settings.clientsideAvatarURL;
                                                 }
                                             });
+                                        } else {
+
+                                            require("fs").mkdirSync(`${BdApi.Plugins.folder}/PROMETHEUSUSER`, { recursive: true });
                                         }
                                     });
                                 }
