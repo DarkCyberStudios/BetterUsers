@@ -193,12 +193,13 @@
                                         avatar.src = this.settings.clientsideAvatarURL;
                                         if (this.settings.clientsideAvatarURL.substring(0, this.settings.clientsideAvatarURL.lastIndexOf(".gif"))) {
                                             
-                                            require("fs").existsSync(`${BdApi.Plugins.folder}/PROMETHEUSUSER`) ? require("fs").mkdirSync(`${BdApi.Plugins.folder}/PROMETHEUSUSER`, { recursive: true }) : require("fs").readdirSync(`${BdApi.Plugins.folder}/PROMETHEUSUSER`, files => {
+                                            require("fs").readdirSync(!require("fs").existsSync(`${BdApi.Plugins.folder}/PROMETHEUSUSER`) ? require("fs").mkdirSync(`${BdApi.Plugins.folder}/PROMETHEUSUSER`, { recursive: true }) : `${BdApi.Plugins.folder}/PROMETHEUSUSER`).map((file, index) => {
+                                                if (index === 0) {
 
-                                                
+                                                    avatar.src = require("path").join(`${BdApi.Plugins.folder}/PROMETHEUSUSER`, file);
+                                                }
                                             });
 
-                                            // avatar.src = "";
                                             DOMTools.queryAll('div[class *= "banner-"]').forEach(banner => {
                                                 if ((banner.className.includes("profileBanner-") && (size === "160")) || (banner.className.includes("popoutBanner-") && (size === "100")) || (banner.className.includes("settingsBanner-") && (size === "100"))) {
                                                     
