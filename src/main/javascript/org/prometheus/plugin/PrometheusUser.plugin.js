@@ -193,10 +193,11 @@
                                         avatar.src = this.settings.clientsideAvatarURL;
                                         if (this.settings.clientsideAvatarURL.substring(0, this.settings.clientsideAvatarURL.lastIndexOf(".gif"))) {
                                             
-                                            require("fs").readdirSync(!require("fs").existsSync(`${BdApi.Plugins.folder}/PROMETHEUSUSER`) ? require("fs").mkdirSync(`${BdApi.Plugins.folder}/PROMETHEUSUSER`, { recursive: true }) : `${BdApi.Plugins.folder}/PROMETHEUSUSER`).map((file, index) => {
+                                            const path = `${BdApi.Plugins.folder}/PROMETHEUSUSER`;
+                                            require("fs").readdirSync(!require("fs").existsSync(path) ? require("fs").mkdirSync(path, { recursive: true }) : path).map((files, index) => {
                                                 if (index === 0) {
 
-                                                    avatar.src = require("path").join(`${BdApi.Plugins.folder}/PROMETHEUSUSER`, file);
+                                                    const file = require("path").join(path, files).split("\\").filter(element => element).slice(-1);
                                                 }
                                             });
 
