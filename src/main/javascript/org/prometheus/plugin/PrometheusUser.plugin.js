@@ -207,9 +207,6 @@
                                                     avatar.src = this.settings.clientsideAvatarURL;
                                                 }
                                             });
-                                        } else {
-
-                                            require("fs").mkdirSync(`${BdApi.Plugins.folder}/PROMETHEUSUSER`, { recursive: true });
                                         }
                                     });
                                 }
