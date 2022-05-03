@@ -73,7 +73,7 @@
 
         const plugin = (Plugin, Api) => {
 
-            const { DiscordModules, DOMTools, Settings, Toasts, Utilities } = Api;
+            const { DiscordModules, DOMTools, Settings, Utilities } = Api;
             return class PrometheusUser extends Plugin {
 
                 defaults = {
