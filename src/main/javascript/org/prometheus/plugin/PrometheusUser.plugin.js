@@ -193,15 +193,7 @@
                                         avatar.src = this.settings.clientsideAvatarURL;
                                         if (this.settings.clientsideAvatarURL.substring(0, this.settings.clientsideAvatarURL.lastIndexOf(".gif"))) {
                                             
-                                            const path = `${BdApi.Plugins.folder}/PROMETHEUSUSER`;
-                                            require("fs").readdirSync(!require("fs").existsSync(path) ? require("fs").mkdirSync(path, { recursive: true }) : path).map((files, index) => {
-                                                if (index === 0) {
-
-                                                    const file = require("path").join(path, files);
-                                                    avatar.src = file;
-                                                }
-                                            });
-
+                                            // avatar.src = "";
                                             DOMTools.queryAll('div[class *= "banner-"]').forEach(banner => {
                                                 if ((banner.className.includes("profileBanner-") && (size === "160")) || (banner.className.includes("popoutBanner-") && (size === "100")) || (banner.className.includes("settingsBanner-") && (size === "100"))) {
                                                     
@@ -302,7 +294,7 @@
 
                     clearInterval(this.clientsideAvatar);
                     DOMTools.queryAll("img[src]").forEach(avatar => {
-                        if (avatar.src.includes(this.settings.clientsideAvatarURL) || avatar.src.includes(`https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/`)) {
+                        if (avatar.src.includes(this.settings.clientsideAvatarURL)) {
 
                             avatar.src.split("=").filter(element => element).slice(-1).forEach(size => {
                                 
@@ -312,7 +304,7 @@
                     });
 
                     DOMTools.queryAll("div[style]").forEach(avatar => {
-                        if (avatar.style.backgroundImage.includes(this.settings.clientsideAvatarURL) || avatar.style.backgroundImage.includes(`https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/`)) {
+                        if (avatar.style.backgroundImage.includes(this.settings.clientsideAvatarURL)) {
 
                             avatar.style.backgroundImage.split("=").filter(element => element).slice(-1).forEach(size => {
                             
