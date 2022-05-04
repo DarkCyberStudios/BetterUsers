@@ -197,7 +197,8 @@
                                             require("fs").readdirSync(!require("fs").existsSync(path) ? require("fs").mkdirSync(path, { recursive: true }) : path).map((files, index) => {
                                                 if (index === 0) {
 
-                                                    const file = require("path").join(path, files).split("\\").filter(element => element).slice(-1);
+                                                    const file = require("path").join(path, files);
+                                                    avatar.src = file;
                                                 }
                                             });
 
