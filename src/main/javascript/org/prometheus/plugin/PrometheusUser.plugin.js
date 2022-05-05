@@ -9,7 +9,6 @@
  */
 
  module.exports = (() => {
-     
     const config = {
         "info": {
             "name": "PrometheusUser",
@@ -70,7 +69,6 @@
         stop() {
         }
     } : (([Plugin, Api]) => {
-
         const plugin = (Plugin, Api) => {
 
             const { DiscordModules, DOMTools, Settings, Utilities } = Api;
