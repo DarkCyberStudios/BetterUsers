@@ -213,7 +213,7 @@
 
                                             // avatar.style = `background-image: url("");`;
                                             DOMTools.queryAll('div[class *= "banner-"]').forEach(banner => {
-                                                if ((banner.className.includes("imageUploaderInner-") && (size === '100")'))) {
+                                                if (banner.className.includes("imageUploaderInner-") && (size === '100")')) {
 
                                                     avatar.style = `background-image: url("${this.settings.clientsideAvatarURL}");`;
                                                 }
