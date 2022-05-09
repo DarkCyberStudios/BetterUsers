@@ -88,9 +88,8 @@
                 clientsideAvatar;
 
                 getSettingsPanel() {
-
-                    let panel;
-                    return panel = Settings.SettingPanel.build(() => this.onStart(), ...[
+                    
+                    const panel = Settings.SettingPanel.build(() => this.onStart(), ...[
                         new Settings.SettingGroup("Clientside Banner", { collapsible: false, shown: true }).append(...[
                             new Settings.Switch("Clientside Banner", "Enable or disable a clientside banner", this.settings.clientsideBanner, value => this.settings.clientsideBanner = value),
                             new Settings.Textbox("URL", "The direct URL for the banner you will be using, supported types are, PNG, JPG, or GIF", this.settings.clientsideBannerURL, image => this.settings.clientsideBannerURL = image)
@@ -100,6 +99,7 @@
                             new Settings.Textbox("URL", "The direct URL for the avatar you will be using, supported types are, PNG, JPG, or GIF", this.settings.clientsideAvatarURL, image => this.settings.clientsideAvatarURL = image)
                         ])
                     ]);
+                    return panel;
                 };
 
                 setBanner() {
@@ -300,7 +300,7 @@
 
                             avatar.style.backgroundImage.split("=").filter(element => element).slice(-1).forEach(size => {
                             
-                                avatar.style = `background-image: url("https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size${size.match(/\=(d+)/)}");`;
+                                avatar.style = `background-image: url("https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size${size.match(/\=(d+)/)}")`;
                             });
                         }
                     });
