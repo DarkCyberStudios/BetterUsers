@@ -88,8 +88,7 @@
                 clientsideAvatar;
 
                 getSettingsPanel() {
-                    
-                    const panel = Settings.SettingPanel.build(() => this.onStart(), ...[
+                    return Settings.SettingPanel.build(() => this.onStart(), ...[
                         new Settings.SettingGroup("Clientside Banner", { collapsible: false, shown: true }).append(...[
                             new Settings.Switch("Clientside Banner", "Enable or disable a clientside banner", this.settings.clientsideBanner, value => this.settings.clientsideBanner = value),
                             new Settings.Textbox("URL", "The direct URL for the banner you will be using, supported types are, PNG, JPG, or GIF", this.settings.clientsideBannerURL, image => this.settings.clientsideBannerURL = image)
@@ -99,7 +98,6 @@
                             new Settings.Textbox("URL", "The direct URL for the avatar you will be using, supported types are, PNG, JPG, or GIF", this.settings.clientsideAvatarURL, image => this.settings.clientsideAvatarURL = image)
                         ])
                     ]);
-                    return panel;
                 };
 
                 setBanner() {
