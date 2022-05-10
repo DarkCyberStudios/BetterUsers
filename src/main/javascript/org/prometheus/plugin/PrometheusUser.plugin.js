@@ -162,7 +162,7 @@
                             });
                         }, 1000);
                     }
-                    if (this.settings.clientsideBanner === false) {
+                    if (!this.settings.clientsideBanner) {
 
                         this.removeBanner();
                     }
@@ -216,7 +216,7 @@
                             });
                         }, 1000);
                     }
-                    if (this.settings.clientsideAvatar === false) {
+                    if (!this.settings.clientsideAvatar) {
 
                         this.removeAvatar();
                     }
