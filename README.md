@@ -1,17 +1,13 @@
-BetterUsers
-===========
+<h2 align = "center"> BetterUsers
+    <h4 align = "center"> Allows you to locally assign a banner or an avatar of your choosing </p>
+ </h2>
 
-Allows you to locally assign a banner or an avatar of your choosing
-
-Introduction
-------------
+## Introduction
 
 A plugin created specifically for giving nitroless users a taste of what nitro could feel like. Emproved and experienced on, this plugin aims to give the aimless a pure representation of nitro perks specifically catered towards the representation of the user profile Based on **[Shimoro-Rune's](https://github.com/Shimoro-Rune)** plugin, **[NitroPerks](https://github.com/Shimoro-Rune/NitroPerks)**
 
-Installation
-------------
+## Installation
 
-Install with [BetterDiscord](https://betterdiscord.app/) by placing it inside of the, \`plugins\` folder. The \`plugins\` folder can be found in, \`C:\\Users\\USERNAME\\AppData\\Roaming\\BetterDiscord\\plugins\`
+Install with [BetterDiscord](https://betterdiscord.app/) by placing it inside of the **plugins** folder. The **plugins** folder can be found in, `\Users\USERNAME\AppData\Roaming\BetterDiscord\plugins\`
 
-Getting Started
----------------
+## Getting Started
