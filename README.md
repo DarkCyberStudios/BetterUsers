@@ -4,7 +4,8 @@
 
 ## Introduction
 
-A plugin created specifically for giving nitroless users a taste of what nitro could feel like. Emproved and experienced on, this plugin aims to give the aimless a pure representation of nitro perks specifically catered towards the representation of the user profile Based on **[Shimoro-Rune's](https://github.com/Shimoro-Rune)** plugin, **[NitroPerks](https://github.com/Shimoro-Rune/NitroPerks)**
+A plugin created specifically for giving nitroless users a taste of what nitro could feel like. Emproved and experienced on, this plugin aims to give the aimless a pure representation of nitro perks specifically catered towards the representation of the user profile 
+> Based on **[Shimoro-Rune's](https://github.com/Shimoro-Rune)** plugin, **[NitroPerks](https://github.com/Shimoro-Rune/NitroPerks)**
 
 ## Installation
 
