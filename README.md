@@ -9,6 +9,6 @@ A plugin created specifically for giving nitroless users a taste of what nitro c
 
 ## Installation
 
-Install with [BetterDiscord](https://betterdiscord.app/) by placing it inside of the **plugins** folder. The **plugins** folder can be found in, `\Users\USERNAME\AppData\Roaming\BetterDiscord\plugins\`
+Install with [BetterDiscord](https://betterdiscord.app/) by placing it inside of the **plugins** folder. The **plugins** folder can be found in, **\\Users\\USERNAME\\AppData\\Roaming\\BetterDiscord\\plugins\\**
 
 ## Getting Started
