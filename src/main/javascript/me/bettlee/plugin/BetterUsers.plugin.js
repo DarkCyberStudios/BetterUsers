@@ -2,8 +2,8 @@
  * @name BetterUsers
  * @author Bettlee
  * @authorId 725079599297331200
- * @source https://raw.githubusercontent.com/Bettlee/BetterUsers/main/src/main/javascript/org/prometheus/plugin/BetterUsers.plugin.js
- * @updateUrl https://raw.githubusercontent.com/Bettlee/BetterUsers/main/src/main/javascript/org/prometheus/plugin/BetterUsers.plugin.js
+ * @source https://raw.githubusercontent.com/Bettlee/BetterUsers/main/src/main/javascript/me/bettlee/plugin/BetterUsers.plugin.js
+ * @updateUrl https://raw.githubusercontent.com/Bettlee/BetterUsers/main/src/main/javascript/me/bettlee/plugin/BetterUsers.plugin.js
  * @version 1.9.2
  * @description Allows you to locally assign a banner or an avatar of your choosing
  */
