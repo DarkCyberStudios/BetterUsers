@@ -1,21 +1,21 @@
 {
-  "name": "prometheususer",
-  "version": "1.9.2",
+  "name": "betterusers",
+  "version": "1.9.5",
   "description": "Allows you to locally assign a banner or an avatar of your choosing",
-  "main": "PrometheusUser.plugin.js",
+  "main": "BetterUsers.plugin.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/NormalBettle437/PrometheusUser.git"
+    "url": "git+https://github.com/Bettlee/BetterUsers.git"
   },
-  "author": "NormalBettle437",
+  "author": "Bettlee",
   "license": "Apache License 2.0",
   "bugs": {
-    "url": "https://github.com/NormalBettle437/PrometheusUser/issues"
+    "url": "https://github.com/Bettlee/BetterUsers/issues"
   },
-  "homepage": "https://github.com/NormalBettle437/PrometheusUser#readme",
+  "homepage": "https://github.com/Bettlee/BetterUsers#readme",
   "devDependencies": {
     "@babel/eslint-parser": "^7.17.0",
     "eslint": "^8.12.0"
