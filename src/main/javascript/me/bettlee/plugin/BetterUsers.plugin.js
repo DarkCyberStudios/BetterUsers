@@ -158,7 +158,7 @@
                                     avatar.src = this.settings.clientsideAvatarURL;
                                     if (this.settings.clientsideAvatarURL.substring(0, this.settings.clientsideAvatarURL.lastIndexOf(".gif"))) {
 
-                                        avatar.src = "";
+                                        avatar.src = this.settings.clientsideAvatarURL;
                                         DOMTools.queryAll('[class *= "banner"]').forEach(banner => {
                                             if (banner.className.includes(WebpackModules.getAllByProps("profileBanner")[0].profileBanner) || banner.className.includes(WebpackModules.getAllByProps("popoutBanner")[0].popoutBanner) || banner.className.includes(WebpackModules.getAllByProps("settingsBanner")[0].settingsBanner)) {
 
@@ -232,7 +232,7 @@
 
                     clearInterval(this.clientsideAvatar);
                     DOMTools.queryAll("[src]").forEach(avatar => {
-                        if (avatar.src.includes(this.settings.clientsideAvatarURL) && avatar.src.includes(`https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/`)) {
+                        if (avatar.src.includes(this.settings.clientsideAvatarURL)) {
 
                             avatar.src.split("=").filter(element => element).slice(-1).forEach(size => {
                                 
@@ -242,7 +242,7 @@
                     });
 
                     DOMTools.queryAll("[style]").forEach(avatar => {
-                        if (avatar.style.backgroundImage.includes(this.settings.clientsideAvatarURL) && avatar.style.backgroundImage.includes(`https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/`)) {
+                        if (avatar.style.backgroundImage.includes(this.settings.clientsideAvatarURL)) {
 
                             avatar.style.backgroundImage.split("=").filter(element => element).slice(-1).forEach(size => {
                             
