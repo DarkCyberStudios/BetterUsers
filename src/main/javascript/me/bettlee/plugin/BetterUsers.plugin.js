@@ -158,7 +158,7 @@
                                     avatar.src = this.settings.clientsideAvatarURL;
                                     if (this.settings.clientsideAvatarURL.substring(0, this.settings.clientsideAvatarURL.lastIndexOf(".gif"))) {
 
-                                        avatar.src = this.settings.clientsideAvatarURL;
+                                        avatar.src = "";
                                         DOMTools.queryAll('[class *= "banner"]').forEach(banner => {
                                             if (banner.className.includes(WebpackModules.getAllByProps("profileBanner")[0].profileBanner) || banner.className.includes(WebpackModules.getAllByProps("popoutBanner")[0].popoutBanner) || banner.className.includes(WebpackModules.getAllByProps("settingsBanner")[0].settingsBanner)) {
 
