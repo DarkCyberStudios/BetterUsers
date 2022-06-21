@@ -178,34 +178,30 @@
                 removeBanner() {
 
                     clearInterval(this.clientsideBanner);
-                    DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("profileBanner")[0].profileBanner}"]`).forEach(profileBanner => {
-                        if (DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("username")[0].username}"]`)[0].innerText === DiscordModules.UserStore.getCurrentUser().username) {
+                    DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("banner")[1].banner}"]`).forEach(banner => {
+                        if (banner.className.includes(WebpackModules.getAllByProps("profileBanner")[0].profileBanner) && (DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("username")[0].username}"]`)[0].innerText === DiscordModules.UserStore.getCurrentUser().username)) {
 
-                            profileBanner.style = `background-image: none !important; background-repeat: none; background-position: none; background-size: none; width: none; height: none;`;
+                            banner.style = `background-image: none !important; background-repeat: none; background-position: none; background-size: none; width: none; height: none;`;
+                        } else if (banner.className.includes(WebpackModules.getAllByProps("popoutBanner")[0].popoutBanner) && (DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("username")[0].username}"]`)[0].innerText === DiscordModules.UserStore.getCurrentUser().username)) {
+
+                            banner.style = `background-image: none !important; background-repeat: none; background-position: none; background-size: none; width: none; height: none;`;
+                        } else if (banner.className.includes(WebpackModules.getAllByProps("settingsBanner")[0].settingsBanner) && (DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("username")[0].username}"]`)[0].innerText === DiscordModules.UserStore.getCurrentUser().username)) {
+
+                            banner.style = `background-image: none !important; background-repeat: none; background-position: none; background-size: none;`;
                         }
                     });
 
-                    DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("popoutBanner")[0].popoutBanner}"]`).forEach(popoutBanner => {
+                    DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("bannerUploaderInnerSquare")[0].bannerUploaderInnerSquare}"]`).forEach(banner => {
                         if (DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("username")[0].username}"]`)[0].innerText === DiscordModules.UserStore.getCurrentUser().username) {
 
-                            popoutBanner.style = `background-image: none !important; background-repeat: none; background-position: none; background-size: none; width: none; height: none;`;
+                            banner.style = `background-image: none !important; background-repeat: none; background-position: none; background-size: none;`;
                         }
-                    });
-
-                    DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("settingsBanner")[0].settingsBanner}"]`).forEach(settingsBanner => {
-
-                        settingsBanner.style = `background-image: none !important; background-repeat: none; background-position: none; background-size: none;`;
-                    });
-
-                    DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("bannerUploaderInnerSquare")[0].bannerUploaderInnerSquare}"]`).forEach(bannerUploaderInnerSquare => {
-
-                        bannerUploaderInnerSquare.style = `background-image: none !important; background-repeat: none; background-position: none; background-size: none;`;
                     });
 
                     DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("avatarWrapperNormal")[0].avatarWrapperNormal}"]`).forEach(avatarWrapperNormal => {
                         if (DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("username")[0].username}"]`)[0].innerText === DiscordModules.UserStore.getCurrentUser().username) {
 
-                            avatarWrapperNormal.style = `top: none;`;
+                            avatarWrapperNormal.style = "top: none;";
                         }
                     });
                 };
