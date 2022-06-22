@@ -108,27 +108,27 @@
                         this.clientsideBanner = setInterval(() => {
 
                             DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("banner")[1].banner}"]`).forEach(banner => {
-                                if (DOMTools.hasClass(banner, WebpackModules.getAllByProps("profileBanner")[0].profileBanner) && (DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("username")[0].username}"]`)[0].innerText === DiscordModules.UserStore.getCurrentUser().username)) {
+                                if (DOMTools.hasClass(banner, WebpackModules.getAllByProps("profileBanner")[0].profileBanner) && (Object.is(DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("username")[0].username}"]`)[0].innerText, DiscordModules.UserStore.getCurrentUser().username))) {
 
                                     banner.style = `background-image: url("${this.settings.clientsideBannerURL}") !important; background-repeat: no repeat; background-position: 50%; background-size: cover; width: 600px; height: 240px;`;
-                                } else if (DOMTools.hasClass(banner, WebpackModules.getAllByProps("popoutBanner")[0].popoutBanner) && (DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("username")[0].username}"]`)[0].innerText === DiscordModules.UserStore.getCurrentUser().username)) {
+                                } else if (DOMTools.hasClass(banner, WebpackModules.getAllByProps("popoutBanner")[0].popoutBanner) && (Object.is(DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("username")[0].username}"]`)[0].innerText, DiscordModules.UserStore.getCurrentUser().username))) {
 
                                     banner.style = `background-image: url("${this.settings.clientsideBannerURL}") !important; background-repeat: no repeat; background-position: 50%; background-size: cover; width: 300px; height: 120px;`;
-                                } else if (DOMTools.hasClass(banner, WebpackModules.getAllByProps("settingsBanner")[0].settingsBanner) && (DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("username")[0].username}"]`)[0].innerText === DiscordModules.UserStore.getCurrentUser().username)) {
+                                } else if (DOMTools.hasClass(banner, WebpackModules.getAllByProps("settingsBanner")[0].settingsBanner) && (Object.is(DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("username")[0].username}"]`)[0].innerText, DiscordModules.UserStore.getCurrentUser().username))) {
 
                                     banner.style = `background-image: url("${this.settings.clientsideBannerURL}") !important; background-repeat: no-repeat; background-position: 50%; background-size: cover;`;
                                 }
                             });
 
                             DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("bannerUploaderInnerSquare")[0].bannerUploaderInnerSquare}"]`).forEach(banner => {
-                                if (DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("username")[0].username}"]`)[0].innerText === DiscordModules.UserStore.getCurrentUser().username) {
+                                if (Object.is(DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("username")[0].username}"]`)[0].innerText, DiscordModules.UserStore.getCurrentUser().username)) {
 
                                     banner.style = `background-image: url("${this.settings.clientsideBannerURL}") !important; background-repeat: no-repeat; background-position: 50%; background-size: cover;`;
                                 }
                             });
 
                             DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("avatarWrapperNormal")[0].avatarWrapperNormal}"]`).forEach(avatarWrapperNormal => {
-                                if (DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("username")[0].username}"]`)[0].innerText === DiscordModules.UserStore.getCurrentUser().username) {
+                                if (Object.is(DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("username")[0].username}"]`)[0].innerText, DiscordModules.UserStore.getCurrentUser().username)) {
 
                                     avatarWrapperNormal.style = "top: 76px;";
                                 }
@@ -179,27 +179,27 @@
 
                     clearInterval(this.clientsideBanner);
                     DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("banner")[1].banner}"]`).forEach(banner => {
-                        if (DOMTools.hasClass(banner, WebpackModules.getAllByProps("profileBanner")[0].profileBanner) && (DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("username")[0].username}"]`)[0].innerText === DiscordModules.UserStore.getCurrentUser().username)) {
+                        if (DOMTools.hasClass(banner, WebpackModules.getAllByProps("profileBanner")[0].profileBanner) && (Object.is(DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("username")[0].username}"]`)[0].innerText, DiscordModules.UserStore.getCurrentUser().username))) {
 
                             banner.style = `background-image: none !important; background-repeat: none; background-position: none; background-size: none; width: none; height: none;`;
-                        } else if (DOMTools.hasClass(banner, WebpackModules.getAllByProps("popoutBanner")[0].popoutBanner) && (DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("username")[0].username}"]`)[0].innerText === DiscordModules.UserStore.getCurrentUser().username)) {
+                        } else if (DOMTools.hasClass(banner, WebpackModules.getAllByProps("popoutBanner")[0].popoutBanner) && (Object.is(DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("username")[0].username}"]`)[0].innerText, DiscordModules.UserStore.getCurrentUser().username))) {
 
                             banner.style = `background-image: none !important; background-repeat: none; background-position: none; background-size: none; width: none; height: none;`;
-                        } else if (DOMTools.hasClass(banner, WebpackModules.getAllByProps("settingsBanner")[0].settingsBanner) && (DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("username")[0].username}"]`)[0].innerText === DiscordModules.UserStore.getCurrentUser().username)) {
+                        } else if (DOMTools.hasClass(banner, WebpackModules.getAllByProps("settingsBanner")[0].settingsBanner) && (Object.is(DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("username")[0].username}"]`)[0].innerText, DiscordModules.UserStore.getCurrentUser().username))) {
 
                             banner.style = `background-image: none !important; background-repeat: none; background-position: none; background-size: none;`;
                         }
                     });
 
                     DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("bannerUploaderInnerSquare")[0].bannerUploaderInnerSquare}"]`).forEach(banner => {
-                        if (DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("username")[0].username}"]`)[0].innerText === DiscordModules.UserStore.getCurrentUser().username) {
+                        if (Object.is(DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("username")[0].username}"]`)[0].innerText, DiscordModules.UserStore.getCurrentUser().username)) {
 
                             banner.style = `background-image: none !important; background-repeat: none; background-position: none; background-size: none;`;
                         }
                     });
 
                     DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("avatarWrapperNormal")[0].avatarWrapperNormal}"]`).forEach(avatarWrapperNormal => {
-                        if (DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("username")[0].username}"]`)[0].innerText === DiscordModules.UserStore.getCurrentUser().username) {
+                        if (Object.is(DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("username")[0].username}"]`)[0].innerText, DiscordModules.UserStore.getCurrentUser().username)) {
 
                             avatarWrapperNormal.style = "top: none;";
                         }
