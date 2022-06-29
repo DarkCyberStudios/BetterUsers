@@ -79,7 +79,9 @@
                     "clientsideBanner": false,
                     "clientsideBannerURL": "",
                     "clientsideAvatar": false,
-                    "clientsideAvatarURL": ""
+                    "clientsideAvatarURL": "",
+                    "clientsideStaticAvatar": false,
+                    "clientsiseStaticAvatarURL": ""
                 };
 
                 settings = Utilities.loadSettings(this.getName(), this.defaults);
@@ -95,7 +97,9 @@
                         ]),
                         new Settings.SettingGroup("Clientside Avatar", { collapsible: false, shown: true }).append(...[
                             new Settings.Switch("Clientside Avatar", "Enable or disable a clientside avatar", this.settings.clientsideAvatar, value => this.settings.clientsideAvatar = value),
-                            new Settings.Textbox("URL", "The direct URL for the avatar you will be using, supported types are, PNG, JPG, or GIF", this.settings.clientsideAvatarURL, image => this.settings.clientsideAvatarURL = image)
+                            new Settings.Textbox("URL", "The direct URL for the avatar you will be using, supported types are, PNG, JPG, or GIF", this.settings.clientsideAvatarURL, image => this.settings.clientsideAvatarURL = image),
+                            new Settings.Switch("Clientside Static Avatar", "Enable or disable a clientside static avatar", this.settings.clientsideStaticAvatar, value => this.settings.clientsideStaticAvatar = value),
+                            new Settings.Textbox("URL", "The direct URL for the static avatar you will be using, supported types are, PNG or JPG", this.settings.clientsideStaticAvatarURL, image => this.settings.clientsideStaticAvatarURL = image)
                         ])
                     ]);
                 };
@@ -144,16 +148,26 @@
                 setAvatar() {
 
                     Utilities.saveSettings(this.getName(), this.settings);
-                    if (this.settings.clientsideAvatar && this.settings.clientsideAvatarURL) {
+                    if ((this.settings.clientsideAvatar && this.settings.clientsideAvatarURL) && (this.settings.clientsideStaticAvatar && this.settings.clientsideStaticAvatarURL)) {
 
                         this.clientsideAvatar = setInterval(() => {
 
                             DOMTools.queryAll("[src]").forEach(avatar => {
                                 if (avatar.src.includes(`https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/`)) {
 
-                                    avatar.src.split("=").filter(element => element).slice(-1).forEach(() => {
+                                    avatar.src.split("=").filter(element => element).slice(-1).forEach(size => {
 
                                         avatar.src = this.settings.clientsideAvatarURL;
+                                        if (this.settings.clientsideAvatarURL.includes(".gif")) { 
+
+                                            avatar.src = this.settings.clientsideStaticAvatarURL;
+                                            DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("banner")[1].banner}"]`).forEach(banner => {
+                                                if ((DOMTools.hasClass(banner, WebpackModules.getAllByProps("profileBanner")[0].profileBanner) && Object.is(size, "160")) || (DOMTools.hasClass(banner, WebpackModules.getAllByProps("popoutBanner")[0].popoutBanner) && Object.is(size, "100")) || (DOMTools.hasClass(banner, WebpackModules.getAllByProps("settingsBanner")[0].settingsBanner) && Object.is(size, "100"))) {
+
+                                                    avatar.src = this.settings.clientsideAvatarURL;
+                                                }
+                                            }); 
+                                        }
                                     });
                                 }
                             });
@@ -161,15 +175,25 @@
                             DOMTools.queryAll("[style]").forEach(avatar => {
                                 if (avatar.style.backgroundImage.includes(`https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/`)) {
 
-                                    avatar.style.backgroundImage.split("=").filter(element => element).slice(-1).forEach(() => {
+                                    avatar.style.backgroundImage.split("=").filter(element => element).slice(-1).forEach(size => {
 
                                         avatar.style = `background-image: url("${this.settings.clientsideAvatarURL}");`;
+                                        if (this.settings.clientsideAvatarURL.includes(".gif")) {
+
+                                            avatar.style = `background-image: url(${this.settings.clientsideStaticAvatarURL})`;
+                                            DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("banner")[5].banner}"]`).forEach(banner => {
+                                                if (DOMTools.hasClass(banner, WebpackModules.getAllByProps("bannerUploaderInnerSquare")[0].bannerUploaderInnerSquare) && Object.is(size, "100\")")) {
+
+                                                    avatar.style = `background-image: url(${this.settings.clientsideAvatarURL})`;
+                                                }
+                                            });
+                                        }
                                     });
                                 }
                             });
                         }, 1000);
                     }
-                    if (!this.settings.clientsideAvatar) {
+                    if (!this.settings.clientsideAvatar || !this.settings.clientsideStaticAvatar) {
 
                         this.removeAvatar();
                     }
@@ -210,7 +234,7 @@
 
                     clearInterval(this.clientsideAvatar);
                     DOMTools.queryAll("[src]").forEach(avatar => {
-                        if (avatar.src.includes(this.settings.clientsideAvatarURL)) {
+                        if (avatar.src.includes(this.settings.clientsideAvatarURL) || avatar.src.includes(this.settings.clientsideStaticAvatarURL)) {
 
                             avatar.src.split("=").filter(element => element).slice(-1).forEach(size => {
                                 
@@ -220,7 +244,7 @@
                     });
 
                     DOMTools.queryAll("[style]").forEach(avatar => {
-                        if (avatar.style.backgroundImage.includes(this.settings.clientsideAvatarURL)) {
+                        if (avatar.style.backgroundImage.includes(this.settings.clientsideAvatarURL) || avatar.style.backgroundImage.includes(this.settings.clientsideStaticAvatarURL)) {
 
                             avatar.style.backgroundImage.split("=").filter(element => element).slice(-1).forEach(size => {
                             
