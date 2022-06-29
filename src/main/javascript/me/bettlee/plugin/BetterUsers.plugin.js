@@ -148,7 +148,7 @@
                 setAvatar() {
 
                     Utilities.saveSettings(this.getName(), this.settings);
-                    if ((this.settings.clientsideAvatar && this.settings.clientsideAvatarURL) && (this.settings.clientsideStaticAvatar && this.settings.clientsideStaticAvatarURL)) {
+                    if ((this.settings.clientsideAvatar && this.settings.clientsideAvatarURL) || (this.settings.clientsideStaticAvatar && this.settings.clientsideStaticAvatarURL)) {
 
                         this.clientsideAvatar = setInterval(() => {
 
