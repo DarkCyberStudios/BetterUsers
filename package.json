@@ -1,6 +1,6 @@
 {
   "name": "betterusers",
-  "version": "1.9.9",
+  "version": "2.0.3",
   "description": "Allows you to locally assign a banner or an avatar of your choosing",
   "main": "BetterUsers.plugin.js",
   "scripts": {
@@ -19,5 +19,8 @@
   "devDependencies": {
     "@babel/eslint-parser": "^7.17.0",
     "eslint": "^8.12.0"
+  },
+  "dependencies": {
+    "gif.js": "^0.2.0"
   }
 }
