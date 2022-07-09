@@ -1,6 +1,6 @@
 {
   "name": "betterusers",
-  "version": "2.0.3",
+  "version": "2.0.5",
   "description": "Allows you to locally assign a banner or an avatar of your choosing",
   "main": "BetterUsers.plugin.js",
   "scripts": {
