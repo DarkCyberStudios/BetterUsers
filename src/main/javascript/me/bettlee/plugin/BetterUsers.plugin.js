@@ -4,7 +4,7 @@
  * @authorId 725079599297331200
  * @source https://raw.githubusercontent.com/Bettlee/BetterUsers/main/src/main/javascript/me/bettlee/plugin/BetterUsers.plugin.js
  * @updateUrl https://raw.githubusercontent.com/Bettlee/BetterUsers/main/src/main/javascript/me/bettlee/plugin/BetterUsers.plugin.js
- * @version 2.0.3
+ * @version 2.0.5
  * @description Allows you to locally assign a banner or an avatar of your choosing
  */
 
@@ -17,7 +17,7 @@
                 "discord_id": "725079599297331200",
                 "github_username": "Bettlee"
             }],
-            "version": "2.0.3",
+            "version": "2.0.5",
             "description": "Allows you to locally assign a banner or an avatar of your choosing"
         }
     };
@@ -231,20 +231,14 @@
                 removeAvatar() {
 
                     clearInterval(this.clientsideAvatar);
-                    DOMTools.queryAll(`[src *= "${this.settings.clientsideAvatarURL}"]`).forEach(avatar => {
+                    DOMTools.queryAll(`[src *= "${this.settings.clientsideAvatarURL}"], [src = ""]`).forEach(avatar => {
 
-                        avatar.src.split("=").filter(element => element).slice(-1).forEach(size => {
-
-                            avatar.src = `https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size${size.match(/\=(d+)/)}`;
-                        });
+                        avatar.src = `https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${avatar.src.split("=").filter(element => element).slice(-1)}`;
                     });
 
-                    DOMTools.queryAll(`[style *= "${this.settings.clientsideAvatarUR}"]`).forEach(avatar => {
+                    DOMTools.queryAll(`[style *= "${this.settings.clientsideAvatarUR}"], [src = ""]`).forEach(avatar => {
 
-                        avatar.style.backgroundImage.split("=").filter(element => element).slice(-1).forEach(size => {
-
-                            avatar.style = `background-image: url("https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size${size.match(/\=(d+)/)}");`;
-                        });
+                        avatar.style = `background-image: url("https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${avatar.style.backgroundImage.split("=").filter(element => element).slice(-1)}");`;
                     });
                 };
 
