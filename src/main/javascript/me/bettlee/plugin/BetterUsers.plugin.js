@@ -141,7 +141,7 @@
                                     avatarWrapperNormal.style = "top: 76px;";
                                 }
                             });
-                        }, 1000);
+                        }, 100);
                     }
                     if (!this.settings.clientsideBanner) {
 
@@ -181,7 +181,7 @@
                                     });
                                 }
                             });
-                        }, 1000);
+                        }, 100);
                     }
                     if (!this.settings.clientsideAvatar) {
 
