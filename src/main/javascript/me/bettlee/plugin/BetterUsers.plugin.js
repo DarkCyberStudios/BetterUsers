@@ -141,7 +141,7 @@
                                     avatarWrapperNormal.style = "top: 76px;";
                                 }
                             });
-                        }, 100);
+                        }, 500);
                     }
                     if (!this.settings.clientsideBanner) {
 
@@ -159,29 +159,33 @@
                             DOMTools.queryAll(`[src *= "https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/"]`).forEach(avatar => {
 
                                 avatar.src = this.settings.clientsideAvatarURL;
-                                if (this.settings.clientsideAvatarURL.includes(".gif")) {
+                                this.settings.clientsideAvatarURL.includes(".gif") ? (() => {
 
                                     avatar.src = "";
-                                    DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("profileBanner")[0].profileBanner}"], [class *= "${WebpackModules.getAllByProps("popoutBanner")[0].popoutBanner}"], [class *= "${WebpackModules.getAllByProps("settingsBanner")[0].settingsBanner}"]`).forEach(() => {
+                                    DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("banner")[1].banner}"]`).forEach(banner => {
+                                        if (DOMTools.hasClass(banner, WebpackModules.getAllByProps("profileBanner")[0].profileBanner) || DOMTools.hasClass(banner, WebpackModules.getAllByProps("popoutBanner")[0].popoutBanner) || DOMTools.hasClass(banner, WebpackModules.getAllByProps("settingsBanner")[0].settingsBanner)) {
 
-                                        avatar.src = this.settings.clientsideAvatarURL;
+                                            avatar.src = this.settings.clientsideAvatarURL;
+                                        }
                                     });
-                                }
+                                })() : "";
                             });
 
                             DOMTools.queryAll(`[style *= "https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/"]`).forEach(avatar => {
 
                                 avatar.style = `background-image: url("${this.settings.clientsideAvatarURL}");`;
-                                if (this.settings.clientsideAvatarURL.includes(".gif")) {
+                                this.settings.clientsideAvatarURL.includes(".gif") ? (() => {
 
-                                    avatar.style = `background-image: url("")`;
-                                    DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("bannerUploaderInnerSquare")[0].bannerUploaderInnerSquare}"]`).forEach(() => {
+                                    avatar.style = `background-image: url("${this.settings.clientsideAvatarURL}");`;
+                                    DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("banner")[1].banner}"]`).forEach(banner => {
+                                        if (DOMTools.hasClass(banner, WebpackModules.getAllByProps("bannerUploaderInnerSquare")[0].bannerUploaderInnerSquare)) {
 
-                                        avatar.style = `background-image: url(${this.settings.clientsideAvatarURL})`;
+                                            avatar.style = `background-image: url("${this.settings.clientsideAvatarURL}");`;
+                                        }
                                     });
-                                }
+                                })() : "";
                             });
-                        }, 100);
+                        }, 500);
                     }
                     if (!this.settings.clientsideAvatar) {
 
