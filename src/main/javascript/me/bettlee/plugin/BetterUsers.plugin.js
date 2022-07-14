@@ -158,32 +158,30 @@
 
                             DOMTools.queryAll(`[src *= "https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/"]`).forEach(avatar => {
 
-                                avatar.src = this.settings.clientsideAvatarURL;
                                 this.settings.clientsideAvatarURL.includes(".gif") ? (() => {
 
-                                    avatar.src = "";
-                                    DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("banner")[1].banner}"]`).forEach(banner => {
+                                    Object.assign(avatar, { src: "" });
+                                    DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("banner")[0].banner}"]`).forEach(banner => {
                                         if (DOMTools.hasClass(banner, WebpackModules.getAllByProps("profileBanner")[0].profileBanner) || DOMTools.hasClass(banner, WebpackModules.getAllByProps("popoutBanner")[0].popoutBanner) || DOMTools.hasClass(banner, WebpackModules.getAllByProps("settingsBanner")[0].settingsBanner)) {
 
-                                            avatar.src = this.settings.clientsideAvatarURL;
+                                            Object.assign(avatar, { src: this.settings.clientsideAvatarURL });
                                         }
                                     });
-                                })() : "";
+                                })() : Object.assign(avatar, { src: this.settings.clientsideAvatarURL });
                             });
 
                             DOMTools.queryAll(`[style *= "https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/"]`).forEach(avatar => {
 
-                                avatar.style = `background-image: url("${this.settings.clientsideAvatarURL}");`;
                                 this.settings.clientsideAvatarURL.includes(".gif") ? (() => {
 
-                                    avatar.style = `background-image: url("");`;
-                                    DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("banner")[5].banner}"]`).forEach(banner => {
-                                        if (DOMTools.hasClass(banner, WebpackModules.getAllByProps("bannerUploaderInnerSquare")[0].bannerUploaderInnerSquare)) {
+                                    Object.assign(avatar.style, { backgroundImage: `url("")` });
+                                    DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("banner")[4].banner}"]`).forEach(banner => {
+                                        if (DOMTools.hasClass(banner, WebpackModules.getAllByProps("imageUploaderInner")[0].imageUploaderInner)) {
 
-                                            avatar.style = `background-image: url("${this.settings.clientsideAvatarURL}");`;
+                                            Object.assign(avatar.style, { backgroundImage: `url("${this.settings.clientsideAvatarURL}")` });
                                         }
                                     });
-                                })() : "";
+                                })() : Object.assign(avatar.style, { backgroundImage: `url("${this.settings.clientsideAvatarURL}")` });
                             });
                         }, 500);
                     }
@@ -250,8 +248,8 @@
 
                     DiscordModules.UserStore.getCurrentUser().premiumType = 2;
 
-                    // DOMTools.addScript("gif.js", "https://unpkg.com/gif.js@0.2.0/dist/gif.js");
-                    // DOMTools.addScript("gif.worker.js", "https://unpkg.com/gif.js@0.2.0/dist/gif.worker.js");
+                    DOMTools.addScript("gif.js", "https://unpkg.com/gif.js@0.2.0/dist/gif.js");
+                    DOMTools.addScript("gif.worker.js", "https://unpkg.com/gif.js@0.2.0/dist/gif.worker.js");
 
                     this.setBanner();
                     this.setAvatar();
@@ -261,8 +259,8 @@
 
                     DiscordModules.UserStore.getCurrentUser().premiumType = 0;
 
-                    // DOMTools.removeScript("gif.js");
-                    // DOMTools.removeScript("gif.worker.js");
+                    DOMTools.removeScript("gif.js");
+                    DOMTools.removeScript("gif.worker.js");
 
                     this.removeBanner();
                     this.removeAvatar();
