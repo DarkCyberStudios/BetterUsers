@@ -235,12 +235,12 @@
                     clearInterval(this.clientsideAvatar);
                     DOMTools.queryAll(`[src *= "${this.settings.clientsideAvatarURL}"], [src = ""]`).forEach(avatar => {
 
-                        avatar.src = `https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${avatar.src.split("=").filter(element => element).slice(-1)}`;
+                        Object.assign(avatar, { src: `https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${avatar.src.split("=").filter(element => element).slice(-1)}` });
                     });
 
                     DOMTools.queryAll(`[style *= "${this.settings.clientsideAvatarUR}"], [src = ""]`).forEach(avatar => {
 
-                        avatar.style = `background-image: url("https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${avatar.style.backgroundImage.split("=").filter(element => element).slice(-1)}");`;
+                        Object.assign(avatar.style, { backgroundImage: `url("https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${avatar.style.backgroundImage.split("=").filter(element => element).slice(-1)}");` });
                     });
                 };
 
