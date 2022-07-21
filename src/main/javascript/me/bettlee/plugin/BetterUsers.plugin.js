@@ -75,11 +75,16 @@
             return class BetterUsers extends Plugin {
 
                 defaults = {
-
-                    "clientsideBanner": false,
-                    "clientsideBannerURL": "",
-                    "clientsideAvatar": false,
-                    "clientsideAvatarURL": ""
+                    "banner": {
+                        "clientsideBanner": false,
+                        "clientsideBannerURL": ""
+                    },
+                    "avatar": {
+                        "clientsideAvatar": false,
+                        "clientsideAvatarURL": "",
+                        "clientsideStaticAvatar": false,
+                        "clientsideStaticAvatarURL": ""
+                    }
                 };
 
                 settings = Utilities.loadSettings(this.getName(), this.defaults);
@@ -90,12 +95,14 @@
                 getSettingsPanel() {
                     return Settings.SettingPanel.build(() => this.onStart(), ...[
                         new Settings.SettingGroup("Clientside Banner", { collapsible: false, shown: true }).append(...[
-                            new Settings.Switch("Clientside Banner", "Enable or disable a clientside banner", this.settings.clientsideBanner, value => this.settings.clientsideBanner = value),
-                            new Settings.Textbox("URL", "The direct URL for the banner you will be using, supported types are, PNG, JPG, or GIF", this.settings.clientsideBannerURL, image => this.settings.clientsideBannerURL = image)
+                            new Settings.Switch("Clientside Banner", "Enable or disable a clientside banner", this.settings.banner.clientsideBanner, value => this.settings.banner.clientsideBanner = value),
+                            new Settings.Textbox("URL", "The direct URL for the banner you will be using, supported types are, PNG, JPG, or GIF", this.settings.banner.clientsideBannerURL, image => this.settings.banner.clientsideBannerURL = image)
                         ]),
                         new Settings.SettingGroup("Clientside Avatar", { collapsible: false, shown: true }).append(...[
-                            new Settings.Switch("Clientside Avatar", "Enable or disable a clientside avatar", this.settings.clientsideAvatar, value => this.settings.clientsideAvatar = value),
-                            new Settings.Textbox("URL", "The direct URL for the avatar you will be using, supported types are, PNG, JPG, or GIF", this.settings.clientsideAvatarURL, image => this.settings.clientsideAvatarURL = image)
+                            new Settings.Switch("Clientside Avatar", "Enable or disable a clientside avatar", this.settings.avatar.clientsideAvatar, value => this.settings.avatar.clientsideAvatar = value),
+                            new Settings.Textbox("URL", "The direct URL for the avatar you will be using, supported types are, PNG, JPG, or GIF", this.settings.avatar.clientsideAvatarURL, image => this.settings.avatar.clientsideAvatarURL = image),
+                            new Settings.Switch("Clientside Static Avatar", "Enable or disable a clientside static avatar", this.settings.avatar.clientsideStaticAvatar, value => this.settings.avatar.clientsideStaticAvatar = value),
+                            new Settings.Textbox("URL", "The direct URL for the avatar you will be using, supported types are, PNG or JPG", this.settings.avatar.clientsideStaticAvatarURL, image => this.settings.avatar.clientsideStaticAvatarURL = image)
                         ])
                     ]);
                 };
@@ -103,35 +110,35 @@
                 setBanner() {
 
                     Utilities.saveSettings(this.getName(), this.settings);
-                    if (this.settings.clientsideBanner && this.settings.clientsideBannerURL) {
+                    if (this.settings.banner.clientsideBanner && this.settings.banner.clientsideBannerURL) {
 
                         this.clientsideBanner = setInterval(() => {
 
                             DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("profileBanner")[0].profileBanner}"]`).forEach(profileBanner => {
                                 if (Object.is(DOMTools.text(DOMTools.query(`[class *= "${WebpackModules.getAllByProps("username")[0].username}"]`)), DiscordModules.UserStore.getCurrentUser().username)) {
 
-                                    Object.assign(profileBanner.style, { backgroundImage: `url(${this.settings.clientsideBannerURL})`, backgroundRepeat: "no-repeat", backgroundPosition: "50%", backgroundSize: "cover", width: "600px", height: "240px" });
+                                    Object.assign(profileBanner.style, { backgroundImage: `url(${this.settings.banner.clientsideBannerURL})`, backgroundRepeat: "no-repeat", backgroundPosition: "50%", backgroundSize: "cover", width: "600px", height: "240px" });
                                 }
                             });
 
                             DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("popoutBanner")[0].popoutBanner}"]`).forEach(popoutBanner => {
                                 if (Object.is(DOMTools.text(DOMTools.query(`[class *= "${WebpackModules.getAllByProps("username")[0].username}"]`)), DiscordModules.UserStore.getCurrentUser().username)) {
 
-                                    Object.assign(popoutBanner.style, { backgroundImage: `url(${this.settings.clientsideBannerURL})`, backgroundRepeat: "no-repeat", backgroundPosition: "50%", backgroundSize: "cover", width: "300px", height: "120px" });
+                                    Object.assign(popoutBanner.style, { backgroundImage: `url(${this.settings.banner.clientsideBannerURL})`, backgroundRepeat: "no-repeat", backgroundPosition: "50%", backgroundSize: "cover", width: "300px", height: "120px" });
                                 }
                             });
 
                             DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("settingsBanner")[0].settingsBanner}"]`).forEach(settingsBanner => {
                                 if (Object.is(DOMTools.text(DOMTools.query(`[class *= "${WebpackModules.getAllByProps("username")[0].username}"]`)), DiscordModules.UserStore.getCurrentUser().username)) {
 
-                                    Object.assign(settingsBanner.style, { backgroundImage: `url(${this.settings.clientsideBannerURL})`, backgroundRepeat: "no-repeat", backgroundPosition: "50%", backgroundSize: "cover" });
+                                    Object.assign(settingsBanner.style, { backgroundImage: `url(${this.settings.banner.clientsideBannerURL})`, backgroundRepeat: "no-repeat", backgroundPosition: "50%", backgroundSize: "cover" });
                                 }
                             });
 
                             DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("bannerUploaderInnerSquare")[0].bannerUploaderInnerSquare}"]`).forEach(bannerUploaderInnerSquare => {
                                 if (Object.is(DOMTools.text(DOMTools.query(`[class *= "${WebpackModules.getAllByProps("username")[0].username}"]`)), DiscordModules.UserStore.getCurrentUser().username)) {
 
-                                    Object.assign(bannerUploaderInnerSquare.style, { backgroundImage: `url(${this.settings.clientsideBannerURL})`, backgroundRepeat: "no-repeat", backgroundPosition: "50%", backgroundSize: "cover" });
+                                    Object.assign(bannerUploaderInnerSquare.style, { backgroundImage: `url(${this.settings.banner.clientsideBannerURL})`, backgroundRepeat: "no-repeat", backgroundPosition: "50%", backgroundSize: "cover" });
                                 }
                             });
 
@@ -143,7 +150,7 @@
                             });
                         }, 500);
                     }
-                    if (!this.settings.clientsideBanner) {
+                    if (!this.settings.banner.clientsideBanner) {
 
                         this.removeBanner();
                     }
@@ -152,40 +159,40 @@
                 setAvatar() {
 
                     Utilities.saveSettings(this.getName(), this.settings);
-                    if (this.settings.clientsideAvatar && this.settings.clientsideAvatarURL) {
+                    if ((this.settings.avatar.clientsideAvatar && this.settings.avatar.clientsideAvatarURL) && (this.settings.avatar.clientsideStaticAvatar && this.settings.avatar.clientsideStaticAvatarURL)) {
 
                         this.clientsideAvatar = setInterval(() => {
 
                             DOMTools.queryAll(`[src *= "https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/"]`).forEach(avatar => {
 
-                                this.settings.clientsideAvatarURL.includes(".gif") ? (() => {
+                                this.settings.avatar.clientsideAvatarURL.includes(".gif") && (this.settings.avatar.clientsideStaticAvatarURL.includes(".png") || this.settings.avatar.clientsideStaticAvatarURL.includes(".jpg")) ? (() => {
 
-                                    Object.assign(avatar, { src: "" });
+                                    Object.assign(avatar, { src: this.settings.avatar.clientsideStaticAvatarURL });
                                     DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("banner")[0].banner}"]`).forEach(banner => {
                                         if (DOMTools.hasClass(banner, WebpackModules.getAllByProps("profileBanner")[0].profileBanner) || DOMTools.hasClass(banner, WebpackModules.getAllByProps("popoutBanner")[0].popoutBanner) || DOMTools.hasClass(banner, WebpackModules.getAllByProps("settingsBanner")[0].settingsBanner)) {
 
-                                            Object.assign(avatar, { src: this.settings.clientsideAvatarURL });
+                                            Object.assign(avatar, { src: this.settings.avatar.clientsideAvatarURL });
                                         }
                                     });
-                                })() : Object.assign(avatar, { src: this.settings.clientsideAvatarURL });
+                                })() : Object.assign(avatar, { src: this.settings.avatar.clientsideAvatarURL });
                             });
 
                             DOMTools.queryAll(`[style *= "https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/"]`).forEach(avatar => {
 
-                                this.settings.clientsideAvatarURL.includes(".gif") ? (() => {
+                                this.settings.avatar.clientsideAvatarURL.includes(".gif") && (this.settings.avatar.clientsideStaticAvatarURL.includes(".png") || this.settings.clientsideStaticAvatarURL.includes(".jpg")) ? (() => {
 
-                                    Object.assign(avatar.style, { backgroundImage: `url("")` });
+                                    Object.assign(avatar.style, { backgroundImage: `url("${this.settings.avatar.clientsideStaticAvatarURL}")` });
                                     DOMTools.queryAll(`[class *= "${WebpackModules.getAllByProps("banner")[4].banner}"]`).forEach(banner => {
                                         if (DOMTools.hasClass(banner, WebpackModules.getAllByProps("imageUploaderInner")[0].imageUploaderInner)) {
 
-                                            Object.assign(avatar.style, { backgroundImage: `url("${this.settings.clientsideAvatarURL}")` });
+                                            Object.assign(avatar.style, { backgroundImage: `url("${this.settings.avatar.clientsideAvatarURL}")` });
                                         }
                                     });
-                                })() : Object.assign(avatar.style, { backgroundImage: `url("${this.settings.clientsideAvatarURL}")` });
+                                })() : Object.assign(avatar.style, { backgroundImage: `url("${this.settings.avatar.clientsideAvatarURL}")` });
                             });
                         }, 500);
                     }
-                    if (!this.settings.clientsideAvatar) {
+                    if (!this.settings.avatar.clientsideAvatar) {
 
                         this.removeAvatar();
                     }
@@ -233,12 +240,12 @@
                 removeAvatar() {
 
                     clearInterval(this.clientsideAvatar);
-                    DOMTools.queryAll(`[src *= "${this.settings.clientsideAvatarURL}"], [src = ""]`).forEach(avatar => {
+                    DOMTools.queryAll(`[src *= "${this.settings.avatar.clientsideAvatarURL}"], [src = "${this.settings.avatar.clientsideStaticAvatarURL}"]`).forEach(avatar => {
 
                         Object.assign(avatar, { src: `https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${avatar.src.split("=").filter(element => element).slice(-1)}` });
                     });
 
-                    DOMTools.queryAll(`[style *= "${this.settings.clientsideAvatarUR}"], [src = ""]`).forEach(avatar => {
+                    DOMTools.queryAll(`[style *= "${this.settings.avatar.clientsideAvatarUR}"], [src = "${this.settings.avatar.clientsideStaticAvatarURL}"]`).forEach(avatar => {
 
                         Object.assign(avatar.style, { backgroundImage: `url("https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${avatar.style.backgroundImage.split("=").filter(element => element).slice(-1)}")` });
                     });
@@ -247,8 +254,6 @@
                 onStart() {
 
                     DiscordModules.UserStore.getCurrentUser().premiumType = 2;
-
-                    DOMTools.addScript("Freezeframe", "https://unpkg.com/freezeframe@5.0.2/dist/freezeframe.min.js");
 
                     this.setBanner();
                     this.setAvatar();
