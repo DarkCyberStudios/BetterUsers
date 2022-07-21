@@ -263,8 +263,6 @@
 
                     DiscordModules.UserStore.getCurrentUser().premiumType = 0;
 
-                    DOMTools.removeScript("Freezeframe");
-
                     this.removeBanner();
                     this.removeAvatar();
                 };
