@@ -148,7 +148,7 @@
                                     Object.assign(avatarWrapperNormal.style, { top: "76px" });
                                 }
                             });
-                        }, 500);
+                        }, 1000);
                     }
                     if (!this.settings.banner.clientsideBanner) {
 
@@ -190,7 +190,7 @@
                                     });
                                 })() : Object.assign(avatar.style, { backgroundImage: `url("${this.settings.avatar.clientsideAvatarURL}")` });
                             });
-                        }, 500);
+                        }, 1000);
                     }
                     if (!this.settings.avatar.clientsideAvatar) {
 
@@ -240,12 +240,12 @@
                 removeAvatar() {
 
                     clearInterval(this.clientsideAvatar);
-                    DOMTools.queryAll(`[src *= "${this.settings.avatar.clientsideAvatarURL}"], [src = "${this.settings.avatar.clientsideStaticAvatarURL}"]`).forEach(avatar => {
+                    DOMTools.queryAll(`[src *= "${this.settings.avatar.clientsideAvatarURL}"], [src *= "${this.settings.avatar.clientsideStaticAvatarURL}"], [src = ""]`).forEach(avatar => {
 
                         Object.assign(avatar, { src: `https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${avatar.src.split("=").filter(element => element).slice(-1)}` });
                     });
 
-                    DOMTools.queryAll(`[style *= "${this.settings.avatar.clientsideAvatarUR}"], [src = "${this.settings.avatar.clientsideStaticAvatarURL}"]`).forEach(avatar => {
+                    DOMTools.queryAll(`[style *= "${this.settings.avatar.clientsideAvatarURL}"], [src *= "${this.settings.avatar.clientsideStaticAvatarURL}"], [src = ""]`).forEach(avatar => {
 
                         Object.assign(avatar.style, { backgroundImage: `url("https://cdn.discordapp.com/avatars/${DiscordModules.UserStore.getCurrentUser().id}/${DiscordModules.UserStore.getCurrentUser().avatar}.webp?size=${avatar.style.backgroundImage.split("=").filter(element => element).slice(-1)}")` });
                     });
