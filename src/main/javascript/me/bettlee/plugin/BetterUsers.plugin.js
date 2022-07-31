@@ -183,7 +183,7 @@ module.exports = (() => {
                 setAvatar() {
 
                     Utilities.saveSettings(this.getName(), this.settings);
-                    if ((this.settings.avatar.clientsideAvatar && this.settings.avatar.clientsideAvatarURL) && (this.settings.avatar.clientsideStaticAvatar && this.settings.avatar.clientsideStaticAvatarURL)) {
+                    if ((this.settings.avatar.clientsideAvatar && this.settings.avatar.clientsideAvatarURL) || ((this.settings.avatar.clientsideAvatar && this.settings.avatar.clientsideAvatarURL) && (this.settings.avatar.clientsideStaticAvatar && this.settings.avatar.clientsideStaticAvatarURL))) {
 
                         this.clientsideAvatar = setInterval(() => {
 
